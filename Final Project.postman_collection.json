@@ -338,7 +338,7 @@
 						"body": {
 							"mode": "file",
 							"file": {
-								"src": "/home/rebh/Development/udacity-aws-cloud-developer-project-3/s3-images/car.jpg"
+								"src": "/home/rebh/Development/udacity-aws-cloud-developer-project-5/UPLOADS/car.jpg"
 							}
 						},
 						"url": {
