@@ -1,5 +1,6 @@
-export interface Todo {
-  todoId: string
+export interface CreateWhateverModel {
+  userId: string
+  itemId: string
   createdAt: string
   name: string
   dueDate: string

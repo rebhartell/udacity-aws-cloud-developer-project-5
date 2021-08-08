@@ -6,12 +6,12 @@ const documentClient = new AWS.DynamoDB.DocumentClient({
 
 documentClient.batchWrite({
   RequestItems: {
-    'Todos-dev': [
+    'whatever-table-dev': [
       {
         PutRequest: {
           Item: {
             "userId": "auth0|60e094fd6c07e100687db898",
-            "todoId": "123",
+            "itemId": "123",
             "createdAt": "2019-07-27T20:01:45.424Z",
             "name": "Buy milk",
             "dueDate": "2019-07-03T20:01:45.424Z",
@@ -24,7 +24,7 @@ documentClient.batchWrite({
         PutRequest: {
           Item: {
             "userId": "auth0|60e094fd6c07e100687db898",
-            "todoId": "124",
+            "itemId": "124",
             "createdAt": "2019-07-27T20:01:45.424Z",
             "name": "Buy milk",
             "dueDate": "2019-07-04T20:01:45.424Z",
@@ -37,7 +37,7 @@ documentClient.batchWrite({
         PutRequest: {
           Item: {
             "userId": "auth0|60e094fd6c07e100687db898",
-            "todoId": "125",
+            "itemId": "125",
             "createdAt": "2019-07-27T20:01:45.424Z",
             "name": "Buy milk",
             "dueDate": "2019-07-05T20:01:45.424Z",
@@ -50,7 +50,7 @@ documentClient.batchWrite({
         PutRequest: {
           Item: {
             "userId": "auth0|60e094fd6c07e100687db898",
-            "todoId": "126",
+            "itemId": "126",
             "createdAt": "2019-07-27T20:01:45.424Z",
             "name": "Buy milk",
             "dueDate": "2019-07-06T20:01:45.424Z",
@@ -63,7 +63,7 @@ documentClient.batchWrite({
         PutRequest: {
           Item: {
             "userId": "auth0|60e094fd6c07e100687db898",
-            "todoId": "127",
+            "itemId": "127",
             "createdAt": "2019-07-27T20:01:45.424Z",
             "name": "Buy milk",
             "dueDate": "2019-07-07T20:01:45.424Z",
@@ -76,7 +76,7 @@ documentClient.batchWrite({
         PutRequest: {
           Item: {
             "userId": "someone else",
-            "todoId": "456",
+            "itemId": "456",
             "createdAt": "2019-07-27T20:01:45.424Z",
             "name": "Send a letter",
             "dueDate": "2019-07-29T20:01:45.424Z",

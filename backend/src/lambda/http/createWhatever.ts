@@ -1,26 +1,26 @@
 import { APIGatewayProxyEvent, APIGatewayProxyHandler, APIGatewayProxyResult } from 'aws-lambda'
 import 'source-map-support/register'
-import { createTodo } from '../../businessLogic/todos'
-import { CreateTodoRequest } from '../../requests/CreateTodoRequest'
+import { createWhatever } from '../../businessLogic/whateverBusiness'
+import { CreateWhateverRequest } from '../../requests/CreateWhateverRequest'
 import { createLogger } from '../../utils/logger'
 import { getUserId } from '../utils'
 
-const logger = createLogger('lambda/http/createTodo')
+const logger = createLogger('lambda/http/createWhatever')
 
 export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
 
-  // TODO: Implement creating a new TODO item
-  logger.info('createTodo handler - Processing event', { event })
+  // Whatever: Implement creating a new Whatever item
+  logger.info('createWhatever handler - Processing event', { event })
 
-  const newTodo: CreateTodoRequest = JSON.parse(event.body)
+  const newWhatever: CreateWhateverRequest = JSON.parse(event.body)
 
   const userId = getUserId(event)
 
   try {
 
-    const newItem = await createTodo(userId, newTodo)
+    const newItem = await createWhatever(userId, newWhatever)
 
-    logger.info('createTodo handler - Successfully created todo', { newItem })
+    logger.info('createWhatever handler - Successfully created whatever', { newItem })
 
     return {
       statusCode: 201,
@@ -34,7 +34,7 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
     }
 
   } catch (error) {
-    logger.error("createTodo handler - Failed to create todo", { error })
+    logger.error("createWhatever handler - Failed to create whatever", { error })
 
     return {
       statusCode: 500,
@@ -43,7 +43,7 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
         'Access-Control-Allow-Credentials': true
       },
       body: JSON.stringify({
-        message: "Failed to create todo"
+        message: "Failed to create whatever"
       })
     }
   }

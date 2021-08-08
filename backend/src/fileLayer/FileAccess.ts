@@ -1,5 +1,6 @@
 import * as AWS from 'aws-sdk'
 import * as AWSXRay from 'aws-xray-sdk'
+import 'source-map-support/register'
 import { createLogger } from '../utils/logger'
 
 const logger = createLogger('fileLayer/fileAccess')
@@ -10,18 +11,18 @@ export class FileAccess {
 
   constructor(
     private readonly S3 = new XAWS.S3({ signatureVersion: 'v4' }),
-    private readonly AttachmentsS3Bucket = process.env.ATTACHMENTS_S3_BUCKET,
+    private readonly AttachmentsS3Bucket = process.env.WHATEVER_ATTACHMENTS_S3_BUCKET,
     private readonly SignedUrlExpiration = parseInt(process.env.SIGNED_URL_EXPIRATION)
   ) { }
 
 
-  async generateUploadUrl(todoId: string): Promise<string> {
+  async generateUploadUrl(itemId: string): Promise<string> {
 
-    logger.info("generateUploadUrl", { todoId })
+    logger.info("generateUploadUrl", { itemId })
 
     const params = {
       Bucket: this.AttachmentsS3Bucket,
-      Key: todoId,
+      Key: itemId,
       Expires: this.SignedUrlExpiration
     }
 

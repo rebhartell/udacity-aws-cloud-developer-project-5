@@ -2,14 +2,14 @@ const AWS = require('aws-sdk');
 const { randomInt } = require('crypto');
 const dynamoDB = new AWS.DynamoDB.DocumentClient({ region: 'us-east-1' });
 
-const TABLE_NAME = "Todos-dev"
+const TABLE_NAME = "whatever-table-dev"
 const USER_ID = "auth0|60e094fd6c07e100687db898"
 
-async function createItem(todoItem) {
+async function createItem(whateverItem) {
 
   const params = {
     TableName: TABLE_NAME,
-    Item: todoItem,
+    Item: whateverItem,
     ReturnValues: "NONE"
   }
 
@@ -32,15 +32,15 @@ async function createItem(todoItem) {
 }
 
 
-const todoId = "111"
+const itemId = "111"
 
-const todoItem = {
+const whateverItem = {
   userId: USER_ID,
-  todoId: todoId,
-  name: "test todo create " + randomInt(1000).toString(),
+  itemId: itemId,
+  name: "test create whatever " + randomInt(1000).toString(),
   createdAt: new Date().toISOString(),
   dueDate: new Date().toISOString(),
   done: false
 }
 
-createItem(todoItem);
+createItem(whateverItem);
