@@ -1,8 +1,8 @@
 {
-  "name": "lambda/http/getTodos",
+  "name": "lambda/http/getWhatever",
   "event": {
-      "resource": "/todos",
-      "path": "/todos",
+      "resource": "/whatever",
+      "path": "/whatever",
       "httpMethod": "GET",
       "headers": {
           "Accept": "*/*",
@@ -90,11 +90,11 @@
               "principalId": "auth0|60e094fd6c07e100687db898",
               "integrationLatency": 858
           },
-          "resourcePath": "/todos",
+          "resourcePath": "/whatever",
           "httpMethod": "GET",
           "extendedRequestId": "Duf4iEbZoAMFY0Q=",
           "requestTime": "08/Aug/2021:02:51:08 +0000",
-          "path": "/dev/todos",
+          "path": "/dev/whatever",
           "accountId": "016523083343",
           "protocol": "HTTP/1.1",
           "stage": "dev",
@@ -122,5 +122,5 @@
       "isBase64Encoded": false
   },
   "level": "info",
-  "message": "getTodos handler - Processing event"
+  "message": "getWhatever handler - Processing event"
 }

@@ -1,27 +1,25 @@
 import { APIGatewayProxyEvent, APIGatewayProxyHandler, APIGatewayProxyResult } from 'aws-lambda'
 import 'source-map-support/register'
-import { updateTodo } from '../../businessLogic/todos'
-import { UpdateTodoRequest } from '../../requests/UpdateTodoRequest'
+import { deleteWhatever } from '../../businessLogic/whateverBusiness'
 import { createLogger } from '../../utils/logger'
 import { getUserId } from '../utils'
 
-const logger = createLogger('lambda/http/updateTodo')
+const logger = createLogger('lambda/http/deleteWhatever')
 
 export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
 
-  // TODO: Update a TODO item with the provided id using values in the "updatedTodo" object
-  logger.info('updateTodo handler - Processing event', { event })
+  // Whatever: Remove a Whatever item by id
+  logger.info('deleteWhatever handler - Processing event', { event })
 
-  const todoId = event.pathParameters.todoId
-
-  const updatedTodo: UpdateTodoRequest = JSON.parse(event.body)
+  const itemId = event.pathParameters.itemId
 
   const userId = getUserId(event)
 
   try {
-    const updatedItem = await updateTodo(userId, todoId, updatedTodo)
 
-    logger.info('updateTodo handler - Successfully updated todo', { updatedItem })
+    const deletedItem = await deleteWhatever(userId, itemId)
+
+    logger.info('deleteWhatever handler - Successfully deleted whatever', { deletedItem })
 
     return {
       statusCode: 204,
@@ -31,8 +29,9 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
       },
       body: ""
     }
+
   } catch (error) {
-    logger.info('updateTodo handler - Failed to update todo', { userId, todoId, updatedTodo })
+    logger.error("deleteWhatever handler - Failed to delete whatever", { itemId, error })
 
     return {
       statusCode: 400,
@@ -41,9 +40,10 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
         'Access-Control-Allow-Credentials': true
       },
       body: JSON.stringify({
-        message: "Failed to update todo",
-        todoId
+        message: "Failed to delete whatever",
+        itemId
       })
     }
   }
+
 }

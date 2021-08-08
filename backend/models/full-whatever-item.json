@@ -1,16 +1,16 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "Full Todo Request Schema",  
-  "description": "A complete TODO item as stored in the backend storage",
+  "title": "Full Whatever Request Schema",  
+  "description": "A complete Whatever item as stored in the backend storage",
   "type": "object",
   "properties": {
     "userId": {
       "title": "userId property schema",  
-      "description": "id of the user who created a TODO item - managed by authentication layer",
+      "description": "id of the user who created a Whatever item - managed by authentication layer",
       "type": "string"
     },
-    "todoId": {
-      "title": "todoId property schema",  
+    "itemId": {
+      "title": "itemId property schema",  
       "description": "a unique id for an item",
       "type": "string"
     },
@@ -21,13 +21,13 @@
     },
     "name": {
       "title": "name property schema",  
-      "description": "name of a TODO item (e.g. \"Change a light bulb\")",
+      "description": "name of a Whatever item (e.g. \"Change a light bulb\")",
       "type": "string",
       "minLength": 1
     },
     "dueDate": {
       "title": "dueDate property schema",  
-      "description": "date and time by which an item should be completed",
+      "description": "date and optional time by which an item should be completed",
       "type": "string",
       "pattern": "^[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9].*$"
     },
@@ -38,12 +38,12 @@
     },
     "attachmentUrl": {
       "title": "attachmentUrl property schema",        
-      "description": "a URL pointing to an image attached to a TODO item",
+      "description": "a URL pointing to an image attached to a Whatever item",
       "type": "string"
     }
   },
   "required": [
-    "todoId",
+    "itemId",
     "createdAt",
     "name",
     "dueDate",

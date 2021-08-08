@@ -1,6 +1,7 @@
 import { decode } from 'jsonwebtoken'
-
+import 'source-map-support/register'
 import { JwtPayload } from './JwtPayload'
+
 
 /**
  * Parse a JWT token and return a user id

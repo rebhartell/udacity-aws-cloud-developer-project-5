@@ -1,4 +1,5 @@
 import { APIGatewayProxyEvent } from "aws-lambda";
+import 'source-map-support/register';
 import { parseUserId } from "../auth/utils";
 
 /**

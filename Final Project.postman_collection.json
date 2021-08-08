@@ -1,15 +1,15 @@
 {
 	"info": {
-		"_postman_id": "f160f2e3-6131-4357-8f30-3cae8415a374",
-		"name": "Udacity - Project Cloud Capstone",
+		"_postman_id": "a6a7f2a9-03b6-455a-9ad3-ed7ad29a6144",
+		"name": "Udacity - Project Cloud Capstone - Whatever",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "TODOs",
+			"name": "Whatever",
 			"item": [
 				{
-					"name": "Get all todos",
+					"name": "Get all whatever",
 					"event": [
 						{
 							"listen": "test",
@@ -20,17 +20,17 @@
 									"    pm.response.to.have.status(200);",
 									"});",
 									"",
-									"pm.test(\"Todo items are returned\", function () {",
+									"pm.test(\"Whatever items are returned\", function () {",
 									"    var jsonData = pm.response.json();",
 									"    pm.expect(jsonData).to.have.property('items');",
 									"});",
 									"",
-									"pm.test(\"First Todo item has expected fields\", function () {",
+									"pm.test(\"First Whatever item has expected fields\", function () {",
 									"    var jsonData = pm.response.json();",
 									"    if (jsonData['items'].length > 0) {",
 									"        var item0 = jsonData['items'][0];",
 									"        pm.expect(item0).to.have.property('createdAt');",
-									"        pm.expect(item0).to.have.property('todoId');",
+									"        pm.expect(item0).to.have.property('itemId');",
 									"        pm.expect(item0).to.have.property('name');",
 									"        pm.expect(item0).to.have.property('done');",
 									"        pm.expect(item0).to.have.property('dueDate');",
@@ -55,7 +55,7 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/todos",
+							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/whatever",
 							"protocol": "https",
 							"host": [
 								"{{apiId}}",
@@ -66,14 +66,14 @@
 							],
 							"path": [
 								"dev",
-								"todos"
+								"whatever"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Create todo",
+					"name": "Create whatever",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -95,24 +95,24 @@
 								"exec": [
 									"// LOAD VARIABLES",
 									"var jsonData = JSON.parse(responseBody);",
-									"pm.collectionVariables.set(\"todoId\", jsonData.item.todoId);",
+									"pm.collectionVariables.set(\"itemId\", jsonData.item.itemId);",
 									"",
 									"// TESTS",
 									"pm.test(\"Status code is 201\", function () {",
 									"    pm.response.to.have.status(201);",
 									"});",
 									"",
-									"pm.test(\"Todo item is returned\", function () {",
+									"pm.test(\"Whatever item is returned\", function () {",
 									"    var jsonData = pm.response.json();",
 									"    pm.expect(jsonData).to.have.property('item');",
 									"});",
 									"",
-									"pm.test(\"Todo item has expected fields\", function () {",
+									"pm.test(\"Whatever item has expected fields\", function () {",
 									"    var jsonData = pm.response.json();",
 									"    if (jsonData['item']) {",
 									"        var item = jsonData['item'];",
 									"        pm.expect(item).to.have.property('createdAt');",
-									"        pm.expect(item).to.have.property('todoId');",
+									"        pm.expect(item).to.have.property('itemId');",
 									"        pm.expect(item).to.have.property('name');",
 									"        pm.expect(item).to.have.property('done');",
 									"        pm.expect(item).to.have.property('dueDate');",
@@ -147,7 +147,7 @@
 							"raw": "{\n\t\"name\": \"{{$randomVerb}} {{$randomNoun}}\",\n\t\"dueDate\": \"{{randomDueDate}}\"\n}"
 						},
 						"url": {
-							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/todos",
+							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/whatever",
 							"protocol": "https",
 							"host": [
 								"{{apiId}}",
@@ -158,14 +158,14 @@
 							],
 							"path": [
 								"dev",
-								"todos"
+								"whatever"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Update todo",
+					"name": "Update whatever",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -222,7 +222,7 @@
 							"raw": "{\n\t\"name\": \"{{$randomVerb}} {{$randomNoun}}\",\n\t\"dueDate\": \"{{randomDueDate}}\",\n\t\"done\": false\n}"
 						},
 						"url": {
-							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/todos/:todoId",
+							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/whatever/:itemId",
 							"protocol": "https",
 							"host": [
 								"{{apiId}}",
@@ -233,13 +233,13 @@
 							],
 							"path": [
 								"dev",
-								"todos",
-								":todoId"
+								"whatever",
+								":itemId"
 							],
 							"variable": [
 								{
-									"key": "todoId",
-									"value": "{{todoId}}"
+									"key": "itemId",
+									"value": "{{itemId}}"
 								}
 							]
 						}
@@ -257,12 +257,16 @@
 									"var jsonData = JSON.parse(responseBody);",
 									"pm.collectionVariables.set(\"uploadAttachmentUrl\", jsonData.uploadUrl);",
 									"",
+									"var uploadUrl = jsonData.uploadUrl.split(\"?\");",
+									"pm.collectionVariables.set(\"getAttachmentUrl\", uploadUrl[0]);",
+									"",
+									"",
 									"// TESTS",
 									"pm.test(\"Status code is 200\", function () {",
 									"    pm.response.to.have.status(200);",
 									"});",
 									"",
-									"pm.test(\"message 'Invalid request body' is returned\", function () {",
+									"pm.test(\"message 'Invalid response body' is returned\", function () {",
 									"    var jsonData = pm.response.json();",
 									"    pm.expect(jsonData).to.have.property('uploadUrl');",
 									"});",
@@ -286,7 +290,7 @@
 							}
 						],
 						"url": {
-							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/todos/{{todoId}}/attachment",
+							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/whatever/{{itemId}}/attachment",
 							"protocol": "https",
 							"host": [
 								"{{apiId}}",
@@ -297,8 +301,8 @@
 							],
 							"path": [
 								"dev",
-								"todos",
-								"{{todoId}}",
+								"whatever",
+								"{{itemId}}",
 								"attachment"
 							]
 						}
@@ -306,7 +310,7 @@
 					"response": []
 				},
 				{
-					"name": "Upload Attachment Image",
+					"name": "Upload attachment Image",
 					"event": [
 						{
 							"listen": "test",
@@ -351,7 +355,7 @@
 					"response": []
 				},
 				{
-					"name": "Get Attachment Image",
+					"name": "Get attachment Image",
 					"event": [
 						{
 							"listen": "test",
@@ -381,23 +385,16 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://serverless-attachments-rebh-dev.s3.amazonaws.com/{{todoId}}",
-							"protocol": "https",
+							"raw": "{{getAttachmentUrl}}",
 							"host": [
-								"serverless-attachments-rebh-dev",
-								"s3",
-								"amazonaws",
-								"com"
-							],
-							"path": [
-								"{{todoId}}"
+								"{{getAttachmentUrl}}"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Delete todo",
+					"name": "Delete whatever",
 					"event": [
 						{
 							"listen": "test",
@@ -440,7 +437,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/todos/:todoId",
+							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/whatever/:itemId",
 							"protocol": "https",
 							"host": [
 								"{{apiId}}",
@@ -451,13 +448,13 @@
 							],
 							"path": [
 								"dev",
-								"todos",
-								":todoId"
+								"whatever",
+								":itemId"
 							],
 							"variable": [
 								{
-									"key": "todoId",
-									"value": "{{todoId}}"
+									"key": "itemId",
+									"value": "{{itemId}}"
 								}
 							]
 						}
@@ -487,10 +484,10 @@
 			]
 		},
 		{
-			"name": "TODOs - bad validation",
+			"name": "Whatever - bad validation",
 			"item": [
 				{
-					"name": "Create todo - bad 'name'",
+					"name": "Create whatever - bad 'name'",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -549,7 +546,7 @@
 							"raw": "{\n\t\"name\": \"\",\n\t\"dueDate\": \"{{randomDueDate}}\"\n}"
 						},
 						"url": {
-							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/todos",
+							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/whatever",
 							"protocol": "https",
 							"host": [
 								"{{apiId}}",
@@ -560,14 +557,14 @@
 							],
 							"path": [
 								"dev",
-								"todos"
+								"whatever"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Create todo - bad 'dueDate'",
+					"name": "Create whatever - bad 'dueDate'",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -626,7 +623,7 @@
 							"raw": "{\n\t\"name\": \"Valid name\",\n\t\"dueDate\": \"Invalid dueDate should match 2021-07-18\"\n}"
 						},
 						"url": {
-							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/todos",
+							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/whatever",
 							"protocol": "https",
 							"host": [
 								"{{apiId}}",
@@ -637,14 +634,14 @@
 							],
 							"path": [
 								"dev",
-								"todos"
+								"whatever"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Update todo - bad 'name'",
+					"name": "Update whatever - bad 'name'",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -703,7 +700,7 @@
 							"raw": "{\n\t\"name\": \"\",\n\t\"dueDate\": \"{{randomDueDate}}\",\n\t\"done\": false\n}"
 						},
 						"url": {
-							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/todos/:todoId",
+							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/whatever/:itemId",
 							"protocol": "https",
 							"host": [
 								"{{apiId}}",
@@ -714,13 +711,13 @@
 							],
 							"path": [
 								"dev",
-								"todos",
-								":todoId"
+								"whatever",
+								":itemId"
 							],
 							"variable": [
 								{
-									"key": "todoId",
-									"value": "{{todoId}}"
+									"key": "itemId",
+									"value": "{{itemId}}"
 								}
 							]
 						}
@@ -728,7 +725,7 @@
 					"response": []
 				},
 				{
-					"name": "Update todo - bad 'dueDate'",
+					"name": "Update whatever - bad 'dueDate'",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -787,7 +784,7 @@
 							"raw": "{\n\t\"name\": \"Valid name\",\n\t\"dueDate\": \"Invalid dueDate should match 2021-07-18\",\n\t\"done\": false\n}"
 						},
 						"url": {
-							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/todos/:todoId",
+							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/whatever/:itemId",
 							"protocol": "https",
 							"host": [
 								"{{apiId}}",
@@ -798,13 +795,13 @@
 							],
 							"path": [
 								"dev",
-								"todos",
-								":todoId"
+								"whatever",
+								":itemId"
 							],
 							"variable": [
 								{
-									"key": "todoId",
-									"value": "{{todoId}}"
+									"key": "itemId",
+									"value": "{{itemId}}"
 								}
 							]
 						}
@@ -814,10 +811,10 @@
 			]
 		},
 		{
-			"name": "TODOs - no auth",
+			"name": "Whatever - no auth",
 			"item": [
 				{
-					"name": "Get all todos - no auth",
+					"name": "Get all whatever - no auth",
 					"event": [
 						{
 							"listen": "test",
@@ -849,7 +846,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/todos",
+							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/whatever",
 							"protocol": "https",
 							"host": [
 								"{{apiId}}",
@@ -860,14 +857,14 @@
 							],
 							"path": [
 								"dev",
-								"todos"
+								"whatever"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Create todo - no auth",
+					"name": "Create whatever - no auth",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -924,7 +921,7 @@
 							"raw": "{\n\t\"name\": \"{{$randomVerb}} {{$randomNoun}}\",\n\t\"dueDate\": \"{{randomDueDate}}\"\n}"
 						},
 						"url": {
-							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/todos",
+							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/whatever",
 							"protocol": "https",
 							"host": [
 								"{{apiId}}",
@@ -935,14 +932,14 @@
 							],
 							"path": [
 								"dev",
-								"todos"
+								"whatever"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Update todo - no auth",
+					"name": "Update whatever - no auth",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -999,7 +996,7 @@
 							"raw": "{\n\t\"name\": \"{{$randomVerb}} {{$randomNoun}}\",\n\t\"dueDate\": \"{{randomDueDate}}\",\n\t\"done\": false\n}"
 						},
 						"url": {
-							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/todos/:todoId",
+							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/whatever/:itemId",
 							"protocol": "https",
 							"host": [
 								"{{apiId}}",
@@ -1010,13 +1007,13 @@
 							],
 							"path": [
 								"dev",
-								"todos",
-								":todoId"
+								"whatever",
+								":itemId"
 							],
 							"variable": [
 								{
-									"key": "todoId",
-									"value": "{{todoId}}"
+									"key": "itemId",
+									"value": "{{itemId}}"
 								}
 							]
 						}
@@ -1056,7 +1053,7 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/todos/{{todoId}}/attachment",
+							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/whatever/{{itemId}}/attachment",
 							"protocol": "https",
 							"host": [
 								"{{apiId}}",
@@ -1067,8 +1064,8 @@
 							],
 							"path": [
 								"dev",
-								"todos",
-								"{{todoId}}",
+								"whatever",
+								"{{itemId}}",
 								"attachment"
 							]
 						}
@@ -1076,7 +1073,7 @@
 					"response": []
 				},
 				{
-					"name": "Delete todo - no auth",
+					"name": "Delete whatever - no auth",
 					"event": [
 						{
 							"listen": "test",
@@ -1119,7 +1116,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/todos/:todoId",
+							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/whatever/:itemId",
 							"protocol": "https",
 							"host": [
 								"{{apiId}}",
@@ -1130,13 +1127,13 @@
 							],
 							"path": [
 								"dev",
-								"todos",
-								":todoId"
+								"whatever",
+								":itemId"
 							],
 							"variable": [
 								{
-									"key": "todoId",
-									"value": "{{todoId}}"
+									"key": "itemId",
+									"value": "{{itemId}}"
 								}
 							]
 						}
@@ -1169,22 +1166,26 @@
 	"variable": [
 		{
 			"key": "apiId",
-			"value": ""
+			"value": "3z1u9ycjug"
 		},
 		{
 			"key": "authToken",
-			"value": ""
+			"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik03OGRwVnEyWDlha3lydU9yWjVLdiJ9.eyJpc3MiOiJodHRwczovL2Rldi01aXR0MnlsMi5ldS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjBlMDk0ZmQ2YzA3ZTEwMDY4N2RiODk4IiwiYXVkIjoiRXU5YWNJbkNQc3QyQ1ZmTmFpZ2l2Y2ZQbnlVVWNYak4iLCJpYXQiOjE2MjgyNDkwMTIsImV4cCI6MTYyODU0OTAxMiwiYXRfaGFzaCI6IjN2c2J5c1JRcEhUYzJJQ2lERFRjRlEiLCJub25jZSI6IjJGTUd-eV84YW5weWtZbTRWMWtabkhBYVRzeGtONk1fIn0.TCOMUakbpIjg3pc3hyF7xgmSL-ZbrNP6lFq-UDSKuV3Z_eQkqjuTk0zRb8vNO9rj2LaXNuG0A4qbcRFdioLJBkibfHgYFhx9kAz9hnNqZnwfkfmsogCwLKv4ijCc3G6TwHEy7WM_KpmbZgAx_1n9TAwqJumT7v6Ezz7bwoCc70tgaQ_dAhN_0lqpicjDmJJmO2fiXx6xxIejmB7kFs4qLlQ1Kkev0CoSOWBacb9Y-m3_Z9L0ITywZMKqw9_oc6ZONlMLSYPOCRvTYxTEGL0VL8lkWAQE8_yXnmh4Z2cBJ895noSundtFxc7TYDsQNYIpWzWtl7qWDyHPRsjdN-ZPMw"
 		},
 		{
 			"key": "randomDueDate",
 			"value": ""
 		},
 		{
-			"key": "todoId",
+			"key": "itemId",
 			"value": ""
 		},
 		{
 			"key": "uploadAttachmentUrl",
+			"value": ""
+		},
+		{
+			"key": "getAttachmentUrl",
 			"value": ""
 		}
 	]

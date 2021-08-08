@@ -1,14 +1,14 @@
 const AWS = require('aws-sdk');
 const dynamoDB = new AWS.DynamoDB.DocumentClient({ region: 'us-east-1' });
 
-const TABLE_NAME = "Todos-dev"
+const TABLE_NAME = "whatever-table-dev"
 const USER_ID = "auth0|60e094fd6c07e100687db898"
 
-async function deleteItem(todoId) {
+async function deleteItem(itemId) {
 
   const params = {
     TableName: TABLE_NAME,
-    Key: { userId: USER_ID, todoId: todoId },
+    Key: { userId: USER_ID, itemId: itemId },
     // Expected: { Exists: true },
     ReturnValues: "ALL_OLD"
   }

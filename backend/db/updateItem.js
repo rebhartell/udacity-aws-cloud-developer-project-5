@@ -2,20 +2,20 @@ const AWS = require('aws-sdk');
 const { randomInt } = require('crypto');
 const dynamoDB = new AWS.DynamoDB.DocumentClient({ region: 'us-east-1' });
 
-const TABLE_NAME = "Todos-dev"
+const TABLE_NAME = "whatever-table-dev"
 const USER_ID = "auth0|60e094fd6c07e100687db898"
 
-async function updateItem(userId, todoId, updatedTodo) {
+async function updateItem(userId, itemId, updatedWhatever) {
 
   const params = {
     TableName: TABLE_NAME,
-    Key: { userId, todoId },
+    Key: { userId, itemId },
     ExpressionAttributeNames: { "#N": "name" },
-    UpdateExpression: "set #N=:todoName, dueDate=:dueDate, done=:done",
+    UpdateExpression: "set #N=:name, dueDate=:dueDate, done=:done",
     ExpressionAttributeValues: {
-      ":todoName": updatedTodo.name,
-      ":dueDate": updatedTodo.dueDate,
-      ":done": updatedTodo.done
+      ":name": updatedWhatever.name,
+      ":dueDate": updatedWhatever.dueDate,
+      ":done": updatedWhatever.done
     },
     ReturnValues: "ALL_NEW"
   }
@@ -39,12 +39,12 @@ async function updateItem(userId, todoId, updatedTodo) {
 }
 
 
-const todoId = "111"
+const itemId = "111"
 
-const todoItem = {
-  name: "test todo update " + randomInt(1000).toString(),
+const whateverItem = {
+  name: "test whatever update " + randomInt(1000).toString(),
   dueDate: new Date().toISOString(),
   done: true
 }
 
-updateItem(USER_ID, todoId, todoItem);
+updateItem(USER_ID, itemId, whateverItem);

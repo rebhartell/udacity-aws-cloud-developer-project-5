@@ -1,28 +1,29 @@
 import * as AWS from 'aws-sdk'
 import { DocumentClient } from 'aws-sdk/clients/dynamodb'
 import * as AWSXRay from 'aws-xray-sdk'
-import { TodoItem } from '../models/TodoItem'
-import { UpdateTodoRequest } from '../requests/UpdateTodoRequest'
+import 'source-map-support/register'
+import { CreateWhateverModel as Item } from '../models/CreateWhateverModel'
+import { UpdateWhateverRequest } from '../requests/UpdateWhateverRequest'
 import { createLogger } from '../utils/logger'
 
-const logger = createLogger('dataLayer/todosAccess')
+const logger = createLogger('dataLayer/databaseAccess')
 
 const XAWS = AWSXRay.captureAWS(AWS)
 
-export class TodoAccess {
+export class DatabaseAccess {
 
   constructor(
     private readonly docClient: DocumentClient = createDynamoDBClient(),
-    private readonly TodosTable = process.env.TODOS_TABLE,
-    private readonly IndexName = process.env.INDEX_NAME
+    private readonly TableName = process.env.WHATEVER_DB_TABLE,
+    private readonly IndexName = process.env.WHATEVER_DB_INDEX
   ) { }
 
-  async getAllTodos(userId: string): Promise<TodoItem[]> {
+  async getAllWhatever(userId: string): Promise<Item[]> {
 
-    logger.info("getAllTodos", { userId })
+    logger.info("getAllWhatever", { userId })
 
     const params = {
-      TableName: this.TodosTable,
+      TableName: this.TableName,
       IndexName: this.IndexName,
       KeyConditionExpression: 'userId = :userId',
       ExpressionAttributeValues: {
@@ -32,7 +33,7 @@ export class TodoAccess {
 
     const result = await this.docClient.query(params).promise()
 
-    const items = result.Items as TodoItem[]
+    const items = result.Items as Item[]
 
 
     // remove the user id - keep it as a hidden field
@@ -41,30 +42,30 @@ export class TodoAccess {
     return items
   }
 
-  async createTodo(todo: TodoItem): Promise<TodoItem> {
+  async createWhatever(whatever: Item): Promise<Item> {
 
-    logger.info("createTodo", { todo })
+    logger.info("createWhatever", { whatever })
 
     const params = {
-      TableName: this.TodosTable,
-      Item: todo
+      TableName: this.TableName,
+      Item: whatever
     }
 
     await this.docClient.put(params).promise()
 
     // remove the user id - keep it as a hidden field
-    delete todo.userId
+    delete whatever.userId
 
-    return todo
+    return whatever
   }
 
-  async deleteTodo(userId: string, todoId: string): Promise<TodoItem> {
+  async deleteWhatever(userId: string, itemId: string): Promise<Item> {
 
-    logger.info("deleteTodo", { userId, todoId })
+    logger.info("deleteWhatever", { userId, itemId })
 
     const params = {
-      TableName: this.TodosTable,
-      Key: { userId: userId, todoId: todoId },
+      TableName: this.TableName,
+      Key: { userId: userId, itemId: itemId },
       ReturnValues: "ALL_OLD"
     }
 
@@ -73,40 +74,40 @@ export class TodoAccess {
     if (!result.Attributes) {
       const errMsg = "Cannot delete item that does not exist"
 
-      logger.info(`deleteTodo - ${errMsg}`)
+      logger.info(`deleteWhatever - ${errMsg}`)
 
       throw new Error(errMsg)
     }
 
-    const todo = result.Attributes as TodoItem
+    const whatever = result.Attributes as Item
 
     // remove the user id - keep it as a hidden field
-    delete todo.userId
+    delete whatever.userId
 
-    return todo
+    return whatever
   }
 
 
-  async updateTodo(userId: string, todoId: string, updatedTodo: UpdateTodoRequest): Promise<TodoItem> {
+  async updateWhatever(userId: string, itemId: string, updatedWhatever: UpdateWhateverRequest): Promise<Item> {
 
-    logger.info("updateTodo", { userId, todoId, updatedTodo })
+    logger.info("updateWhatever", { userId, itemId, updatedWhatever })
 
     const params = {
-      TableName: this.TodosTable,
-      Key: { userId, todoId },
+      TableName: this.TableName,
+      Key: { userId, itemId },
       ExpressionAttributeNames: { "#N": "name" },
-      UpdateExpression: "set #N=:todoName, dueDate=:dueDate, done=:done",
+      UpdateExpression: "set #N=:whateverName, dueDate=:dueDate, done=:done",
       ExpressionAttributeValues: {
-        ":todoName": updatedTodo.name,
-        ":dueDate": updatedTodo.dueDate,
-        ":done": updatedTodo.done
+        ":whateverName": updatedWhatever.name,
+        ":dueDate": updatedWhatever.dueDate,
+        ":done": updatedWhatever.done
       },
       ReturnValues: "ALL_NEW"
     }
 
     const result = await this.docClient.update(params).promise()
 
-    const updatedItem = result.Attributes as TodoItem
+    const updatedItem = result.Attributes as Item
 
     // remove the user id - keep it as a hidden field
     delete updatedItem.userId
@@ -115,13 +116,13 @@ export class TodoAccess {
   }
 
 
-  async updateAttachmentUrl(userId: string, todoId: string, attachmentUrl: string): Promise<string> {
+  async updateAttachmentUrl(userId: string, itemId: string, attachmentUrl: string): Promise<string> {
 
-    logger.info("updateAttachmentUrl", { userId, todoId, attachmentUrl })
+    logger.info("updateAttachmentUrl", { userId, itemId, attachmentUrl })
 
     const params = {
-      TableName: this.TodosTable,
-      Key: { userId, todoId },
+      TableName: this.TableName,
+      Key: { userId, itemId },
       UpdateExpression: "set attachmentUrl=:URL",
       ExpressionAttributeValues: {
         ":URL": attachmentUrl

@@ -36,9 +36,9 @@ Entrypoint src/lambda/auth/auth0Authorizer = src/lambda/auth/auth0Authorizer.js 
 Time: 77970ms
 Built at: 18/07/2021 18:15:00
                           Asset      Size  Chunks             Chunk Names
-    src/lambda/http/getTodos.js  3.52 MiB       0  [emitted]  src/lambda/http/getTodos
-src/lambda/http/getTodos.js.map     3 MiB       0  [emitted]  src/lambda/http/getTodos
-Entrypoint src/lambda/http/getTodos = src/lambda/http/getTodos.js src/lambda/http/getTodos.js.map
+    src/lambda/http/getWhatever.js  3.52 MiB       0  [emitted]  src/lambda/http/getWhatever
+src/lambda/http/getWhatever.js.map     3 MiB       0  [emitted]  src/lambda/http/getWhatever
+Entrypoint src/lambda/http/getWhatever = src/lambda/http/getWhatever.js src/lambda/http/getWhatever.js.map
    [9] external "fs" 42 bytes {0} [built]
   [17] ./node_modules/logform/index.js 1.12 KiB {0} [built]
   [34] ./node_modules/winston-transport/index.js 6.65 KiB {0} [built]
@@ -52,12 +52,12 @@ Entrypoint src/lambda/http/getTodos = src/lambda/http/getTodos.js src/lambda/htt
  [254] ./node_modules/winston/lib/winston/exception-handler.js 6.72 KiB {0} [built]
  [267] ./node_modules/source-map-support/register.js 25 bytes {0} [built]
  [268] ./node_modules/source-map-support/source-map-support.js 17.7 KiB {0} [built]
-[1202] ./src/lambda/http/getTodos.ts + 11 modules 12 KiB {0} [built]
-       | ./src/lambda/http/getTodos.ts 1.23 KiB [built]
+[1202] ./src/lambda/http/getWhatever.ts + 11 modules 12 KiB {0} [built]
+       | ./src/lambda/http/getWhatever.ts 1.23 KiB [built]
        | ./src/utils/logger.ts 459 bytes [built]
-       | ./src/businessLogic/todos.ts 2.04 KiB [built]
+       | ./src/businessLogic/whatever.ts 2.04 KiB [built]
        | ./src/lambda/utils.ts 608 bytes [built]
-       | ./src/dataLayer/todosAccess.ts 3.8 KiB [built]
+       | ./src/dataLayer/whateverAccess.ts 3.8 KiB [built]
        | ./src/fileLayer/fileAccess.ts 1.1 KiB [built]
        | ./src/auth/utils.ts 278 bytes [built]
        | ./node_modules/uuid/dist/esm-node/validate.js 141 bytes [built]
@@ -75,8 +75,8 @@ Critical dependency: the request of a dependency is an expression
  @ ./node_modules/aws-xray-sdk-core/lib/index.js
  @ ./node_modules/aws-xray-sdk/lib/index.js
  @ ./src/fileLayer/fileAccess.ts
- @ ./src/businessLogic/todos.ts
- @ ./src/lambda/http/getTodos.ts
+ @ ./src/businessLogic/whatever.ts
+ @ ./src/lambda/http/getWhatever.ts
 
 WARNING in ./node_modules/aws-xray-sdk-core/node_modules/colors/lib/colors.js 127:29-43
 Critical dependency: the request of a dependency is an expression
@@ -88,14 +88,14 @@ Critical dependency: the request of a dependency is an expression
  @ ./node_modules/aws-xray-sdk-core/lib/index.js
  @ ./node_modules/aws-xray-sdk/lib/index.js
  @ ./src/fileLayer/fileAccess.ts
- @ ./src/businessLogic/todos.ts
- @ ./src/lambda/http/getTodos.ts
+ @ ./src/businessLogic/whatever.ts
+ @ ./src/lambda/http/getWhatever.ts
 Time: 77967ms
 Built at: 18/07/2021 18:15:00
                             Asset      Size  Chunks             Chunk Names
-    src/lambda/http/createTodo.js  3.52 MiB       0  [emitted]  src/lambda/http/createTodo
-src/lambda/http/createTodo.js.map     3 MiB       0  [emitted]  src/lambda/http/createTodo
-Entrypoint src/lambda/http/createTodo = src/lambda/http/createTodo.js src/lambda/http/createTodo.js.map
+    src/lambda/http/createWhatever.js  3.52 MiB       0  [emitted]  src/lambda/http/createWhatever
+src/lambda/http/createWhatever.js.map     3 MiB       0  [emitted]  src/lambda/http/createWhatever
+Entrypoint src/lambda/http/createWhatever = src/lambda/http/createWhatever.js src/lambda/http/createWhatever.js.map
    [9] external "fs" 42 bytes {0} [built]
   [17] ./node_modules/logform/index.js 1.12 KiB {0} [built]
   [34] ./node_modules/winston-transport/index.js 6.65 KiB {0} [built]
@@ -109,12 +109,12 @@ Entrypoint src/lambda/http/createTodo = src/lambda/http/createTodo.js src/lambda
  [254] ./node_modules/winston/lib/winston/exception-handler.js 6.72 KiB {0} [built]
  [267] ./node_modules/source-map-support/register.js 25 bytes {0} [built]
  [268] ./node_modules/source-map-support/source-map-support.js 17.7 KiB {0} [built]
-[1202] ./src/lambda/http/createTodo.ts + 11 modules 12.1 KiB {0} [built]
-       | ./src/lambda/http/createTodo.ts 1.3 KiB [built]
+[1202] ./src/lambda/http/createWhatever.ts + 11 modules 12.1 KiB {0} [built]
+       | ./src/lambda/http/createWhatever.ts 1.3 KiB [built]
        | ./src/utils/logger.ts 459 bytes [built]
-       | ./src/businessLogic/todos.ts 2.04 KiB [built]
+       | ./src/businessLogic/whatever.ts 2.04 KiB [built]
        | ./src/lambda/utils.ts 608 bytes [built]
-       | ./src/dataLayer/todosAccess.ts 3.8 KiB [built]
+       | ./src/dataLayer/whateverAccess.ts 3.8 KiB [built]
        | ./src/fileLayer/fileAccess.ts 1.1 KiB [built]
        | ./src/auth/utils.ts 278 bytes [built]
        | ./node_modules/uuid/dist/esm-node/validate.js 141 bytes [built]
@@ -131,9 +131,9 @@ Critical dependency: the request of a dependency is an expression
  @ ./node_modules/aws-xray-sdk-core/lib/aws-xray.js
  @ ./node_modules/aws-xray-sdk-core/lib/index.js
  @ ./node_modules/aws-xray-sdk/lib/index.js
- @ ./src/dataLayer/todosAccess.ts
- @ ./src/businessLogic/todos.ts
- @ ./src/lambda/http/createTodo.ts
+ @ ./src/dataLayer/whateverAccess.ts
+ @ ./src/businessLogic/whatever.ts
+ @ ./src/lambda/http/createWhatever.ts
 
 WARNING in ./node_modules/aws-xray-sdk-core/node_modules/colors/lib/colors.js 127:29-43
 Critical dependency: the request of a dependency is an expression
@@ -144,15 +144,15 @@ Critical dependency: the request of a dependency is an expression
  @ ./node_modules/aws-xray-sdk-core/lib/aws-xray.js
  @ ./node_modules/aws-xray-sdk-core/lib/index.js
  @ ./node_modules/aws-xray-sdk/lib/index.js
- @ ./src/dataLayer/todosAccess.ts
- @ ./src/businessLogic/todos.ts
- @ ./src/lambda/http/createTodo.ts
+ @ ./src/dataLayer/whateverAccess.ts
+ @ ./src/businessLogic/whatever.ts
+ @ ./src/lambda/http/createWhatever.ts
 Time: 77925ms
 Built at: 18/07/2021 18:15:00
                             Asset      Size  Chunks             Chunk Names
-    src/lambda/http/updateTodo.js  3.52 MiB       0  [emitted]  src/lambda/http/updateTodo
-src/lambda/http/updateTodo.js.map     3 MiB       0  [emitted]  src/lambda/http/updateTodo
-Entrypoint src/lambda/http/updateTodo = src/lambda/http/updateTodo.js src/lambda/http/updateTodo.js.map
+    src/lambda/http/updateWhatever.js  3.52 MiB       0  [emitted]  src/lambda/http/updateWhatever
+src/lambda/http/updateWhatever.js.map     3 MiB       0  [emitted]  src/lambda/http/updateWhatever
+Entrypoint src/lambda/http/updateWhatever = src/lambda/http/updateWhatever.js src/lambda/http/updateWhatever.js.map
    [9] external "fs" 42 bytes {0} [built]
   [17] ./node_modules/logform/index.js 1.12 KiB {0} [built]
   [34] ./node_modules/winston-transport/index.js 6.65 KiB {0} [built]
@@ -166,12 +166,12 @@ Entrypoint src/lambda/http/updateTodo = src/lambda/http/updateTodo.js src/lambda
  [254] ./node_modules/winston/lib/winston/exception-handler.js 6.72 KiB {0} [built]
  [267] ./node_modules/source-map-support/register.js 25 bytes {0} [built]
  [268] ./node_modules/source-map-support/source-map-support.js 17.7 KiB {0} [built]
-[1202] ./src/lambda/http/updateTodo.ts + 11 modules 12.2 KiB {0} [built]
-       | ./src/lambda/http/updateTodo.ts 1.4 KiB [built]
+[1202] ./src/lambda/http/updateWhatever.ts + 11 modules 12.2 KiB {0} [built]
+       | ./src/lambda/http/updateWhatever.ts 1.4 KiB [built]
        | ./src/utils/logger.ts 459 bytes [built]
-       | ./src/businessLogic/todos.ts 2.04 KiB [built]
+       | ./src/businessLogic/whatever.ts 2.04 KiB [built]
        | ./src/lambda/utils.ts 608 bytes [built]
-       | ./src/dataLayer/todosAccess.ts 3.8 KiB [built]
+       | ./src/dataLayer/whateverAccess.ts 3.8 KiB [built]
        | ./src/fileLayer/fileAccess.ts 1.1 KiB [built]
        | ./src/auth/utils.ts 278 bytes [built]
        | ./node_modules/uuid/dist/esm-node/validate.js 141 bytes [built]
@@ -188,9 +188,9 @@ Critical dependency: the request of a dependency is an expression
  @ ./node_modules/aws-xray-sdk-core/lib/aws-xray.js
  @ ./node_modules/aws-xray-sdk-core/lib/index.js
  @ ./node_modules/aws-xray-sdk/lib/index.js
- @ ./src/dataLayer/todosAccess.ts
- @ ./src/businessLogic/todos.ts
- @ ./src/lambda/http/updateTodo.ts
+ @ ./src/dataLayer/whateverAccess.ts
+ @ ./src/businessLogic/whatever.ts
+ @ ./src/lambda/http/updateWhatever.ts
 
 WARNING in ./node_modules/aws-xray-sdk-core/node_modules/colors/lib/colors.js 127:29-43
 Critical dependency: the request of a dependency is an expression
@@ -201,15 +201,15 @@ Critical dependency: the request of a dependency is an expression
  @ ./node_modules/aws-xray-sdk-core/lib/aws-xray.js
  @ ./node_modules/aws-xray-sdk-core/lib/index.js
  @ ./node_modules/aws-xray-sdk/lib/index.js
- @ ./src/dataLayer/todosAccess.ts
- @ ./src/businessLogic/todos.ts
- @ ./src/lambda/http/updateTodo.ts
+ @ ./src/dataLayer/whateverAccess.ts
+ @ ./src/businessLogic/whatever.ts
+ @ ./src/lambda/http/updateWhatever.ts
 Time: 77964ms
 Built at: 18/07/2021 18:15:00
                             Asset      Size  Chunks             Chunk Names
-    src/lambda/http/deleteTodo.js  3.52 MiB       0  [emitted]  src/lambda/http/deleteTodo
-src/lambda/http/deleteTodo.js.map     3 MiB       0  [emitted]  src/lambda/http/deleteTodo
-Entrypoint src/lambda/http/deleteTodo = src/lambda/http/deleteTodo.js src/lambda/http/deleteTodo.js.map
+    src/lambda/http/deleteWhatever.js  3.52 MiB       0  [emitted]  src/lambda/http/deleteWhatever
+src/lambda/http/deleteWhatever.js.map     3 MiB       0  [emitted]  src/lambda/http/deleteWhatever
+Entrypoint src/lambda/http/deleteWhatever = src/lambda/http/deleteWhatever.js src/lambda/http/deleteWhatever.js.map
    [9] external "fs" 42 bytes {0} [built]
   [17] ./node_modules/logform/index.js 1.12 KiB {0} [built]
   [34] ./node_modules/winston-transport/index.js 6.65 KiB {0} [built]
@@ -223,12 +223,12 @@ Entrypoint src/lambda/http/deleteTodo = src/lambda/http/deleteTodo.js src/lambda
  [254] ./node_modules/winston/lib/winston/exception-handler.js 6.72 KiB {0} [built]
  [267] ./node_modules/source-map-support/register.js 25 bytes {0} [built]
  [268] ./node_modules/source-map-support/source-map-support.js 17.7 KiB {0} [built]
-[1202] ./src/lambda/http/deleteTodo.ts + 11 modules 12 KiB {0} [built]
-       | ./src/lambda/http/deleteTodo.ts 1.28 KiB [built]
+[1202] ./src/lambda/http/deleteWhatever.ts + 11 modules 12 KiB {0} [built]
+       | ./src/lambda/http/deleteWhatever.ts 1.28 KiB [built]
        | ./src/utils/logger.ts 459 bytes [built]
-       | ./src/businessLogic/todos.ts 2.04 KiB [built]
+       | ./src/businessLogic/whatever.ts 2.04 KiB [built]
        | ./src/lambda/utils.ts 608 bytes [built]
-       | ./src/dataLayer/todosAccess.ts 3.8 KiB [built]
+       | ./src/dataLayer/whateverAccess.ts 3.8 KiB [built]
        | ./src/fileLayer/fileAccess.ts 1.1 KiB [built]
        | ./src/auth/utils.ts 278 bytes [built]
        | ./node_modules/uuid/dist/esm-node/validate.js 141 bytes [built]
@@ -245,9 +245,9 @@ Critical dependency: the request of a dependency is an expression
  @ ./node_modules/aws-xray-sdk-core/lib/aws-xray.js
  @ ./node_modules/aws-xray-sdk-core/lib/index.js
  @ ./node_modules/aws-xray-sdk/lib/index.js
- @ ./src/dataLayer/todosAccess.ts
- @ ./src/businessLogic/todos.ts
- @ ./src/lambda/http/deleteTodo.ts
+ @ ./src/dataLayer/whateverAccess.ts
+ @ ./src/businessLogic/whatever.ts
+ @ ./src/lambda/http/deleteWhatever.ts
 
 WARNING in ./node_modules/aws-xray-sdk-core/node_modules/colors/lib/colors.js 127:29-43
 Critical dependency: the request of a dependency is an expression
@@ -258,9 +258,9 @@ Critical dependency: the request of a dependency is an expression
  @ ./node_modules/aws-xray-sdk-core/lib/aws-xray.js
  @ ./node_modules/aws-xray-sdk-core/lib/index.js
  @ ./node_modules/aws-xray-sdk/lib/index.js
- @ ./src/dataLayer/todosAccess.ts
- @ ./src/businessLogic/todos.ts
- @ ./src/lambda/http/deleteTodo.ts
+ @ ./src/dataLayer/whateverAccess.ts
+ @ ./src/businessLogic/whatever.ts
+ @ ./src/lambda/http/deleteWhatever.ts
 Time: 77960ms
 Built at: 18/07/2021 18:15:00
                                    Asset      Size  Chunks             Chunk Names
@@ -283,9 +283,9 @@ Entrypoint src/lambda/http/generateUploadUrl = src/lambda/http/generateUploadUrl
 [1202] ./src/lambda/http/generateUploadUrl.ts + 11 modules 12.2 KiB {0} [built]
        | ./src/lambda/http/generateUploadUrl.ts 1.4 KiB [built]
        | ./src/utils/logger.ts 459 bytes [built]
-       | ./src/businessLogic/todos.ts 2.04 KiB [built]
+       | ./src/businessLogic/whatever.ts 2.04 KiB [built]
        | ./src/lambda/utils.ts 608 bytes [built]
-       | ./src/dataLayer/todosAccess.ts 3.8 KiB [built]
+       | ./src/dataLayer/whateverAccess.ts 3.8 KiB [built]
        | ./src/fileLayer/fileAccess.ts 1.1 KiB [built]
        | ./src/auth/utils.ts 278 bytes [built]
        | ./node_modules/uuid/dist/esm-node/validate.js 141 bytes [built]
@@ -302,8 +302,8 @@ Critical dependency: the request of a dependency is an expression
  @ ./node_modules/aws-xray-sdk-core/lib/aws-xray.js
  @ ./node_modules/aws-xray-sdk-core/lib/index.js
  @ ./node_modules/aws-xray-sdk/lib/index.js
- @ ./src/dataLayer/todosAccess.ts
- @ ./src/businessLogic/todos.ts
+ @ ./src/dataLayer/whateverAccess.ts
+ @ ./src/businessLogic/whatever.ts
  @ ./src/lambda/http/generateUploadUrl.ts
 
 WARNING in ./node_modules/aws-xray-sdk-core/node_modules/colors/lib/colors.js 127:29-43
@@ -315,52 +315,52 @@ Critical dependency: the request of a dependency is an expression
  @ ./node_modules/aws-xray-sdk-core/lib/aws-xray.js
  @ ./node_modules/aws-xray-sdk-core/lib/index.js
  @ ./node_modules/aws-xray-sdk/lib/index.js
- @ ./src/dataLayer/todosAccess.ts
- @ ./src/businessLogic/todos.ts
+ @ ./src/dataLayer/whateverAccess.ts
+ @ ./src/businessLogic/whatever.ts
  @ ./src/lambda/http/generateUploadUrl.ts
 Serverless: Zip function: /home/rebh/Development/udacity-aws-cloud-developer-project-4/backend/.webpack/Auth [151 ms]
-Serverless: Zip function: /home/rebh/Development/udacity-aws-cloud-developer-project-4/backend/.webpack/GetTodos [163 ms]
-Serverless: Zip function: /home/rebh/Development/udacity-aws-cloud-developer-project-4/backend/.webpack/CreateTodo [143 ms]
-Serverless: Zip function: /home/rebh/Development/udacity-aws-cloud-developer-project-4/backend/.webpack/UpdateTodo [147 ms]
-Serverless: Zip function: /home/rebh/Development/udacity-aws-cloud-developer-project-4/backend/.webpack/DeleteTodo [145 ms]
+Serverless: Zip function: /home/rebh/Development/udacity-aws-cloud-developer-project-4/backend/.webpack/GetWhatever [163 ms]
+Serverless: Zip function: /home/rebh/Development/udacity-aws-cloud-developer-project-4/backend/.webpack/CreateWhatever [143 ms]
+Serverless: Zip function: /home/rebh/Development/udacity-aws-cloud-developer-project-4/backend/.webpack/UpdateWhatever [147 ms]
+Serverless: Zip function: /home/rebh/Development/udacity-aws-cloud-developer-project-4/backend/.webpack/DeleteWhatever [145 ms]
 Serverless: Zip function: /home/rebh/Development/udacity-aws-cloud-developer-project-4/backend/.webpack/GenerateUploadUrl [132 ms]
 Serverless: Packaging service...
 Serverless: Remove /home/rebh/Development/udacity-aws-cloud-developer-project-4/backend/.webpack
 Serverless: Service files not changed. Skipping deployment...
 Service Information
-service: serverless-todo-app
+service: serverless-whatever-app
 stage: dev
 region: us-east-1
-stack: serverless-todo-app-dev
+stack: serverless-whatever-app-dev
 resources: 53
 api keys:
   None
 endpoints:
-  GET - https://b5ybvj6uz3.execute-api.us-east-1.amazonaws.com/dev/todos
-  POST - https://b5ybvj6uz3.execute-api.us-east-1.amazonaws.com/dev/todos
-  PATCH - https://b5ybvj6uz3.execute-api.us-east-1.amazonaws.com/dev/todos/{todoId}
-  DELETE - https://b5ybvj6uz3.execute-api.us-east-1.amazonaws.com/dev/todos/{todoId}
-  POST - https://b5ybvj6uz3.execute-api.us-east-1.amazonaws.com/dev/todos/{todoId}/attachment
+  GET - https://b5ybvj6uz3.execute-api.us-east-1.amazonaws.com/dev/whatever
+  POST - https://b5ybvj6uz3.execute-api.us-east-1.amazonaws.com/dev/whatever
+  PATCH - https://b5ybvj6uz3.execute-api.us-east-1.amazonaws.com/dev/whatever/{itemId}
+  DELETE - https://b5ybvj6uz3.execute-api.us-east-1.amazonaws.com/dev/whatever/{itemId}
+  POST - https://b5ybvj6uz3.execute-api.us-east-1.amazonaws.com/dev/whatever/{itemId}/attachment
 functions:
-  Auth: serverless-todo-app-dev-Auth
-  GetTodos: serverless-todo-app-dev-GetTodos
-  CreateTodo: serverless-todo-app-dev-CreateTodo
-  UpdateTodo: serverless-todo-app-dev-UpdateTodo
-  DeleteTodo: serverless-todo-app-dev-DeleteTodo
-  GenerateUploadUrl: serverless-todo-app-dev-GenerateUploadUrl
+  Auth: serverless-whatever-app-dev-Auth
+  GetWhatever: serverless-whatever-app-dev-GetWhatever
+  CreateWhatever: serverless-whatever-app-dev-CreateWhatever
+  UpdateWhatever: serverless-whatever-app-dev-UpdateWhatever
+  DeleteWhatever: serverless-whatever-app-dev-DeleteWhatever
+  GenerateUploadUrl: serverless-whatever-app-dev-GenerateUploadUrl
 layers:
   None
 
 Stack Outputs
-AuthLambdaFunctionQualifiedArn: arn:aws:lambda:us-east-1:016523083343:function:serverless-todo-app-dev-Auth:11
-GenerateUploadUrlLambdaFunctionQualifiedArn: arn:aws:lambda:us-east-1:016523083343:function:serverless-todo-app-dev-GenerateUploadUrl:8
-UpdateTodoLambdaFunctionQualifiedArn: arn:aws:lambda:us-east-1:016523083343:function:serverless-todo-app-dev-UpdateTodo:9
+AuthLambdaFunctionQualifiedArn: arn:aws:lambda:us-east-1:016523083343:function:serverless-whatever-app-dev-Auth:11
+GenerateUploadUrlLambdaFunctionQualifiedArn: arn:aws:lambda:us-east-1:016523083343:function:serverless-whatever-app-dev-GenerateUploadUrl:8
+UpdateWhateverLambdaFunctionQualifiedArn: arn:aws:lambda:us-east-1:016523083343:function:serverless-whatever-app-dev-UpdateWhatever:9
 AwsDocApiId: b5ybvj6uz3
-GetTodosLambdaFunctionQualifiedArn: arn:aws:lambda:us-east-1:016523083343:function:serverless-todo-app-dev-GetTodos:32
-DeleteTodoLambdaFunctionQualifiedArn: arn:aws:lambda:us-east-1:016523083343:function:serverless-todo-app-dev-DeleteTodo:18
-CreateTodoLambdaFunctionQualifiedArn: arn:aws:lambda:us-east-1:016523083343:function:serverless-todo-app-dev-CreateTodo:20
+GetWhateverLambdaFunctionQualifiedArn: arn:aws:lambda:us-east-1:016523083343:function:serverless-whatever-app-dev-GetWhatever:32
+DeleteWhateverLambdaFunctionQualifiedArn: arn:aws:lambda:us-east-1:016523083343:function:serverless-whatever-app-dev-DeleteWhatever:18
+CreateWhateverLambdaFunctionQualifiedArn: arn:aws:lambda:us-east-1:016523083343:function:serverless-whatever-app-dev-CreateWhatever:20
 ServiceEndpoint: https://b5ybvj6uz3.execute-api.us-east-1.amazonaws.com/dev
-ServerlessDeploymentBucketName: serverless-todo-app-dev-serverlessdeploymentbucke-6byi9e6wuhps
+ServerlessDeploymentBucketName: serverless-whatever-app-dev-serverlessdeploymentbucke-6byi9e6wuhps
 
 -------------------
 documentation version already exists, skipping upload
