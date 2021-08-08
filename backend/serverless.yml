@@ -1,7 +1,6 @@
-org: rebhart
+org: rebhartell
 app: serverless-todo-app
-service:
-  name: serverless-todo-app
+service: serverless-todo-app
 
 plugins:
   - serverless-webpack
@@ -12,8 +11,7 @@ plugins:
 provider:
   name: aws
   runtime: nodejs12.x
-  # TODO
-#  lambdaHashingVersion: '20201221'
+  lambdaHashingVersion: '20201221'
 
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'us-east-1'}
@@ -88,7 +86,7 @@ functions:
           cors: true
           authorizer: Auth
           request:
-            schema:
+            schemas:
               application/json: ${file(models/create-todo-request.json)}
 
     iamRoleStatements:
@@ -108,7 +106,7 @@ functions:
           cors: true
           authorizer: Auth        
           request:
-            schema:
+            schemas:
               application/json: ${file(models/update-todo-request.json)}           
     iamRoleStatements:
       - Effect: Allow

@@ -1,4 +1,4 @@
-import { CustomAuthorizerEvent, CustomAuthorizerResult } from 'aws-lambda'
+import { APIGatewayTokenAuthorizerEvent, CustomAuthorizerResult } from 'aws-lambda'
 import Axios from 'axios'
 import { decode, verify } from 'jsonwebtoken'
 import 'source-map-support/register'
@@ -14,7 +14,7 @@ const logger = createLogger('lambda/auth')
 // To get this URL you need to go to an Auth0 page -> Show Advanced Settings -> Endpoints -> JSON Web Key Set
 const jwksUrl = 'https://dev-5itt2yl2.eu.auth0.com/.well-known/jwks.json'
 
-export const handler = async (event: CustomAuthorizerEvent): Promise<CustomAuthorizerResult> => {
+export const handler = async (event: APIGatewayTokenAuthorizerEvent): Promise<CustomAuthorizerResult> => {
   logger.info('auth0Authorizer handler - Authorizing a user', { authorizationToken: event.authorizationToken })
   try {
     const jwtToken = await verifyToken(event.authorizationToken)
