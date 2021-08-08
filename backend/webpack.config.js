@@ -15,6 +15,9 @@ module.exports = {
     path: path.join(__dirname, '.webpack'),
     filename: '[name].js',
   },
+  stats: {
+    errorDetails: true,
+  },
   target: 'node',
   module: {
     rules: [
