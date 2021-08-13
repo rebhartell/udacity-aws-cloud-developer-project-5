@@ -18,6 +18,7 @@ export class DatabaseAccess {
     private readonly IndexName = process.env.WHATEVER_DB_INDEX
   ) { }
 
+
   async getAllWhatever(userId: string): Promise<Item[]> {
 
     logger.info("getAllWhatever", { userId })
@@ -42,6 +43,35 @@ export class DatabaseAccess {
     return items
   }
 
+
+  async getWhatever(userId: string, itemId: string): Promise<Item> {
+
+    logger.info("getWhatever", { userId, itemId })
+
+    const params = {
+      TableName: this.TableName,
+      Key: { userId: userId, itemId: itemId }
+    }
+
+    const result = await this.docClient.get(params).promise()
+
+    if (!result.Item) {
+      const errMsg = "Cannot get item that does not exist"
+
+      logger.info(`getWhatever - ${errMsg}`)
+
+      throw new Error(errMsg)
+    }
+
+    const whatever = result.Item as Item
+
+    // remove the user id - keep it as a hidden field
+    delete whatever.userId
+
+    return whatever
+  }
+
+
   async createWhatever(whatever: Item): Promise<Item> {
 
     logger.info("createWhatever", { whatever })
@@ -58,6 +88,7 @@ export class DatabaseAccess {
 
     return whatever
   }
+
 
   async deleteWhatever(userId: string, itemId: string): Promise<Item> {
 

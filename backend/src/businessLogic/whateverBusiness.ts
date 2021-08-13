@@ -25,6 +25,18 @@ export async function getAllWhatever(userId: string): Promise<CreateWhateverMode
   return whateverItems
 }
 
+export async function getWhatever(userId: string, itemId: string): Promise<CreateWhateverModel> {
+
+  logger.info("getWhatever", { userId, itemId })
+
+  const getItem = databaseAccess.getWhatever(userId, itemId)
+
+  logger.info("getWhatever - get item", { getItem })
+
+  return getItem
+}
+
+
 export async function deleteWhatever(userId: string, itemId: string): Promise<CreateWhateverModel> {
 
   logger.info("deleteWhatever", { userId, itemId })

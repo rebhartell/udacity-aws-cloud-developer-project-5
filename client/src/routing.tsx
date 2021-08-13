@@ -1,9 +1,10 @@
-import React from 'react'
-import Auth from './auth/Auth'
-import { Router, Route } from 'react-router-dom'
-import Callback from './components/Callback'
 import createHistory from 'history/createBrowserHistory'
-import App from './App';
+import React from 'react'
+import { Redirect, Route, Router, Switch } from 'react-router-dom'
+import App from './App'
+import Auth from './auth/Auth'
+import Callback from './components/Callback'
+import { NotFound } from './components/NotFound'
 const history = createHistory()
 
 const auth = new Auth(history)
@@ -21,16 +22,27 @@ export const makeAuthRouting = () => {
       <div>
         <Route
           path="/callback"
-          render={props => {
+          render={(props) => {
             handleAuthentication(props)
             return <Callback />
           }}
         />
-        <Route
-          render={props => {
-            return <App auth={auth} {...props} />
-          }}
-        />
+
+        <Switch>
+          
+          <Route
+            path="/whatever"
+            render={(props) => {
+              return <App auth={auth} {...props} />
+            }}
+          />
+
+          <Redirect from="/" to="/whatever" exact/>
+
+          <Route component={NotFound} />
+
+        </Switch>
+
       </div>
     </Router>
   )

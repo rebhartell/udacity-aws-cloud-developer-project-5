@@ -165,6 +165,84 @@
 					"response": []
 				},
 				{
+					"name": "Get whatever",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// TESTS",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Whatever item is returned\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('item');",
+									"});",
+									"",
+									"pm.test(\"Whatever item has expected fields\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    if (jsonData['item']) {",
+									"        var item = jsonData['item'];",
+									"        pm.expect(item).to.have.property('createdAt');",
+									"        pm.expect(item).to.have.property('itemId');",
+									"        pm.expect(item).to.have.property('name');",
+									"        pm.expect(item).to.have.property('done');",
+									"        pm.expect(item).to.have.property('dueDate');",
+									"    }",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 5000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(5000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/whatever/:itemId",
+							"protocol": "https",
+							"host": [
+								"{{apiId}}",
+								"execute-api",
+								"us-east-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"whatever",
+								":itemId"
+							],
+							"variable": [
+								{
+									"key": "itemId",
+									"value": "{{itemId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Update whatever",
 					"event": [
 						{
@@ -864,6 +942,70 @@
 					"response": []
 				},
 				{
+					"name": "Get whatever - no auth",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// TESTS",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"",
+									"pm.test(\"message 'Unauthorized' is returned\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('message');",
+									"    pm.expect(jsonData.message).to.eql(\"Unauthorized\");",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 5000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(5000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/whatever/:itemId",
+							"protocol": "https",
+							"host": [
+								"{{apiId}}",
+								"execute-api",
+								"us-east-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"whatever",
+								":itemId"
+							],
+							"variable": [
+								{
+									"key": "itemId",
+									"value": "{{itemId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Create whatever - no auth",
 					"event": [
 						{
@@ -1170,7 +1312,7 @@
 		},
 		{
 			"key": "authToken",
-			"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik03OGRwVnEyWDlha3lydU9yWjVLdiJ9.eyJpc3MiOiJodHRwczovL2Rldi01aXR0MnlsMi5ldS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjBlMDk0ZmQ2YzA3ZTEwMDY4N2RiODk4IiwiYXVkIjoiRXU5YWNJbkNQc3QyQ1ZmTmFpZ2l2Y2ZQbnlVVWNYak4iLCJpYXQiOjE2MjgyNDkwMTIsImV4cCI6MTYyODU0OTAxMiwiYXRfaGFzaCI6IjN2c2J5c1JRcEhUYzJJQ2lERFRjRlEiLCJub25jZSI6IjJGTUd-eV84YW5weWtZbTRWMWtabkhBYVRzeGtONk1fIn0.TCOMUakbpIjg3pc3hyF7xgmSL-ZbrNP6lFq-UDSKuV3Z_eQkqjuTk0zRb8vNO9rj2LaXNuG0A4qbcRFdioLJBkibfHgYFhx9kAz9hnNqZnwfkfmsogCwLKv4ijCc3G6TwHEy7WM_KpmbZgAx_1n9TAwqJumT7v6Ezz7bwoCc70tgaQ_dAhN_0lqpicjDmJJmO2fiXx6xxIejmB7kFs4qLlQ1Kkev0CoSOWBacb9Y-m3_Z9L0ITywZMKqw9_oc6ZONlMLSYPOCRvTYxTEGL0VL8lkWAQE8_yXnmh4Z2cBJ895noSundtFxc7TYDsQNYIpWzWtl7qWDyHPRsjdN-ZPMw"
+			"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik03OGRwVnEyWDlha3lydU9yWjVLdiJ9.eyJpc3MiOiJodHRwczovL2Rldi01aXR0MnlsMi5ldS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NjBlMDk0ZmQ2YzA3ZTEwMDY4N2RiODk4IiwiYXVkIjoiRXU5YWNJbkNQc3QyQ1ZmTmFpZ2l2Y2ZQbnlVVWNYak4iLCJpYXQiOjE2Mjg3ODIzMjQsImV4cCI6MTYyOTA4MjMyNCwiYXRfaGFzaCI6ImpfZUNXVmFuSml6M1hGdTFCMUxYZFEiLCJub25jZSI6InJ1WVRqU0lxRUFmWHBxX2h-Vmw2NzN5R1ZlaGRFb0l4In0.dpby9yRhfCKzJHSPX4I34CPXlXW44dJbzgL9KM2LURKngO1EuD3UyIhfP6dtvDRKjjoKvJWwNtKOfo2-8J5EiwtrescN5tlYxwYhr10qVQ5ejbcsHrEwA-7vzw1MBbTxGjEBk0BgT6eOIzkOZJIAJ7HSp6ZFFtBShdeJynq0u5ANUw1zhxTVlc_BmnWnrfxUPLgKwgteWOmswHX5CJvkW-56VHSEb_4MfPjI_JO41ufU2y0lRskvJtg7N6rorM8YU628rDYVblWUNFphAd_p8-Ou_NdRuJSEtaejf1HNPbX9ADuhAis0cUELpG1i2LJiE1hEINMlkxBkvJlYUq_lSw"
 		},
 		{
 			"key": "randomDueDate",

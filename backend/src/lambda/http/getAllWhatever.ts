@@ -1,25 +1,23 @@
 import { APIGatewayProxyEvent, APIGatewayProxyHandler, APIGatewayProxyResult } from 'aws-lambda'
 import 'source-map-support/register'
-import { getWhatever } from '../../businessLogic/whateverBusiness'
+import { getAllWhatever } from '../../businessLogic/whateverBusiness'
 import { createLogger } from '../../utils/logger'
 import { getUserId } from '../utils'
 
-const logger = createLogger('lambda/http/getWhatever')
+const logger = createLogger('lambda/http/getAllWhatever')
 
 export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
 
-  // Whatever: Get a Whatever item by id
-  logger.info('getWhatever handler - Processing event', { event })
+  // DONE: Get all Whatever items for a current user
+  logger.info('getAllWhatever handler - Processing event', { event })
 
-  const itemId = event.pathParameters.itemId
-
-  const userId = getUserId(event)
+  const userId = getUserId(event);
 
   try {
 
-    const getItem = await getWhatever(userId, itemId)
+    const items = await getAllWhatever(userId)
 
-    logger.info('getWhatever handler - Successfully retrieved whatever', { getItem })
+    logger.info('getAllWhatever handler - Succesfully got whatever', { items })
 
     return {
       statusCode: 200,
@@ -28,24 +26,22 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
         'Access-Control-Allow-Credentials': true
       },
       body: JSON.stringify({
-        item: getItem
+        items
       })
     }
 
   } catch (error) {
-    logger.error("getWhatever handler - Failed to retrieve whatever", { itemId, error })
+    logger.error("getAllWhatever handler - Failed to get all whatever", { error })
 
     return {
-      statusCode: 400,
+      statusCode: 500,
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Credentials': true
       },
       body: JSON.stringify({
-        message: "Failed to retrieve whatever",
-        itemId
+        message: "Failed to get all whatever"
       })
     }
   }
-
 }

@@ -3,7 +3,7 @@ const dynamoDB = new AWS.DynamoDB.DocumentClient({ region: 'us-east-1' });
 
 const params = {
   TableName: 'whatever-table-dev',
-  IndexName: 'Whatever-index-dev',
+  IndexName: 'whatever-index-dev',
   KeyConditionExpression: 'userId = :userId',
   ExpressionAttributeValues: {
     ':userId': "auth0|60e094fd6c07e100687db898"
