@@ -174,7 +174,7 @@ functions:
           - s3:PutObject
         Resource: 'arn:aws:s3:::${self:provider.environment.WHATEVER_ATTACHMENTS_S3_BUCKET}/*'
 
-  # Retrieve all Category items
+  # Retrieve all Categories items
   GetAllCategory:
     handler: src/lambda/http/getAllCategory.handler
     events:

@@ -8,16 +8,28 @@ import { EditWhatever } from './components/EditWhatever'
 import { LogIn } from './components/LogIn'
 import { Whatever } from './components/Whatever'
 
-export interface AppProps {}
+const NOT_SELECTED: string = 'Not Selected'
 
 export interface AppProps {
   auth: Auth
   history: any
 }
 
-export interface AppState {}
+export interface AppState {
+  categoryId: string
+  categoryName: string
+  whateverId: string
+  whateverName: string
+}
 
 export default class App extends Component<AppProps, AppState> {
+  state: AppState = {
+    categoryId: NOT_SELECTED,
+    categoryName: '',
+    whateverId: NOT_SELECTED,
+    whateverName: ''
+  }
+
   constructor(props: AppProps) {
     super(props)
 
@@ -33,19 +45,28 @@ export default class App extends Component<AppProps, AppState> {
     this.props.auth.logout()
   }
 
+  updateCategory = (id: string, name: string): void => {
+    this.setState({ categoryId: id, categoryName: name })
+  }
+
+  updateWhatever = (id: string, name: string): void => {
+    this.setState({ whateverId: id, whateverName: name })
+  }
+
   render() {
     return (
       <div>
         <Segment color="red" style={{ padding: '2em' }} vertical inverted>
           <Grid container stackable>
-
             <Grid.Row color="yellow">
               <Grid.Column width={2} color="pink">
                 <Image src="spinning_globe.gif" size="tiny" />
               </Grid.Column>
 
               <Grid.Column width={14} color="pink" verticalAlign="middle">
-                <Header as="h1">Whatever You Want</Header>
+                <Header as="h1" textAlign="left">
+                  Whatever You Want
+                </Header>
               </Grid.Column>
             </Grid.Row>
 
@@ -60,7 +81,6 @@ export default class App extends Component<AppProps, AppState> {
                 </Router>
               </Grid.Column>
             </Grid.Row>
-
           </Grid>
         </Segment>
       </div>
@@ -77,6 +97,25 @@ export default class App extends Component<AppProps, AppState> {
           </Link>
         </Menu.Item>
 
+        {this.renderWhateverMenu()}
+
+        <Menu.Menu position="right">
+          {/* {this.userName()} */}
+          {this.logInLogOutButton()}
+        </Menu.Menu>
+      </Menu>
+    )
+  }
+
+  renderWhateverMenu() {
+    if (this.state.categoryId === NOT_SELECTED) {
+      return null
+    }
+
+    return (
+      <Menu>
+        <Menu.Item header>{this.state.categoryName}</Menu.Item>
+
         <Menu.Item name="items">
           <Link to="/whatever">
             <Icon name="boxes" />
@@ -84,10 +123,7 @@ export default class App extends Component<AppProps, AppState> {
           </Link>
         </Menu.Item>
 
-        <Menu.Menu position="right">
-          {/* {this.userName()} */}
-          {this.logInLogOutButton()}
-        </Menu.Menu>
+        <Menu.Item header>{this.state.whateverName}</Menu.Item>
       </Menu>
     )
   }
@@ -139,7 +175,21 @@ export default class App extends Component<AppProps, AppState> {
           path="/category"
           exact
           render={(props) => {
-            return <Category {...props} auth={this.props.auth} />
+            return (
+              <Category
+                {...props}
+                auth={this.props.auth}
+                updateCategory={this.updateCategory}
+              />
+            )
+          }}
+        />
+
+        <Route
+          path="/category/:itemId/edit"
+          exact
+          render={(props) => {
+            return <EditCategory {...props} auth={this.props.auth} />
           }}
         />
 
@@ -156,14 +206,6 @@ export default class App extends Component<AppProps, AppState> {
           exact
           render={(props) => {
             return <EditWhatever {...props} auth={this.props.auth} />
-          }}
-        />
-
-        <Route
-          path="/category/:itemId/edit"
-          exact
-          render={(props) => {
-            return <EditCategory {...props} auth={this.props.auth} />
           }}
         />
       </Switch>

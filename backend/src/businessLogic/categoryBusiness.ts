@@ -16,7 +16,7 @@ export async function getAllCategory(userId: string): Promise<CreateCategoryMode
 
   const categoryItems = databaseAccess.getAllCategory(userId)
 
-  logger.info("getAllCategory - retrieved all category for userId", { categoryItems })
+  logger.info("getAllCategory - retrieved all categories for userId", { categoryItems })
 
   return categoryItems
 }

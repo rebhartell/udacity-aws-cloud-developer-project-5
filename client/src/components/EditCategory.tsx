@@ -42,8 +42,17 @@ export class EditCategory extends React.PureComponent<
         this.props.match.params.itemId
       )
 
-      category.jsonSchema = this.prettyPrint(category.jsonSchema)
-      category.uiSchema = this.prettyPrint(category.uiSchema)
+      try {
+        category.jsonSchema = this.prettyPrint(category.jsonSchema)
+      } catch (error) {
+        // ignore
+      }
+
+      try {
+        category.uiSchema = this.prettyPrint(category.uiSchema)
+      } catch (error) {
+        // ignore
+      }
 
       this.setState({
         category,
@@ -131,7 +140,7 @@ export class EditCategory extends React.PureComponent<
         this.state.category
       )
 
-      alert('Category was uploaded!')
+      alert('Category was updated!')
     } catch (e) {
       alert('Could not upload Category: ' + e.message)
     } finally {
@@ -193,7 +202,7 @@ export class EditCategory extends React.PureComponent<
           label="JSON Schema"
           name="jsonSchema"
           value={this.state.category.jsonSchema}
-          placeholder="UI Schema defining data entry for items of this Category"
+          placeholder="JSON Schema defining data model for items of this Category"
           onChange={this.handleTextAreaChange}
         />
 

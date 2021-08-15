@@ -13,5 +13,5 @@ const params = {
 dynamoDB
   .query(params)
   .promise()
-  .then(data => console.log(data))
+  .then(data => console.log(JSON.stringify(data,undefined,4)))
   .catch(console.error);

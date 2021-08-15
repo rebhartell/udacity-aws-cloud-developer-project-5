@@ -5,6 +5,7 @@ import App from './App'
 import Auth from './auth/Auth'
 import Callback from './components/Callback'
 import { NotFound } from './components/NotFound'
+
 const history = createHistory()
 
 const auth = new Auth(history)

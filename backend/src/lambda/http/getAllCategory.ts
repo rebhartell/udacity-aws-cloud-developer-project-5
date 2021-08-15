@@ -8,7 +8,7 @@ const logger = createLogger('lambda/http/getAllCategory')
 
 export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
 
-  // DONE: Get all Category items for a current user
+  // DONE: Get all Categories items for a current user
   logger.info('getAllCategory handler - Processing event', { event })
 
   const userId = getUserId(event);
@@ -32,7 +32,7 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
     }
 
   } catch (error) {
-    logger.error("getAllCategory handler - Failed to get all category", { error })
+    logger.error("getAllCategory handler - Failed to get all categories", { error })
 
     return {
       statusCode: 500,
@@ -41,7 +41,7 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
         'Access-Control-Allow-Credentials': true
       },
       body: JSON.stringify({
-        message: "Failed to get all category"
+        message: "Failed to get all categories"
       })
     }
   }

@@ -1,21 +1,28 @@
 import { History } from 'history'
 import * as React from 'react'
 import {
-  Button, Divider,
+  Button,
+  Divider,
   Grid,
   Header,
-  Icon, Input, Loader
+  Icon,
+  Input,
+  Loader
 } from 'semantic-ui-react'
-import { createCategory, deleteCategory, getAllCategory } from '../api/category-api'
+import {
+  createCategory,
+  deleteCategory,
+  getAllCategory
+} from '../api/category-api'
 // import { createCategory, deleteCategory, getAllCategory, patchCategory } from '../api/category-api'
 import Auth from '../auth/Auth'
 import { CategoryItem } from '../types/CategoryItem'
 // import { CategoryItem } from '../types/CategoryItem'
 
-
 interface CategoryProps {
   auth: Auth
   history: History
+  updateCategory: (id: string, name: string) => void
 }
 
 interface CategoryState {
@@ -24,7 +31,10 @@ interface CategoryState {
   loadingCategory: boolean
 }
 
-export class Category extends React.PureComponent<CategoryProps, CategoryState> {
+export class Category extends React.PureComponent<
+  CategoryProps,
+  CategoryState
+> {
   state: CategoryState = {
     category: [],
     newCategoryName: '',
@@ -35,25 +45,41 @@ export class Category extends React.PureComponent<CategoryProps, CategoryState> 
     this.setState({ newCategoryName: event.target.value })
   }
 
+  onSelectButtonClick = (id: string, name: string) => {
+    this.props.updateCategory(`${id}`, `${name}`)
+  }
+
   onEditButtonClick = (itemId: string) => {
     this.props.history.push(`/category/${itemId}/edit`)
   }
 
   onCategoryCreate = async (event: React.ChangeEvent<HTMLButtonElement>) => {
+    if (this.state.newCategoryName === '') {
+      alert('Specify a new Category')
+      return
+    }
+
     try {
       const category: CategoryItem = {
-        itemId: "",
+        itemId: '',
         name: this.state.newCategoryName,
-        jsonSchema: "",
-        uiSchema: "",
-        createdAt: ""
+        jsonSchema: '',
+        uiSchema: '',
+        createdAt: ''
       }
 
-      const newCategory = await createCategory(this.props.auth.getIdToken(), category)
+      const newCategory = await createCategory(
+        this.props.auth.getIdToken(),
+        category
+      )
+
       this.setState({
         category: [...this.state.category, newCategory],
         newCategoryName: ''
       })
+
+      this.props.updateCategory(`${category.itemId}`, `${category.name}`)
+      
     } catch {
       alert('Category creation failed')
     }
@@ -63,7 +89,9 @@ export class Category extends React.PureComponent<CategoryProps, CategoryState> 
     try {
       await deleteCategory(this.props.auth.getIdToken(), itemId)
       this.setState({
-        category: this.state.category.filter(category => category.itemId !== itemId)
+        category: this.state.category.filter(
+          (category) => category.itemId !== itemId
+        )
       })
     } catch {
       alert('Category deletion failed')
@@ -103,13 +131,14 @@ export class Category extends React.PureComponent<CategoryProps, CategoryState> 
               color: 'teal',
               labelPosition: 'left',
               icon: 'add',
-              content: 'New task',
+              content: 'New Category',
               onClick: this.onCategoryCreate
             }}
             fluid
             actionPosition="left"
-            placeholder="To change the world..."
+            placeholder="... for Whatever You Want"
             onChange={this.handleNameChange}
+            defaultValue={this.state.newCategoryName}
           />
         </Grid.Column>
         <Grid.Column width={16}>
@@ -143,9 +172,22 @@ export class Category extends React.PureComponent<CategoryProps, CategoryState> 
         {this.state.category.map((category, pos) => {
           return (
             <Grid.Row key={category.itemId}>
-              <Grid.Column width={10} verticalAlign="middle">
+              <Grid.Column width={13} verticalAlign="middle">
                 {category.name}
               </Grid.Column>
+
+              <Grid.Column width={1} floated="right">
+                <Button
+                  icon
+                  color="green"
+                  onClick={() =>
+                    this.onSelectButtonClick(category.itemId, category.name)
+                  }
+                >
+                  <Icon name="target" />
+                </Button>
+              </Grid.Column>
+
               <Grid.Column width={1} floated="right">
                 <Button
                   icon
@@ -155,6 +197,7 @@ export class Category extends React.PureComponent<CategoryProps, CategoryState> 
                   <Icon name="pencil" />
                 </Button>
               </Grid.Column>
+
               <Grid.Column width={1} floated="right">
                 <Button
                   icon
@@ -164,6 +207,7 @@ export class Category extends React.PureComponent<CategoryProps, CategoryState> 
                   <Icon name="delete" />
                 </Button>
               </Grid.Column>
+
               <Grid.Column width={16}>
                 <Divider />
               </Grid.Column>
@@ -173,5 +217,4 @@ export class Category extends React.PureComponent<CategoryProps, CategoryState> 
       </Grid>
     )
   }
-
 }

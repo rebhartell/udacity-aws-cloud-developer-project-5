@@ -9,7 +9,7 @@
 			"name": "Category",
 			"item": [
 				{
-					"name": "Get all category",
+					"name": "Get all categories",
 					"event": [
 						{
 							"listen": "test",
@@ -722,7 +722,7 @@
 			"name": "Category - no auth",
 			"item": [
 				{
-					"name": "Get all category - no auth",
+					"name": "Get all categories - no auth",
 					"event": [
 						{
 							"listen": "test",
