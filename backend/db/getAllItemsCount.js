@@ -7,7 +7,8 @@ const params = {
   KeyConditionExpression: 'userId = :userId',
   ExpressionAttributeValues: {
     ':userId': "auth0|60e094fd6c07e100687db898"
-  }
+  },
+  Select: "COUNT"
 }
 
 dynamoDB

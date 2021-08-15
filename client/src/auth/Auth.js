@@ -1,6 +1,8 @@
 import auth0 from 'auth0-js';
 import { authConfig } from '../config';
 
+const HOME = '/category'
+
 export default class Auth {
   accessToken;
   idToken;
@@ -37,7 +39,7 @@ export default class Auth {
         console.log('id token: ', authResult.idToken)
         this.setSession(authResult);
       } else if (err) {
-        this.history.replace('/whatever');
+        this.history.replace(HOME);
         console.log(err);
         alert(`Error: ${err.error}. Check the console for further details.`);
       }
@@ -63,7 +65,7 @@ export default class Auth {
     this.expiresAt = expiresAt;
 
     // navigate to the home route
-    this.history.replace('/whatever');
+    this.history.replace(HOME);
   }
 
   renewSession() {
@@ -92,7 +94,7 @@ export default class Auth {
     });
 
     // navigate to the home route
-    this.history.replace('/whatever');
+    this.history.replace(HOME);
   }
 
   isAuthenticated() {

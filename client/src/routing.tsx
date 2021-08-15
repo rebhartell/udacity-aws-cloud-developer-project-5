@@ -31,13 +31,13 @@ export const makeAuthRouting = () => {
         <Switch>
           
           <Route
-            path="/whatever"
+            path="/"
             render={(props) => {
               return <App auth={auth} {...props} />
             }}
           />
 
-          <Redirect from="/" to="/whatever" exact/>
+          <Redirect from="/" to="/category" exact/>
 
           <Route component={NotFound} />
 

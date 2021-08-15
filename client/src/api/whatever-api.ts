@@ -4,8 +4,8 @@ import { CreateWhateverRequest } from '../types/CreateWhateverRequest';
 import { UpdateWhateverRequest } from '../types/UpdateWhateverRequest';
 import { WhateverItem } from '../types/WhateverItem';
 
-export async function getWhatever(idToken: string): Promise<WhateverItem[]> {
-  console.log('Fetching whatever')
+export async function getAllWhatever(idToken: string): Promise<WhateverItem[]> {
+  console.log('Fetching all whatever')
 
   const response = await Axios.get(`${apiEndpoint}/whatever`, {
     headers: {
@@ -13,15 +13,28 @@ export async function getWhatever(idToken: string): Promise<WhateverItem[]> {
       'Authorization': `Bearer ${idToken}`
     },
   })
-  console.log('Whatever:', response.data)
+  console.log('All Whatever:', response.data)
   return response.data.items
+}
+
+export async function getWhatever(
+  idToken: string,
+  itemId: string
+): Promise<WhateverItem> {
+  const response = await Axios.get(`${apiEndpoint}/whatever/${itemId}`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${idToken}`
+    }
+  })
+  return response.data.item
 }
 
 export async function createWhatever(
   idToken: string,
   newWhatever: CreateWhateverRequest
 ): Promise<WhateverItem> {
-  const response = await Axios.post(`${apiEndpoint}/whatever`,  JSON.stringify(newWhatever), {
+  const response = await Axios.post(`${apiEndpoint}/whatever`, JSON.stringify(newWhatever), {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${idToken}`

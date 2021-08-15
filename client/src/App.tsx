@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { Link, Route, Router, Switch } from 'react-router-dom'
-import { Grid, Icon, Image, Menu, Segment } from 'semantic-ui-react'
+import { Grid, Header, Icon, Image, Menu, Segment } from 'semantic-ui-react'
 import Auth from './auth/Auth'
+import { Category } from './components/Category'
+import { EditCategory } from './components/EditCategory'
 import { EditWhatever } from './components/EditWhatever'
 import { LogIn } from './components/LogIn'
 import { Whatever } from './components/Whatever'
@@ -36,10 +38,19 @@ export default class App extends Component<AppProps, AppState> {
       <div>
         <Segment color="red" style={{ padding: '2em' }} vertical inverted>
           <Grid container stackable>
+
             <Grid.Row color="yellow">
               <Grid.Column width={2} color="pink">
-                <Image src="spinning_globe.gif" size="small" />
+                <Image src="spinning_globe.gif" size="tiny" />
               </Grid.Column>
+
+              <Grid.Column width={14} color="pink" verticalAlign="middle">
+                <Header as="h1">Whatever You Want</Header>
+              </Grid.Column>
+            </Grid.Row>
+
+            <Grid.Row color="yellow">
+              <Grid.Column width={2} color="pink" />
 
               <Grid.Column width={14} color="pink" verticalAlign="middle">
                 <Router history={this.props.history}>
@@ -49,6 +60,7 @@ export default class App extends Component<AppProps, AppState> {
                 </Router>
               </Grid.Column>
             </Grid.Row>
+
           </Grid>
         </Segment>
       </div>
@@ -58,10 +70,17 @@ export default class App extends Component<AppProps, AppState> {
   generateMenu() {
     return (
       <Menu>
-        <Menu.Item name="home">
+        <Menu.Item name="category">
+          <Link to="/category">
+            <Icon name="warehouse" />
+            Categories
+          </Link>
+        </Menu.Item>
+
+        <Menu.Item name="items">
           <Link to="/whatever">
-            <Icon name="home" />
-            Home
+            <Icon name="boxes" />
+            Items
           </Link>
         </Menu.Item>
 
@@ -117,6 +136,14 @@ export default class App extends Component<AppProps, AppState> {
     return (
       <Switch>
         <Route
+          path="/category"
+          exact
+          render={(props) => {
+            return <Category {...props} auth={this.props.auth} />
+          }}
+        />
+
+        <Route
           path="/whatever"
           exact
           render={(props) => {
@@ -132,6 +159,13 @@ export default class App extends Component<AppProps, AppState> {
           }}
         />
 
+        <Route
+          path="/category/:itemId/edit"
+          exact
+          render={(props) => {
+            return <EditCategory {...props} auth={this.props.auth} />
+          }}
+        />
       </Switch>
     )
   }

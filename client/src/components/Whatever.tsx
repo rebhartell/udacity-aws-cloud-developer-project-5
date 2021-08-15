@@ -10,7 +10,7 @@ import {
   Header,
   Icon, Image, Input, Loader
 } from 'semantic-ui-react'
-import { createWhatever, deleteWhatever, getWhatever, patchWhatever } from '../api/whatever-api'
+import { createWhatever, deleteWhatever, getAllWhatever, patchWhatever } from '../api/whatever-api'
 import Auth from '../auth/Auth'
 import { WhateverItem } from '../types/WhateverItem'
 
@@ -82,26 +82,26 @@ export class Whatever extends React.PureComponent<WhateverProps, WhateverState> 
         })
       })
     } catch {
-      alert('Whatever deletion failed')
+      alert('Whatever toggle done failed')
     }
   }
 
   async componentDidMount() {
     try {
-      const whatever = await getWhatever(this.props.auth.getIdToken())
+      const whatever = await getAllWhatever(this.props.auth.getIdToken())
       this.setState({
         whatever,
         loadingWhatever: false
       })
     } catch (e) {
-      alert(`Failed to fetch whatever: ${e.message}`)
+      alert(`Failed to fetch all whatever: ${e.message}`)
     }
   }
 
   render() {
     return (
       <div>
-        <Header as="h1">Whatever</Header>
+        <Header as="h1">Items</Header>
 
         {this.renderCreateWhateverInput()}
 
@@ -147,7 +147,7 @@ export class Whatever extends React.PureComponent<WhateverProps, WhateverState> 
     return (
       <Grid.Row>
         <Loader indeterminate active inline="centered">
-          Loading Whatever
+          Loading Items
         </Loader>
       </Grid.Row>
     )
