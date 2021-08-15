@@ -2,11 +2,14 @@ org: rebhartell
 app: serverless-whatever-app
 service: serverless-whatever-service
 
+variablesResolutionMode: 20210326 # update variable resolution to future release operation
+configValidationMode: error       # https://www.serverless.com/framework/docs/deprecations/#CONFIG_VALIDATION_MODE_DEFAULT
+
 plugins:
-  - serverless-iam-roles-per-function
-  - serverless-prune-plugin
   - serverless-webpack
-  # Whatever
+  - serverless-iam-roles-per-function
+  - serverless-jetpack
+  - serverless-prune-plugin
 #  - serverless-plugin-tracing
 
 package:
@@ -15,7 +18,7 @@ package:
 provider:
   name: aws
   runtime: nodejs14.x
-  lambdaHashingVersion: '20201221'
+  lambdaHashingVersion: 20201221
 
   stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'us-east-1'}
@@ -27,6 +30,8 @@ provider:
   # Use these variables in the functions and resources section below. For example, 
   # ${self:provider.environment.WHATEVER_ATTACHMENTS_S3_BUCKET}
   environment:
+    CATEGORY_DB_TABLE: category-table-${self:provider.stage}
+    CATEGORY_DB_INDEX: category-index-${self:provider.stage}
     WHATEVER_DB_TABLE: whatever-table-${self:provider.stage}
     WHATEVER_DB_INDEX: whatever-index-${self:provider.stage}
     # the name of this S3 bucket must be unique within the whole aws
@@ -37,13 +42,17 @@ custom:
   documentation:
     api:
       info:
-        version: v1.0.0
+        version: v2.0.0
         title: serverless-whatever-app
-        description: Serverless application for Whatever items
+        description: Serverless application for Whatever You Want items
 
   prune:
     automatic: true
     number: 2
+
+  webpack:
+    concurrency: 3 # desired concurrency, defaults to the number of available cores
+    serializedCompile: false # backward compatible, true translates to concurrency: 1    
 
 #  logs:
     # Enable API Gateway logs
@@ -165,6 +174,87 @@ functions:
           - s3:PutObject
         Resource: 'arn:aws:s3:::${self:provider.environment.WHATEVER_ATTACHMENTS_S3_BUCKET}/*'
 
+  # Retrieve all Category items
+  GetAllCategory:
+    handler: src/lambda/http/getAllCategory.handler
+    events:
+      - http:
+          method: get
+          path: category
+          cors: true
+          authorizer: Auth
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.CATEGORY_DB_TABLE}/index/${self:provider.environment.CATEGORY_DB_INDEX}
+
+  # Get a Category item
+  GetCategory:
+    handler: src/lambda/http/getCategory.handler
+    events:
+      - http:
+          method: get
+          path: category/{itemId}
+          cors: true
+          authorizer: Auth               
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:GetItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.CATEGORY_DB_TABLE}
+
+  # Create a Category item
+  CreateCategory:
+    handler: src/lambda/http/createCategory.handler
+    events:
+      - http:
+          method: post
+          path: category
+          cors: true
+          authorizer: Auth
+          request:
+            schemas:
+              application/json: ${file(models/create-category-request.json)}
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:PutItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.CATEGORY_DB_TABLE}
+
+  # Update a Category item
+  UpdateCategory:
+    handler: src/lambda/http/updateCategory.handler
+    events:
+      - http:
+          method: patch
+          path: category/{itemId}
+          cors: true
+          authorizer: Auth        
+          request:
+            schemas:
+              application/json: ${file(models/update-category-request.json)}           
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:UpdateItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.CATEGORY_DB_TABLE}
+
+  # Delete a Category item
+  DeleteCategory:
+    handler: src/lambda/http/deleteCategory.handler
+    events:
+      - http:
+          method: delete
+          path: category/{itemId}
+          cors: true
+          authorizer: Auth            
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:DeleteItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.CATEGORY_DB_TABLE}
+
 resources:
   Resources:
     
@@ -180,7 +270,7 @@ resources:
         RestApiId:
           Ref: ApiGatewayRestApi
 
-    # The Whatever DynamoDB Tabel
+    # The Whatever DynamoDB Table
     WhateverDynamoDBTable:
       Type: AWS::DynamoDB::Table
       Properties:
@@ -243,3 +333,31 @@ resources:
                 - s3:PutObject
               Resource: 'arn:aws:s3:::${self:provider.environment.WHATEVER_ATTACHMENTS_S3_BUCKET}/*'
         Bucket: !Ref AttachmentsBucket
+
+    # The Category DynamoDB Table
+    CategoryDynamoDBTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: userId
+            AttributeType: S
+          - AttributeName: itemId
+            AttributeType: S
+          - AttributeName: name
+            AttributeType: S
+        KeySchema:
+          - AttributeName: userId
+            KeyType: HASH
+          - AttributeName: itemId
+            KeyType: RANGE
+        BillingMode: PAY_PER_REQUEST
+        TableName: ${self:provider.environment.CATEGORY_DB_TABLE}
+        LocalSecondaryIndexes:
+          - IndexName: ${self:provider.environment.CATEGORY_DB_INDEX}
+            KeySchema:
+              - AttributeName: userId
+                KeyType: HASH
+              - AttributeName: name
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL # What attributes will be copied to an index

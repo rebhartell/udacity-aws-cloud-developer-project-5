@@ -1,6 +1,6 @@
 import 'source-map-support/register'
 import * as uuid from 'uuid'
-import { DatabaseAccess } from '../databaseLayer/DatabaseAccess'
+import { WhateverDatabaseAccess } from '../databaseLayer/WhateverDatabaseAccess'
 import { FileAccess } from '../fileLayer/FileAccess'
 import { CreateWhateverModel } from '../models/CreateWhateverModel'
 import { CreateWhateverRequest } from '../requests/CreateWhateverRequest'
@@ -9,7 +9,7 @@ import { createLogger } from '../utils/logger'
 
 const logger = createLogger('businessLogic/whateverBusiness')
 
-const databaseAccess = new DatabaseAccess()
+const databaseAccess = new WhateverDatabaseAccess()
 
 const fileAccess = new FileAccess()
 

@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Create Category Request Schema",
+  "description": "Fields in a request to create a single Category item.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "title": "name property schema",
+      "description": "name of a Category item (e.g. \"Change a light bulb\")",
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "additionalProperties": false
+}

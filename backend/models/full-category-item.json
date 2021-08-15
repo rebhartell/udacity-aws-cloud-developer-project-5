@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Full Category Request Schema",
+  "description": "A complete Category item as stored in the backend storage",
+  "type": "object",
+  "properties": {
+    "userId": {
+      "title": "userId property schema",
+      "description": "id of the user who created a Category item - managed by authentication layer",
+      "type": "string"
+    },
+    "itemId": {
+      "title": "itemId property schema",
+      "description": "a unique id for an item",
+      "type": "string"
+    },
+    "createdAt": {
+      "title": "createdAt property schema",
+      "description": "date and time when an item was created",
+      "type": "string"
+    },
+    "name": {
+      "title": "name property schema",
+      "description": "name of a Category item (e.g. \"Change a light bulb\")",
+      "type": "string",
+      "minLength": 1
+    },
+    "jsonSchema": {
+      "title": "jsonSchema property schema",
+      "description": "JSON Schema declaring the data model of Whatever items in the Category",
+      "type": "string",
+      "minLength": 1
+    },
+    "uiSchema": {
+      "title": "uiSchema property schema",
+      "description": "UI Schema describing additional data entry rules for Whatever items in the Category",
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "itemId",
+    "createdAt",
+    "name",
+    "jsonSchema",
+    "uiSchema"
+  ],
+  "additionalProperties": false
+}

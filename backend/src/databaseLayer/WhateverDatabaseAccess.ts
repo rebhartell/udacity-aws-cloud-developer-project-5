@@ -6,11 +6,11 @@ import { CreateWhateverModel as Item } from '../models/CreateWhateverModel'
 import { UpdateWhateverRequest } from '../requests/UpdateWhateverRequest'
 import { createLogger } from '../utils/logger'
 
-const logger = createLogger('dataLayer/databaseAccess')
+const logger = createLogger('dataLayer/WhateverDatabaseAccess')
 
 const XAWS = AWSXRay.captureAWS(AWS)
 
-export class DatabaseAccess {
+export class WhateverDatabaseAccess {
 
   constructor(
     private readonly docClient: DocumentClient = createDynamoDBClient(),

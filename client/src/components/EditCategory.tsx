@@ -41,6 +41,10 @@ export class EditCategory extends React.PureComponent<
         this.props.auth.getIdToken(),
         this.props.match.params.itemId
       )
+
+      category.jsonSchema = this.prettyPrint(category.jsonSchema)
+      category.uiSchema = this.prettyPrint(category.uiSchema)
+
       this.setState({
         category,
         isLoading: false
@@ -95,12 +99,31 @@ export class EditCategory extends React.PureComponent<
     event.preventDefault()
 
     try {
-      if (!this.state.category.name) {
+      let category = this.state.category
+
+      if (!category.name) {
         alert('Name should be specified')
         return
       }
 
-      this.setState({ isSaving: true })
+      try {
+        category.jsonSchema = this.prettyPrint(category.jsonSchema)
+      } catch (error) {
+        alert('JSON Schema has errors')
+        return
+      }
+
+      try {
+        category.uiSchema = this.prettyPrint(category.uiSchema)
+      } catch (error) {
+        alert('UI Schema has errors')
+        return
+      }
+
+      this.setState({
+        isSaving: true,
+        category: category
+      })
 
       await patchCategory(
         this.props.auth.getIdToken(),
@@ -118,31 +141,10 @@ export class EditCategory extends React.PureComponent<
     console.log(`handleSubmit: ${JSON.stringify(this.state)}`)
   }
 
-  
-  // handlePrettyClick = () => {
-  //   let ugly = this.state.category.jsonSchema
-  //   let obj = JSON.parse(ugly)
-  //   let pretty = JSON.stringify(obj, undefined, 4)
-
-  //   this.setState((prevState) => ({
-  //     category: {
-  //       ...prevState.category,
-  //       jsonSchema: pretty
-  //     }
-  //   }))
-
-  //   ugly = this.state.category.uiSchema
-  //   obj = JSON.parse(ugly)
-  //   pretty = JSON.stringify(obj, undefined, 4)
-
-  //   this.setState((prevState) => ({
-  //     category: {
-  //       ...prevState.category,
-  //       uiSchema: pretty
-  //     }
-  //   }))
-  // }
-
+  prettyPrint = (ugly: string) => {
+    const obj = JSON.parse(ugly)
+    return JSON.stringify(obj, undefined, 4)
+  }
 
   render() {
     return (
@@ -212,18 +214,13 @@ export class EditCategory extends React.PureComponent<
   renderButton() {
     return (
       <div>
+        
         {this.state.isSaving && <p>Saving Category</p>}
 
         <Form.Button loading={this.state.isSaving} type="submit">
           Save
         </Form.Button>
 
-        {/* <Button
-          loading={this.state.isSaving}
-          onClick={this.handlePrettyClick}
-        >
-          Pretty JSON
-        </Button> */}
       </div>
     )
   }
