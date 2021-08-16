@@ -4,16 +4,19 @@ import { CreateWhateverRequest } from '../types/CreateWhateverRequest';
 import { UpdateWhateverRequest } from '../types/UpdateWhateverRequest';
 import { WhateverItem } from '../types/WhateverItem';
 
-export async function getAllWhatever(idToken: string): Promise<WhateverItem[]> {
+
+export async function getAllWhateverByCategory(idToken: string, categoryId: string): Promise<WhateverItem[]> {
   console.log('Fetching all whatever')
 
-  const response = await Axios.get(`${apiEndpoint}/whatever`, {
+  const response = await Axios.get(`${apiEndpoint}/category/${categoryId}/whatever`, {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${idToken}`
     },
   })
-  console.log('All Whatever:', response.data)
+
+  console.log('All Whatever by Category:', response.data)
+
   return response.data.items
 }
 
@@ -34,12 +37,18 @@ export async function createWhatever(
   idToken: string,
   newWhatever: CreateWhateverRequest
 ): Promise<WhateverItem> {
+
+  console.log(`createWhatever: `, newWhatever)
+
   const response = await Axios.post(`${apiEndpoint}/whatever`, JSON.stringify(newWhatever), {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${idToken}`
     }
   })
+
+  console.log(`createWhatever `, response.data.item )
+
   return response.data.item
 }
 

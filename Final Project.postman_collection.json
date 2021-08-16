@@ -9,7 +9,7 @@
 			"name": "Category",
 			"item": [
 				{
-					"name": "Get all categories",
+					"name": "Get all category",
 					"event": [
 						{
 							"listen": "test",
@@ -722,7 +722,7 @@
 			"name": "Category - no auth",
 			"item": [
 				{
-					"name": "Get all categories - no auth",
+					"name": "Get all category - no auth",
 					"event": [
 						{
 							"listen": "test",
@@ -1066,6 +1066,93 @@
 			"name": "Whatever",
 			"item": [
 				{
+					"name": "Create category to link to",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// LOAD VARIABLES",
+									"var jsonData = JSON.parse(responseBody);",
+									"pm.collectionVariables.set(\"categoryId\", jsonData.item.itemId);",
+									"",
+									"// TESTS",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Category item is returned\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('item');",
+									"});",
+									"",
+									"pm.test(\"Category item has expected fields\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    if (jsonData['item']) {",
+									"        var item = jsonData['item'];",
+									"        pm.expect(item).to.have.property('createdAt');",
+									"        pm.expect(item).to.have.property('itemId');",
+									"        pm.expect(item).to.have.property('name');",
+									"        pm.expect(item).to.have.property('jsonSchema');",
+									"        pm.expect(item).to.have.property('uiSchema');",
+									"    }",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 5000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(5000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{$randomVerb}} {{$randomNoun}}\"\n}"
+						},
+						"url": {
+							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/category",
+							"protocol": "https",
+							"host": [
+								"{{apiId}}",
+								"execute-api",
+								"us-east-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Get all whatever",
 					"event": [
 						{
@@ -1089,8 +1176,8 @@
 									"        pm.expect(item0).to.have.property('createdAt');",
 									"        pm.expect(item0).to.have.property('itemId');",
 									"        pm.expect(item0).to.have.property('name');",
-									"        pm.expect(item0).to.have.property('done');",
-									"        pm.expect(item0).to.have.property('dueDate');",
+									"        pm.expect(item0).to.have.property('categoryId');",
+									"        pm.expect(item0).to.have.property('formData');",
 									"    }",
 									"});",
 									"",
@@ -1136,12 +1223,7 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"// PRE-SET VARIABLES",
-									"const fromTime = new Date().getTime();",
-									"const SEVEN_DAYS_IN_MSECS = 7 * 24 * 60 * 60 * 1000;",
-									"const randomDueDate = (new Date(fromTime + Math.random() * SEVEN_DAYS_IN_MSECS)).toISOString().substring(0,10);",
-									"",
-									"pm.collectionVariables.set(\"randomDueDate\", randomDueDate);"
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -1171,8 +1253,8 @@
 									"        pm.expect(item).to.have.property('createdAt');",
 									"        pm.expect(item).to.have.property('itemId');",
 									"        pm.expect(item).to.have.property('name');",
-									"        pm.expect(item).to.have.property('done');",
-									"        pm.expect(item).to.have.property('dueDate');",
+									"        pm.expect(item).to.have.property('categoryId');",
+									"        pm.expect(item).to.have.property('formData');",
 									"    }",
 									"});",
 									"",
@@ -1201,7 +1283,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"{{$randomVerb}} {{$randomNoun}}\",\n\t\"dueDate\": \"{{randomDueDate}}\"\n}"
+							"raw": "{\n\t\"name\": \"{{$randomVerb}} {{$randomNoun}}\",\n    \"categoryId\": \"{{categoryId}}\"\n}"
 						},
 						"url": {
 							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/whatever",
@@ -1215,6 +1297,72 @@
 							],
 							"path": [
 								"dev",
+								"whatever"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all whatever by category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// TESTS",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Whatever items are returned\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('items');",
+									"});",
+									"",
+									"pm.test(\"First Whatever item has expected fields\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    if (jsonData['items'].length > 0) {",
+									"        var item0 = jsonData['items'][0];",
+									"        pm.expect(item0).to.have.property('createdAt');",
+									"        pm.expect(item0).to.have.property('itemId');",
+									"        pm.expect(item0).to.have.property('name');",
+									"        pm.expect(item0).to.have.property('categoryId');",
+									"        pm.expect(item0).to.have.property('formData');",
+									"    }",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 5000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(5000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/category/{{categoryId}}/whatever",
+							"protocol": "https",
+							"host": [
+								"{{apiId}}",
+								"execute-api",
+								"us-east-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"category",
+								"{{categoryId}}",
 								"whatever"
 							]
 						}
@@ -1245,8 +1393,8 @@
 									"        pm.expect(item).to.have.property('createdAt');",
 									"        pm.expect(item).to.have.property('itemId');",
 									"        pm.expect(item).to.have.property('name');",
-									"        pm.expect(item).to.have.property('done');",
-									"        pm.expect(item).to.have.property('dueDate');",
+									"        pm.expect(item).to.have.property('categoryId');",
+									"        pm.expect(item).to.have.property('formData');",
 									"    }",
 									"});",
 									"",
@@ -1306,12 +1454,7 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"// PRE-SET VARIABLES",
-									"const fromTime = new Date().getTime();",
-									"const SEVEN_DAYS_IN_MSECS = 7 * 24 * 60 * 60 * 1000;",
-									"const randomDueDate = (new Date(fromTime + Math.random() * SEVEN_DAYS_IN_MSECS)).toISOString().substring(0,10);",
-									"",
-									"pm.collectionVariables.set(\"randomDueDate\", randomDueDate);"
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -1354,7 +1497,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"{{$randomVerb}} {{$randomNoun}}\",\n\t\"dueDate\": \"{{randomDueDate}}\",\n\t\"done\": false\n}"
+							"raw": "{\n\t\"name\": \"{{$randomVerb}} {{$randomNoun}}\",\n\t\"categoryId\": \"{{categoryId}}\",\n    \"formData\": {\n        \"title\": \"{{$randomNamePrefix}}\",\n        \"name\": {\n            \"firstName\": \"{{$randomFirstName}}\",\n            \"lastName\": \"{{$randomLastName}}\"\n        }\n    }\n}"
 						},
 						"url": {
 							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/whatever/:itemId",
@@ -1678,7 +1821,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"\",\n\t\"dueDate\": \"{{randomDueDate}}\"\n}"
+							"raw": "{\n\t\"name\": \"\",\n    \"categoryId\": \"{{categoryId}}\"\n}"
 						},
 						"url": {
 							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/whatever",
@@ -1699,7 +1842,7 @@
 					"response": []
 				},
 				{
-					"name": "Create whatever - bad 'dueDate'",
+					"name": "Create whatever - bad 'categoryId'",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -1755,7 +1898,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Valid name\",\n\t\"dueDate\": \"Invalid dueDate should match 2021-07-18\"\n}"
+							"raw": "{\n\t\"name\": \"{{$randomVerb}} {{$randomNoun}}\",\n    \"categoryId\": \"\"\n}"
 						},
 						"url": {
 							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/whatever",
@@ -1832,7 +1975,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"\",\n\t\"dueDate\": \"{{randomDueDate}}\",\n\t\"done\": false\n}"
+							"raw": "{\n\t\"name\": \"\",\n\t\"categoryId\": \"{{categoryId}}\",\n    \"formData\": {\n        \"title\": \"{{$randomNamePrefix}}\",\n        \"name\": {\n            \"firstName\": \"{{$randomFirstName}}\",\n            \"lastName\": \"{{$randomLastName}}\"\n        }\n    }\n}"
 						},
 						"url": {
 							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/whatever/:itemId",
@@ -1860,7 +2003,7 @@
 					"response": []
 				},
 				{
-					"name": "Update whatever - bad 'dueDate'",
+					"name": "Update whatever - bad 'categoryId'",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -1916,7 +2059,91 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"Valid name\",\n\t\"dueDate\": \"Invalid dueDate should match 2021-07-18\",\n\t\"done\": false\n}"
+							"raw": "{\n\t\"name\": \"{{$randomVerb}} {{$randomNoun}}\",\n\t\"categoryId\": \"\",\n    \"formData\": {\n        \"title\": \"{{$randomNamePrefix}}\",\n        \"name\": {\n            \"firstName\": \"{{$randomFirstName}}\",\n            \"lastName\": \"{{$randomLastName}}\"\n        }\n    }\n}"
+						},
+						"url": {
+							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/whatever/:itemId",
+							"protocol": "https",
+							"host": [
+								"{{apiId}}",
+								"execute-api",
+								"us-east-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"whatever",
+								":itemId"
+							],
+							"variable": [
+								{
+									"key": "itemId",
+									"value": "{{itemId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update whatever - missing 'formData'",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// PRE-SET VARIABLES",
+									"const fromTime = new Date().getTime();",
+									"const SEVEN_DAYS_IN_MSECS = 7 * 24 * 60 * 60 * 1000;",
+									"const randomDueDate = (new Date(fromTime + Math.random() * SEVEN_DAYS_IN_MSECS)).toISOString().substring(0,10);",
+									"",
+									"pm.collectionVariables.set(\"randomDueDate\", randomDueDate);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// TESTS",
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"message 'Invalid request body' is returned\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('message');",
+									"    pm.expect(jsonData.message).to.eql(\"Invalid request body\");",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 5000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(5000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{$randomVerb}} {{$randomNoun}}\",\n\t\"categoryId\": \"{{categoryId}}\"\n}"
 						},
 						"url": {
 							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/whatever/:itemId",
@@ -2005,12 +2232,7 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"// PRE-SET VARIABLES",
-									"const fromTime = new Date().getTime();",
-									"const SEVEN_DAYS_IN_MSECS = 7 * 24 * 60 * 60 * 1000;",
-									"const randomDueDate = (new Date(fromTime + Math.random() * SEVEN_DAYS_IN_MSECS)).toISOString().substring(0,10);",
-									"",
-									"pm.collectionVariables.set(\"randomDueDate\", randomDueDate);"
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -2053,7 +2275,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"{{$randomVerb}} {{$randomNoun}}\",\n\t\"dueDate\": \"{{randomDueDate}}\"\n}"
+							"raw": "{\n\t\"name\": \"{{$randomVerb}} {{$randomNoun}}\",\n\t\"categoryId\": \"{{categoryId}}\"\n}"
 						},
 						"url": {
 							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/whatever",
@@ -2067,6 +2289,58 @@
 							],
 							"path": [
 								"dev",
+								"whatever"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all whatever by category - no auth",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// TESTS",
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});",
+									"",
+									"pm.test(\"message 'Unauthorized' is returned\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData).to.have.property('message');",
+									"    pm.expect(jsonData.message).to.eql(\"Unauthorized\");",
+									"});",
+									"",
+									"pm.test(\"Response time is less than 5000ms\", function () {",
+									"    pm.expect(pm.response.responseTime).to.be.below(5000);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/category/{{categoryId}}/whatever",
+							"protocol": "https",
+							"host": [
+								"{{apiId}}",
+								"execute-api",
+								"us-east-1",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								"dev",
+								"category",
+								"{{categoryId}}",
 								"whatever"
 							]
 						}
@@ -2144,12 +2418,7 @@
 							"listen": "prerequest",
 							"script": {
 								"exec": [
-									"// PRE-SET VARIABLES",
-									"const fromTime = new Date().getTime();",
-									"const SEVEN_DAYS_IN_MSECS = 7 * 24 * 60 * 60 * 1000;",
-									"const randomDueDate = (new Date(fromTime + Math.random() * SEVEN_DAYS_IN_MSECS)).toISOString().substring(0,10);",
-									"",
-									"pm.collectionVariables.set(\"randomDueDate\", randomDueDate);"
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -2192,7 +2461,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"name\": \"{{$randomVerb}} {{$randomNoun}}\",\n\t\"dueDate\": \"{{randomDueDate}}\",\n\t\"done\": false\n}"
+							"raw": "{\n\t\"name\": \"{{$randomVerb}} {{$randomNoun}}\",\n\t\"categoryId\": \"{{categoryId}}\",\n    \"formData\": {\n        \"title\": \"{{$randomNamePrefix}}\",\n        \"name\": {\n            \"firstName\": \"{{$randomFirstName}}\",\n            \"lastName\": \"{{$randomLastName}}\"\n        }\n    }\n}"
 						},
 						"url": {
 							"raw": "https://{{apiId}}.execute-api.us-east-1.amazonaws.com/dev/whatever/:itemId",
@@ -2365,7 +2634,7 @@
 	"variable": [
 		{
 			"key": "apiId",
-			"value": "3z1u9ycjug"
+			"value": "wdjq4nvsa6"
 		},
 		{
 			"key": "authToken",
@@ -2385,6 +2654,10 @@
 		},
 		{
 			"key": "getAttachmentUrl",
+			"value": ""
+		},
+		{
+			"key": "categoryId",
 			"value": ""
 		}
 	]

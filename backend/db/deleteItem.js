@@ -31,4 +31,4 @@ async function deleteItem(itemId) {
 
 }
 
-deleteItem("111");
+deleteItem("1005");

@@ -10,16 +10,16 @@
       "type": "string",
       "minLength": 1
     },
-    "dueDate": {
-      "title": "dueDate property schema",  
-      "description": "date and optional time by which an item should be completed",
+    "categoryId": {
+      "title": "categoryId property schema",  
+      "description": "FK to Category this item belongs to",
       "type": "string",
-      "pattern": "^[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9].*$"
+      "minLength": 1
     }
   },
   "required": [
     "name",
-    "dueDate"
+    "categoryId"
   ],
   "additionalProperties": false
 }

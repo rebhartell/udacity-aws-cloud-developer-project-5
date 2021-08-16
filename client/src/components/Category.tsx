@@ -14,10 +14,9 @@ import {
   deleteCategory,
   getAllCategory
 } from '../api/category-api'
-// import { createCategory, deleteCategory, getAllCategory, patchCategory } from '../api/category-api'
 import Auth from '../auth/Auth'
 import { CategoryItem } from '../types/CategoryItem'
-// import { CategoryItem } from '../types/CategoryItem'
+
 
 interface CategoryProps {
   auth: Auth
@@ -47,6 +46,7 @@ export class Category extends React.PureComponent<
 
   onSelectButtonClick = (id: string, name: string) => {
     this.props.updateCategory(`${id}`, `${name}`)
+    this.props.history.push(`/category/${id}/whatever`)
   }
 
   onEditButtonClick = (itemId: string) => {
@@ -78,7 +78,7 @@ export class Category extends React.PureComponent<
         newCategoryName: ''
       })
 
-      this.props.updateCategory(`${category.itemId}`, `${category.name}`)
+      this.props.updateCategory(`${newCategory.itemId}`, `${newCategory.name}`)
       
     } catch {
       alert('Category creation failed')

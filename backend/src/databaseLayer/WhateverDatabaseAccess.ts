@@ -2,7 +2,7 @@ import * as AWS from 'aws-sdk'
 import { DocumentClient } from 'aws-sdk/clients/dynamodb'
 import * as AWSXRay from 'aws-xray-sdk'
 import 'source-map-support/register'
-import { CreateWhateverModel as Item } from '../models/CreateWhateverModel'
+import { CreateWhateverModel } from '../models/CreateWhateverModel'
 import { UpdateWhateverRequest } from '../requests/UpdateWhateverRequest'
 import { createLogger } from '../utils/logger'
 
@@ -19,7 +19,7 @@ export class WhateverDatabaseAccess {
   ) { }
 
 
-  async getAllWhatever(userId: string): Promise<Item[]> {
+  async getAllWhatever(userId: string): Promise<CreateWhateverModel[]> {
 
     logger.info("getAllWhatever", { userId })
 
@@ -34,7 +34,7 @@ export class WhateverDatabaseAccess {
 
     const result = await this.docClient.query(params).promise()
 
-    const items = result.Items as Item[]
+    const items = result.Items as CreateWhateverModel[]
 
 
     // remove the user id - keep it as a hidden field
@@ -44,7 +44,33 @@ export class WhateverDatabaseAccess {
   }
 
 
-  async getWhatever(userId: string, itemId: string): Promise<Item> {
+  async getAllWhateverByCategory(userId: string, categoryId: string): Promise<CreateWhateverModel[]> {
+
+    logger.info("getAllWhateverByCategory", { userId, categoryId })
+
+    const params = {
+      TableName: this.TableName,
+      IndexName: this.IndexName,
+      KeyConditionExpression: 'userId = :userId and categoryId = :categoryId',
+      ExpressionAttributeValues: {
+        ':userId': userId,
+        ':categoryId': categoryId
+      }
+    }
+
+    const result = await this.docClient.query(params).promise()
+
+    const items = result.Items as CreateWhateverModel[]
+
+
+    // remove the user id - keep it as a hidden field
+    items.forEach(item => { delete item.userId });
+
+    return items
+  }
+
+
+  async getWhatever(userId: string, itemId: string): Promise<CreateWhateverModel> {
 
     logger.info("getWhatever", { userId, itemId })
 
@@ -63,7 +89,7 @@ export class WhateverDatabaseAccess {
       throw new Error(errMsg)
     }
 
-    const whatever = result.Item as Item
+    const whatever = result.Item as CreateWhateverModel
 
     // remove the user id - keep it as a hidden field
     delete whatever.userId
@@ -72,7 +98,7 @@ export class WhateverDatabaseAccess {
   }
 
 
-  async createWhatever(whatever: Item): Promise<Item> {
+  async createWhatever(whatever: CreateWhateverModel): Promise<CreateWhateverModel> {
 
     logger.info("createWhatever", { whatever })
 
@@ -90,7 +116,7 @@ export class WhateverDatabaseAccess {
   }
 
 
-  async deleteWhatever(userId: string, itemId: string): Promise<Item> {
+  async deleteWhatever(userId: string, itemId: string): Promise<CreateWhateverModel> {
 
     logger.info("deleteWhatever", { userId, itemId })
 
@@ -110,7 +136,7 @@ export class WhateverDatabaseAccess {
       throw new Error(errMsg)
     }
 
-    const whatever = result.Attributes as Item
+    const whatever = result.Attributes as CreateWhateverModel
 
     // remove the user id - keep it as a hidden field
     delete whatever.userId
@@ -119,7 +145,7 @@ export class WhateverDatabaseAccess {
   }
 
 
-  async updateWhatever(userId: string, itemId: string, updatedWhatever: UpdateWhateverRequest): Promise<Item> {
+  async updateWhatever(userId: string, itemId: string, updatedWhatever: UpdateWhateverRequest): Promise<CreateWhateverModel> {
 
     logger.info("updateWhatever", { userId, itemId, updatedWhatever })
 
@@ -127,18 +153,18 @@ export class WhateverDatabaseAccess {
       TableName: this.TableName,
       Key: { userId, itemId },
       ExpressionAttributeNames: { "#N": "name" },
-      UpdateExpression: "set #N=:whateverName, dueDate=:dueDate, done=:done",
+      UpdateExpression: "set #N=:whateverName, categoryId=:categoryId, formData=:formData",
       ExpressionAttributeValues: {
         ":whateverName": updatedWhatever.name,
-        ":dueDate": updatedWhatever.dueDate,
-        ":done": updatedWhatever.done
+        ":categoryId": updatedWhatever.categoryId,
+        ":formData": updatedWhatever.formData
       },
       ReturnValues: "ALL_NEW"
     }
 
     const result = await this.docClient.update(params).promise()
 
-    const updatedItem = result.Attributes as Item
+    const updatedItem = result.Attributes as CreateWhateverModel
 
     // remove the user id - keep it as a hidden field
     delete updatedItem.userId

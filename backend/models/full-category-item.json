@@ -14,16 +14,16 @@
       "description": "a unique id for an item",
       "type": "string"
     },
-    "createdAt": {
-      "title": "createdAt property schema",
-      "description": "date and time when an item was created",
-      "type": "string"
-    },
     "name": {
       "title": "name property schema",
       "description": "name of a Category item (e.g. \"Change a light bulb\")",
       "type": "string",
       "minLength": 1
+    },
+        "createdAt": {
+      "title": "createdAt property schema",
+      "description": "date and time when an item was created",
+      "type": "string"
     },
     "jsonSchema": {
       "title": "jsonSchema property schema",
@@ -39,9 +39,10 @@
     }
   },
   "required": [
+    "userId",
     "itemId",
-    "createdAt",
     "name",
+    "createdAt",
     "jsonSchema",
     "uiSchema"
   ],

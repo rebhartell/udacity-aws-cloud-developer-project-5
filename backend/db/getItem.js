@@ -29,6 +29,6 @@ async function getItem(userId, itemId) {
 
 }
 
-const itemId = "ff92ae23-babd-44f2-8448-48d939715830"
+const itemId = "2000"
 
 getItem(USER_ID, itemId);

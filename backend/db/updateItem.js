@@ -39,12 +39,19 @@ async function updateItem(userId, itemId, updatedWhatever) {
 }
 
 
-const itemId = "111"
+const itemId = "1004"
 
 const whateverItem = {
   name: "test whatever update " + randomInt(1000).toString(),
   dueDate: new Date().toISOString(),
-  done: true
+  done: true,
+  formData: {
+    title: "miss",
+    name: {
+      firstName: "Little",
+      lastName: "Sunshine"
+    }
+  } 
 }
 
 updateItem(USER_ID, itemId, whateverItem);

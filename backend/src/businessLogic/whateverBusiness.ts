@@ -7,6 +7,7 @@ import { CreateWhateverRequest } from '../requests/CreateWhateverRequest'
 import { UpdateWhateverRequest } from '../requests/UpdateWhateverRequest'
 import { createLogger } from '../utils/logger'
 
+
 const logger = createLogger('businessLogic/whateverBusiness')
 
 const databaseAccess = new WhateverDatabaseAccess()
@@ -21,6 +22,17 @@ export async function getAllWhatever(userId: string): Promise<CreateWhateverMode
   const whateverItems = databaseAccess.getAllWhatever(userId)
 
   logger.info("getAllWhatever - retrieved all whatever for userId", { whateverItems })
+
+  return whateverItems
+}
+
+export async function getAllWhateverByCategory(userId: string, categoryId: string): Promise<CreateWhateverModel[]> {
+
+  logger.info("getAllWhateverByCategory", { userId, categoryId })
+
+  const whateverItems = databaseAccess.getAllWhateverByCategory(userId, categoryId)
+
+  logger.info("getAllWhateverByCategory - retrieved all whatever for userId and categoryId", { whateverItems })
 
   return whateverItems
 }
@@ -59,8 +71,9 @@ export async function createWhatever(userId: string, createWhateverRequest: Crea
     userId: userId,
     name: createWhateverRequest.name,
     createdAt: new Date().toISOString(),
-    dueDate: createWhateverRequest.dueDate,
-    done: false
+    categoryId: createWhateverRequest.categoryId,
+    formData: {},
+    attachmentUrl: null
   })
 
   logger.info("createWhatever created item", { createdItem })

@@ -51,7 +51,7 @@ custom:
     number: 2
 
   webpack:
-    concurrency: 3 # desired concurrency, defaults to the number of available cores
+    concurrency: 2           # desired concurrency, defaults to the number of available cores
     serializedCompile: false # backward compatible, true translates to concurrency: 1    
 
 #  logs:
@@ -81,6 +81,21 @@ functions:
       - http:
           method: get
           path: whatever
+          cors: true
+          authorizer: Auth
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.WHATEVER_DB_TABLE}/index/${self:provider.environment.WHATEVER_DB_INDEX}
+
+  # Retrieve all Whatever items by category - shortened name because too long
+  GetAllWhateverByCat:
+    handler: src/lambda/http/getAllWhateverByCategory.handler
+    events:
+      - http:
+          method: get
+          path: category/{itemId}/whatever
           cors: true
           authorizer: Auth
     iamRoleStatements:
@@ -279,7 +294,7 @@ resources:
             AttributeType: S
           - AttributeName: itemId
             AttributeType: S
-          - AttributeName: dueDate
+          - AttributeName: categoryId
             AttributeType: S
         KeySchema:
           - AttributeName: userId
@@ -293,7 +308,7 @@ resources:
             KeySchema:
               - AttributeName: userId
                 KeyType: HASH
-              - AttributeName: dueDate
+              - AttributeName: categoryId
                 KeyType: RANGE
             Projection:
               ProjectionType: ALL # What attributes will be copied to an index

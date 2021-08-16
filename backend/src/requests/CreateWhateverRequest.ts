@@ -3,5 +3,5 @@
  */
 export interface CreateWhateverRequest {
   name: string
-  dueDate: string
+  categoryId: string
 }

@@ -1,26 +1,27 @@
 import * as React from 'react'
-import { Button, Form } from 'semantic-ui-react'
-import { getUploadUrl, uploadFile } from '../api/whatever-api'
+import { Form, Grid, Header, Loader } from 'semantic-ui-react'
+import { getCategory } from '../api/category-api'
+import { getWhatever, patchWhatever } from '../api/whatever-api'
 import Auth from '../auth/Auth'
-
-enum UploadState {
-  NoUpload,
-  FetchingPresignedUrl,
-  UploadingFile
-}
+import { CategoryItem } from '../types/CategoryItem'
+import { WhateverItem } from '../types/WhateverItem'
 
 interface EditWhateverProps {
   match: {
     params: {
-      itemId: string
+      categoryId: string
+      whateverId: string
     }
   }
   auth: Auth
 }
 
 interface EditWhateverState {
-  file: any
-  uploadState: UploadState
+  isLoading: boolean
+  isSaving: boolean
+  category: CategoryItem
+  whatever: WhateverItem
+  formDataJson: string
 }
 
 export class EditWhatever extends React.PureComponent<
@@ -28,82 +29,226 @@ export class EditWhatever extends React.PureComponent<
   EditWhateverState
 > {
   state: EditWhateverState = {
-    file: undefined,
-    uploadState: UploadState.NoUpload
+    isLoading: true,
+    isSaving: false,
+    category: {
+      itemId: this.props.match.params.categoryId,
+      name: '',
+      jsonSchema: '',
+      uiSchema: '',
+      createdAt: ''
+    },
+    whatever: {
+      itemId: this.props.match.params.whateverId,
+      name: '',
+      categoryId: '',
+      formData: {},
+      attachmentUrl: '',
+      createdAt: ''
+    },
+    formDataJson: ''
   }
 
-  handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files
-    if (!files) return
+  prettyPrint = (ugly: string): string => {
+    const obj = JSON.parse(ugly)
+    return JSON.stringify(obj, undefined, 4)
+  }
+
+  prettyPrintIgnoreErrors = (ugly: string): string => {
+    try {
+      return this.prettyPrint(ugly)
+    } catch (error) {
+      // ignore
+    }
+
+    return ugly
+  }
+
+  prettyPrintObjectIgnoreErrors = (ugly: object): string => {
+    try {
+      return JSON.stringify(ugly, undefined, 4)
+    } catch (error) {
+      // ignore
+    }
+
+    return ""
+  }
+
+  async componentDidMount() {
+
+    try {
+      const category = await getCategory(
+        this.props.auth.getIdToken(),
+        this.props.match.params.categoryId
+      )
+
+      category.jsonSchema = this.prettyPrintIgnoreErrors(category.jsonSchema)
+
+      category.uiSchema = this.prettyPrintIgnoreErrors(category.uiSchema)
+
+      this.setState({
+        category
+      })
+
+    } catch (e) {
+      alert(`Failed to fetch category: ${e.message}`)
+    }
+
+    try {
+      const whatever = await getWhatever(
+        this.props.auth.getIdToken(),
+        this.props.match.params.whateverId
+      )
+
+      this.setState({
+        whatever,
+        formDataJson: this.prettyPrintObjectIgnoreErrors(whatever.formData)
+      })
+
+    } catch (e) {
+      alert(`Failed to fetch whatever: ${e.message}`)
+    }
 
     this.setState({
-      file: files[0]
+      isLoading: false
     })
   }
+
+  
+  handleTextAreaChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const name = event.target.name
+    const value = event.target.value
+
+    if (name === 'jsonSchema') {
+      this.setState((prevState) => ({
+        category: {
+          ...prevState.category,
+          jsonSchema: value
+        }
+      }))
+    } else if (name === 'uiSchema') {
+      this.setState((prevState) => ({
+        category: {
+          ...prevState.category,
+          uiSchema: value
+        }
+      }))
+    }
+
+    console.log(`handleTextAreaChange: ${name}`)
+    console.log(`handleTextAreaChange: ${value}`)
+  }
+
 
   handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault()
 
     try {
-      if (!this.state.file) {
-        alert('File should be selected')
+      let whatever = this.state.whatever
+
+      try {
+        whatever.formData = JSON.parse(this.state.formDataJson)
+      } catch (error) {
+        alert('formData Schema has errors')
         return
       }
 
-      this.setUploadState(UploadState.FetchingPresignedUrl)
-      const uploadUrl = await getUploadUrl(this.props.auth.getIdToken(), this.props.match.params.itemId)
 
-      this.setUploadState(UploadState.UploadingFile)
-      await uploadFile(uploadUrl, this.state.file)
+      this.setState({
+        isSaving: true,
+        whatever: whatever
+      })
 
-      alert('File was uploaded!')
+     
+      await patchWhatever(
+        this.props.auth.getIdToken(),
+        this.props.match.params.whateverId,
+        this.state.whatever
+      )
+
+      alert('Whatever was updated!')
     } catch (e) {
-      alert('Could not upload a file: ' + e.message)
+      alert('Could not upload Whatever: ' + e.message)
     } finally {
-      this.setUploadState(UploadState.NoUpload)
+      this.setState({ isSaving: false })
     }
-  }
 
-  setUploadState(uploadState: UploadState) {
-    this.setState({
-      uploadState
-    })
+    console.log(`handleSubmit: ${JSON.stringify(this.state)}`)
   }
 
   render() {
     return (
       <div>
-        <h1>Upload new image</h1>
+        <Header as="h1">Edit Whatever</Header>
 
-        <Form onSubmit={this.handleSubmit}>
-          <Form.Field>
-            <label>File</label>
-            <input
-              type="file"
-              accept="image/*"
-              placeholder="Image to upload"
-              onChange={this.handleFileChange}
-            />
-          </Form.Field>
-
-          {this.renderButton()}
-        </Form>
+        {this.renderWhatever()}
       </div>
     )
   }
 
-  renderButton() {
+  renderWhatever() {
+    if (this.state.isLoading) {
+      return this.renderLoading()
+    }
 
+    return this.renderWhateverItem()
+  }
+
+  renderLoading() {
+    return (
+      <Grid>
+        <Grid.Row>
+          <Loader indeterminate active inline="centered">
+            Loading Whatever Item
+          </Loader>
+        </Grid.Row>
+      </Grid>
+    )
+  }
+
+  renderWhateverItem() {
+    return (
+      <Form onSubmit={this.handleSubmit}>
+        <Form.TextArea
+          rows={10}
+          label="Form Data"
+          name="formData"
+          value={this.state.formDataJson}
+          placeholder="Form Data is the data model this Whatever item"
+          onChange={this.handleTextAreaChange}
+        />
+
+        <Form.TextArea
+          rows={10}
+          label="JSON Schema"
+          name="jsonSchema"
+          value={this.state.category.jsonSchema}
+          placeholder="JSON Schema defining data model for items of this Whatever"
+          onChange={this.handleTextAreaChange}
+        />
+
+        <Form.TextArea
+          rows={10}
+          label="UI Schema"
+          name="uiSchema"
+          value={this.state.category.uiSchema}
+          placeholder="UI Schema defining data entry for items of this Whatever"
+          onChange={this.handleTextAreaChange}
+        />
+
+        {this.renderButton()}
+      </Form>
+    )
+  }
+
+  renderButton() {
     return (
       <div>
-        {this.state.uploadState === UploadState.FetchingPresignedUrl && <p>Uploading image metadata</p>}
-        {this.state.uploadState === UploadState.UploadingFile && <p>Uploading file</p>}
-        <Button
-          loading={this.state.uploadState !== UploadState.NoUpload}
-          type="submit"
-        >
-          Upload
-        </Button>
+        {this.state.isSaving && <p>Saving Whatever</p>}
+
+        <Form.Button loading={this.state.isSaving} type="submit">
+          Save
+        </Form.Button>
       </div>
     )
   }

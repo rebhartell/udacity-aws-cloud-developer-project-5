@@ -7,7 +7,7 @@ import { CategoryItem } from '../types/CategoryItem'
 interface EditCategoryProps {
   match: {
     params: {
-      itemId: string
+      categoryId: string
     }
   }
   auth: Auth
@@ -27,7 +27,7 @@ export class EditCategory extends React.PureComponent<
     isLoading: true,
     isSaving: false,
     category: {
-      itemId: this.props.match.params.itemId,
+      itemId: this.props.match.params.categoryId,
       name: '',
       jsonSchema: '',
       uiSchema: '',
@@ -39,7 +39,7 @@ export class EditCategory extends React.PureComponent<
     try {
       const category = await getCategory(
         this.props.auth.getIdToken(),
-        this.props.match.params.itemId
+        this.props.match.params.categoryId
       )
 
       try {
@@ -136,7 +136,7 @@ export class EditCategory extends React.PureComponent<
 
       await patchCategory(
         this.props.auth.getIdToken(),
-        this.props.match.params.itemId,
+        this.props.match.params.categoryId,
         this.state.category
       )
 

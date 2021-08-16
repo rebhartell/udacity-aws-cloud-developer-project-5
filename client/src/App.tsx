@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link, Route, Router, Switch } from 'react-router-dom'
 import { Grid, Header, Icon, Image, Menu, Segment } from 'semantic-ui-react'
 import Auth from './auth/Auth'
+import { AttachToWhatever } from './components/AttachToWhatever'
 import { Category } from './components/Category'
 import { EditCategory } from './components/EditCategory'
 import { EditWhatever } from './components/EditWhatever'
@@ -35,6 +36,15 @@ export default class App extends Component<AppProps, AppState> {
 
     this.handleLogin = this.handleLogin.bind(this)
     this.handleLogout = this.handleLogout.bind(this)
+  }
+
+  async componentDidMount() {
+    this.setState({
+      categoryId: NOT_SELECTED,
+      categoryName: '',
+      whateverId: NOT_SELECTED,
+      whateverName: ''
+    })
   }
 
   handleLogin() {
@@ -117,7 +127,7 @@ export default class App extends Component<AppProps, AppState> {
         <Menu.Item header>{this.state.categoryName}</Menu.Item>
 
         <Menu.Item name="items">
-          <Link to="/whatever">
+          <Link to={`/category/${this.state.categoryId}/whatever`}>
             <Icon name="boxes" />
             Items
           </Link>
@@ -186,7 +196,15 @@ export default class App extends Component<AppProps, AppState> {
         />
 
         <Route
-          path="/category/:itemId/edit"
+          path="/category/:categoryId/whatever/:whateverId/edit"
+          exact
+          render={(props) => {
+            return <EditWhatever {...props} auth={this.props.auth} />
+          }}
+        />
+
+        <Route
+          path="/category/:categoryId/edit"
           exact
           render={(props) => {
             return <EditCategory {...props} auth={this.props.auth} />
@@ -194,18 +212,24 @@ export default class App extends Component<AppProps, AppState> {
         />
 
         <Route
-          path="/whatever"
+          path="/category/:categoryId/whatever"
           exact
           render={(props) => {
-            return <Whatever {...props} auth={this.props.auth} />
+            return (
+              <Whatever
+                {...props}
+                auth={this.props.auth}
+                updateWhatever={this.updateWhatever}
+              />
+            )
           }}
         />
 
         <Route
-          path="/whatever/:itemId/edit"
+          path="/whatever/:whateverId/attach"
           exact
           render={(props) => {
-            return <EditWhatever {...props} auth={this.props.auth} />
+            return <AttachToWhatever {...props} auth={this.props.auth} />
           }}
         />
       </Switch>

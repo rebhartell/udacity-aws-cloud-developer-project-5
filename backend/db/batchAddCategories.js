@@ -11,7 +11,7 @@ documentClient.batchWrite({
         PutRequest: {
           Item: {
             "userId": "auth0|60e094fd6c07e100687db898",
-            "itemId": "123",
+            "itemId": "1000",
             "createdAt": "2019-07-27T20:01:45.424Z",
             "name": "Note Book",
             "jsonSchema": `{"title":"Test form","type":"string"}`,
@@ -23,7 +23,7 @@ documentClient.batchWrite({
         PutRequest: {
           Item: {
             "userId": "auth0|60e094fd6c07e100687db898",
-            "itemId": "124",
+            "itemId": "1001",
             "createdAt": "2019-07-27T20:01:45.424Z",
             "name": "Address Book",
             "jsonSchema": `{"title":"Test form","type":"string"}`,
@@ -34,7 +34,7 @@ documentClient.batchWrite({
         PutRequest: {
           Item: {
             "userId": "auth0|60e094fd6c07e100687db898",
-            "itemId": "125",
+            "itemId": "1002",
             "createdAt": "2019-07-27T20:01:45.424Z",
             "name": "Diary",
             "jsonSchema": `{"title":"Test form","type":"string"}`,
@@ -45,7 +45,7 @@ documentClient.batchWrite({
         PutRequest: {
           Item: {
             "userId": "auth0|60e094fd6c07e100687db898",
-            "itemId": "126",
+            "itemId": "1003",
             "createdAt": "2019-07-27T20:01:45.424Z",
             "name": "Book Collection",
             "jsonSchema": `{"title":"Test form","type":"string"}`,
@@ -62,8 +62,3 @@ documentClient.batchWrite({
   .catch((e) => [
     console.log('Failed: ', e.message)
   ])
-
-
-
-
-
