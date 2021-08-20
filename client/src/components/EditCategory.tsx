@@ -3,6 +3,7 @@ import { Form, Grid, Header, Loader } from 'semantic-ui-react'
 import { getCategory, patchCategory } from '../api/category-api'
 import Auth from '../auth/Auth'
 import { CategoryItem } from '../types/CategoryItem'
+import { IGNORE_ERRORS, prettyPrint } from '../utils/JsonUtils'
 
 interface EditCategoryProps {
   match: {
@@ -42,17 +43,10 @@ export class EditCategory extends React.PureComponent<
         this.props.match.params.categoryId
       )
 
-      try {
-        category.jsonSchema = this.prettyPrint(category.jsonSchema)
-      } catch (error) {
-        // ignore
-      }
+        category.jsonSchema = prettyPrint(category.jsonSchema, IGNORE_ERRORS)
 
-      try {
-        category.uiSchema = this.prettyPrint(category.uiSchema)
-      } catch (error) {
-        // ignore
-      }
+
+        category.uiSchema = prettyPrint(category.uiSchema, IGNORE_ERRORS)
 
       this.setState({
         category,
@@ -116,14 +110,14 @@ export class EditCategory extends React.PureComponent<
       }
 
       try {
-        category.jsonSchema = this.prettyPrint(category.jsonSchema)
+        category.jsonSchema = prettyPrint(category.jsonSchema)
       } catch (error) {
         alert('JSON Schema has errors')
         return
       }
 
       try {
-        category.uiSchema = this.prettyPrint(category.uiSchema)
+        category.uiSchema = prettyPrint(category.uiSchema)
       } catch (error) {
         alert('UI Schema has errors')
         return
@@ -140,9 +134,9 @@ export class EditCategory extends React.PureComponent<
         this.state.category
       )
 
-      alert('Category was updated!')
+      alert(`Category updated: ${this.state.category.name}`)
     } catch (e) {
-      alert('Could not upload Category: ' + e.message)
+      alert(`Could not update Category: ${this.state.category.name}\n ${e.message}`)
     } finally {
       this.setState({ isSaving: false })
     }
@@ -150,10 +144,6 @@ export class EditCategory extends React.PureComponent<
     console.log(`handleSubmit: ${JSON.stringify(this.state)}`)
   }
 
-  prettyPrint = (ugly: string) => {
-    const obj = JSON.parse(ugly)
-    return JSON.stringify(obj, undefined, 4)
-  }
 
   render() {
     return (

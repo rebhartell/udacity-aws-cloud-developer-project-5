@@ -38,15 +38,6 @@ export default class App extends Component<AppProps, AppState> {
     this.handleLogout = this.handleLogout.bind(this)
   }
 
-  async componentDidMount() {
-    this.setState({
-      categoryId: NOT_SELECTED,
-      categoryName: '',
-      whateverId: NOT_SELECTED,
-      whateverName: ''
-    })
-  }
-
   handleLogin() {
     this.props.auth.login()
   }
@@ -56,7 +47,12 @@ export default class App extends Component<AppProps, AppState> {
   }
 
   updateCategory = (id: string, name: string): void => {
-    this.setState({ categoryId: id, categoryName: name })
+    this.setState({
+      categoryId: id,
+      categoryName: name,
+      whateverId: NOT_SELECTED,
+      whateverName: ''
+    })
   }
 
   updateWhatever = (id: string, name: string): void => {
@@ -78,6 +74,25 @@ export default class App extends Component<AppProps, AppState> {
                   Whatever You Want
                 </Header>
               </Grid.Column>
+
+              {/* <Grid.Column width={5} color="pink" verticalAlign="middle">
+                <Header as="h3" textAlign="left">
+                  categoryId={this.state.categoryId}
+                </Header>
+                <Header as="h3" textAlign="left">
+                  categoryName={this.state.categoryName}
+                </Header>
+              </Grid.Column>
+
+              <Grid.Column width={5} color="pink" verticalAlign="middle">
+                <Header as="h3" textAlign="left">
+                  whateverId={this.state.whateverId}
+                </Header>
+                <Header as="h3" textAlign="left">
+                  whateverName={this.state.whateverName}
+                </Header>
+              </Grid.Column> */}
+
             </Grid.Row>
 
             <Grid.Row color="yellow">
@@ -100,14 +115,11 @@ export default class App extends Component<AppProps, AppState> {
   generateMenu() {
     return (
       <Menu>
-        <Menu.Item name="category">
-          <Link to="/category">
-            <Icon name="warehouse" />
-            Categories
-          </Link>
-        </Menu.Item>
+        {this.renderCategoriesMenu()}
+        {this.renderSelectedCategory()}
 
         {this.renderWhateverMenu()}
+        {this.renderSelectedWhatever()}
 
         <Menu.Menu position="right">
           {/* {this.userName()} */}
@@ -117,25 +129,58 @@ export default class App extends Component<AppProps, AppState> {
     )
   }
 
+  renderCategoriesMenu() {
+    if (!this.props.auth.isAuthenticated()) {
+      return null
+    }
+
+    return (
+      <Menu.Item name="category">
+        <Link
+          to={'/category'}
+          onClick={() => this.updateCategory(NOT_SELECTED, '')}
+        >
+          <Icon name="warehouse" />
+          Categories
+        </Link>
+      </Menu.Item>
+    )
+  }
+
+  renderSelectedCategory() {
+    if (this.state.categoryId === NOT_SELECTED) {
+      return null
+    }
+
+    return <Menu.Item header>{this.state.categoryName}</Menu.Item>
+  }
+
   renderWhateverMenu() {
     if (this.state.categoryId === NOT_SELECTED) {
       return null
     }
 
     return (
-      <Menu>
-        <Menu.Item header>{this.state.categoryName}</Menu.Item>
-
-        <Menu.Item name="items">
-          <Link to={`/category/${this.state.categoryId}/whatever`}>
-            <Icon name="boxes" />
-            Items
-          </Link>
-        </Menu.Item>
-
-        <Menu.Item header>{this.state.whateverName}</Menu.Item>
-      </Menu>
+      <Menu.Item name="items">
+        <Link
+          to={`/category/${this.state.categoryId}/whatever`}
+          onClick={() => 
+            this.updateWhatever(NOT_SELECTED, '')
+          }
+        >
+          <Icon name="boxes" />
+          Items
+        </Link>
+      </Menu.Item>
     )
+  }
+
+  renderSelectedWhatever() {
+    if (this.state.whateverId === NOT_SELECTED) {
+      return null
+    }
+
+    return <Menu.Item header>{this.state.whateverName}</Menu.Item>
   }
 
   // userName() {

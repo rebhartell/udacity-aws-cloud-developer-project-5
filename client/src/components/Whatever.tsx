@@ -57,17 +57,27 @@ export class Whatever extends React.PureComponent<
     this.setState({ newWhateverName: event.target.value })
   }
 
-  onAddAttachmentButtonClick = (itemId: string) => {
-    this.props.history.push(`/whatever/${itemId}/attach`)
+  onAddAttachmentButtonClick = (id: string, name: string) => {
+    this.props.updateWhatever(`${id}`, `${name}`)
+    this.props.history.push(`/whatever/${id}/attach`)
   }
 
-  onEditButtonClick = (itemId: string) => {
-    this.props.history.push(`/category/${this.state.category.itemId}/whatever/${itemId}/edit`)
+  onEditButtonClick = (id: string, name: string) => {
+    this.props.updateWhatever(`${id}`, `${name}`)
+    this.props.history.push(`/category/${this.state.category.itemId}/whatever/${id}/edit`)
   }
 
   onWhateverCreate = async (event: React.ChangeEvent<HTMLButtonElement>) => {
+    if (this.state.newWhateverName === '') {
+      alert('The new Item needs a name')
+      return
+    }
+
     try {
-      const newWhatever = await createWhatever(this.props.auth.getIdToken(), {
+      const newName = this.state.newWhateverName
+
+      const newWhatever = await createWhatever(
+        this.props.auth.getIdToken(), {
         name: this.state.newWhateverName,
         categoryId: this.state.category.itemId
       })
@@ -77,23 +87,32 @@ export class Whatever extends React.PureComponent<
         newWhateverName: ''
       })
 
-      this.props.updateWhatever(`${newWhatever.itemId}`, `${newWhatever.name}`)
+      this.props.updateWhatever('Not Selected', '')
 
-    } catch {
-      alert('Whatever creation failed')
+      alert(`New Item created: ${newName}`)
+
+    } catch (e) {
+      alert(`Whatever creation failed\n${e.message}`)
     }
   }
 
   onWhateverDelete = async (itemId: string) => {
+    const name = this.state.whatever.find(whatever => whatever.itemId === itemId)?.name
+
     try {
       await deleteWhatever(this.props.auth.getIdToken(), itemId)
+
       this.setState({
         whatever: this.state.whatever.filter(
           (whatever) => whatever.itemId !== itemId
         )
       })
-    } catch {
-      alert('Whatever deletion failed')
+
+      this.props.updateWhatever('Not Selected', '')
+
+     alert(`Item deleted: ${name}`)
+    } catch (e) {
+      alert(`Item deletion failed: ${name}\n${e.message}`)
     }
   }
 
@@ -106,7 +125,7 @@ export class Whatever extends React.PureComponent<
         loadingWhatever: false
       })
     } catch (e) {
-      alert(`Failed to fetch all whatever: ${e.message}`)
+      alert(`Failed to fetch all whatever:\n${e.message}`)
     }
   }
 
@@ -131,7 +150,7 @@ export class Whatever extends React.PureComponent<
               color: 'teal',
               labelPosition: 'left',
               icon: 'add',
-              content: 'New task',
+              content: 'Create Item',
               onClick: this.onWhateverCreate
             }}
             fluid
@@ -185,7 +204,7 @@ export class Whatever extends React.PureComponent<
                 <Button
                   icon
                   color="blue"
-                  onClick={() => this.onEditButtonClick(whatever.itemId)}
+                  onClick={() => this.onEditButtonClick(whatever.itemId, whatever.name)}
                 >
                   <Icon name="pencil" />
                 </Button>
@@ -195,7 +214,7 @@ export class Whatever extends React.PureComponent<
                 <Button
                   icon
                   color="green"
-                  onClick={() => this.onAddAttachmentButtonClick(whatever.itemId)}
+                  onClick={() => this.onAddAttachmentButtonClick(whatever.itemId, whatever.name)}
                 >
                   <Icon name="image" />
                 </Button>

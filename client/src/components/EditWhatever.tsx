@@ -1,10 +1,12 @@
 import * as React from 'react'
-import { Form, Grid, Header, Loader } from 'semantic-ui-react'
+import { Grid, Header, Loader, Segment } from 'semantic-ui-react'
 import { getCategory } from '../api/category-api'
 import { getWhatever, patchWhatever } from '../api/whatever-api'
 import Auth from '../auth/Auth'
 import { CategoryItem } from '../types/CategoryItem'
+import { UpdateWhateverRequest } from '../types/UpdateWhateverRequest'
 import { WhateverItem } from '../types/WhateverItem'
+import RjsForm from './RjsForm'
 
 interface EditWhateverProps {
   match: {
@@ -21,7 +23,6 @@ interface EditWhateverState {
   isSaving: boolean
   category: CategoryItem
   whatever: WhateverItem
-  formDataJson: string
 }
 
 export class EditWhatever extends React.PureComponent<
@@ -45,51 +46,19 @@ export class EditWhatever extends React.PureComponent<
       formData: {},
       attachmentUrl: '',
       createdAt: ''
-    },
-    formDataJson: ''
-  }
-
-  prettyPrint = (ugly: string): string => {
-    const obj = JSON.parse(ugly)
-    return JSON.stringify(obj, undefined, 4)
-  }
-
-  prettyPrintIgnoreErrors = (ugly: string): string => {
-    try {
-      return this.prettyPrint(ugly)
-    } catch (error) {
-      // ignore
     }
-
-    return ugly
-  }
-
-  prettyPrintObjectIgnoreErrors = (ugly: object): string => {
-    try {
-      return JSON.stringify(ugly, undefined, 4)
-    } catch (error) {
-      // ignore
-    }
-
-    return ""
   }
 
   async componentDidMount() {
-
     try {
       const category = await getCategory(
         this.props.auth.getIdToken(),
         this.props.match.params.categoryId
       )
 
-      category.jsonSchema = this.prettyPrintIgnoreErrors(category.jsonSchema)
-
-      category.uiSchema = this.prettyPrintIgnoreErrors(category.uiSchema)
-
       this.setState({
         category
       })
-
     } catch (e) {
       alert(`Failed to fetch category: ${e.message}`)
     }
@@ -101,10 +70,8 @@ export class EditWhatever extends React.PureComponent<
       )
 
       this.setState({
-        whatever,
-        formDataJson: this.prettyPrintObjectIgnoreErrors(whatever.formData)
+        whatever
       })
-
     } catch (e) {
       alert(`Failed to fetch whatever: ${e.message}`)
     }
@@ -114,61 +81,32 @@ export class EditWhatever extends React.PureComponent<
     })
   }
 
-  
-  handleTextAreaChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const name = event.target.name
-    const value = event.target.value
+  handleRjsFormSubmit = async (formData: any) => {
+    this.setState({
+      isSaving: true,
+      whatever: {
+        ...this.state.whatever,
 
-    if (name === 'jsonSchema') {
-      this.setState((prevState) => ({
-        category: {
-          ...prevState.category,
-          jsonSchema: value
-        }
-      }))
-    } else if (name === 'uiSchema') {
-      this.setState((prevState) => ({
-        category: {
-          ...prevState.category,
-          uiSchema: value
-        }
-      }))
+        formData: formData
+      }
+    })
+
+    const updatedWhatever: UpdateWhateverRequest = {
+      name: this.state.whatever.name,
+      categoryId: this.state.whatever.categoryId,
+      formData: formData      
     }
 
-    console.log(`handleTextAreaChange: ${name}`)
-    console.log(`handleTextAreaChange: ${value}`)
-  }
-
-
-  handleSubmit = async (event: React.SyntheticEvent) => {
-    event.preventDefault()
-
     try {
-      let whatever = this.state.whatever
-
-      try {
-        whatever.formData = JSON.parse(this.state.formDataJson)
-      } catch (error) {
-        alert('formData Schema has errors')
-        return
-      }
-
-
-      this.setState({
-        isSaving: true,
-        whatever: whatever
-      })
-
-     
       await patchWhatever(
         this.props.auth.getIdToken(),
         this.props.match.params.whateverId,
-        this.state.whatever
+        updatedWhatever
       )
 
-      alert('Whatever was updated!')
+      alert(`Item updated: ${this.state.whatever.name}`)
     } catch (e) {
-      alert('Could not upload Whatever: ' + e.message)
+      alert(`Could not update Item: ${this.state.whatever.name}\n ${e.message}`)
     } finally {
       this.setState({ isSaving: false })
     }
@@ -191,7 +129,23 @@ export class EditWhatever extends React.PureComponent<
       return this.renderLoading()
     }
 
+    if (this.state.isSaving) {
+      return this.renderSaving()
+    }
+
     return this.renderWhateverItem()
+  }
+
+  renderSaving() {
+    return (
+      <Grid>
+        <Grid.Row>
+          <Loader indeterminate active inline="centered">
+            Saving Whatever Item
+          </Loader>
+        </Grid.Row>
+      </Grid>
+    )
   }
 
   renderLoading() {
@@ -208,48 +162,14 @@ export class EditWhatever extends React.PureComponent<
 
   renderWhateverItem() {
     return (
-      <Form onSubmit={this.handleSubmit}>
-        <Form.TextArea
-          rows={10}
-          label="Form Data"
-          name="formData"
-          value={this.state.formDataJson}
-          placeholder="Form Data is the data model this Whatever item"
-          onChange={this.handleTextAreaChange}
+      <Segment color="yellow">
+        <RjsForm
+          schema={this.state.category.jsonSchema}
+          uiSchema={this.state.category.uiSchema}
+          formData={this.state.whatever.formData}
+          handleRjsFormSubmit={this.handleRjsFormSubmit}
         />
-
-        <Form.TextArea
-          rows={10}
-          label="JSON Schema"
-          name="jsonSchema"
-          value={this.state.category.jsonSchema}
-          placeholder="JSON Schema defining data model for items of this Whatever"
-          onChange={this.handleTextAreaChange}
-        />
-
-        <Form.TextArea
-          rows={10}
-          label="UI Schema"
-          name="uiSchema"
-          value={this.state.category.uiSchema}
-          placeholder="UI Schema defining data entry for items of this Whatever"
-          onChange={this.handleTextAreaChange}
-        />
-
-        {this.renderButton()}
-      </Form>
-    )
-  }
-
-  renderButton() {
-    return (
-      <div>
-        {this.state.isSaving && <p>Saving Whatever</p>}
-
-        <Form.Button loading={this.state.isSaving} type="submit">
-          Save
-        </Form.Button>
-      </div>
+      </Segment>
     )
   }
 }

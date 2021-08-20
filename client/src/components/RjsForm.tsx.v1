@@ -1,0 +1,55 @@
+import Form, { IChangeEvent, UiSchema } from '@rjsf/core'
+import { JSONSchema7 } from 'json-schema'
+import * as React from 'react'
+
+
+const schema: JSONSchema7 = {
+  title: 'Todo',
+  type: 'object',
+  required: ['title'],
+  properties: {
+    title: { type: 'string', title: 'Title', default: 'A new task' },
+    done: { type: 'boolean', title: 'Done?', default: false }
+  }
+}
+
+const uiSchema: UiSchema = {
+  classNames: 'custom-css-class'
+}
+
+const formData = {
+  title: 'First task',
+  done: true
+}
+
+class MyForm extends React.Component {
+  static propTypes = {}
+
+  onFormChange(e: IChangeEvent) {
+    console.log('changed', e)
+    // setFormData(e.formData)
+  }
+
+  onFormSubmit(e: IChangeEvent,fe: React.FormEvent<HTMLFormElement>) {
+    console.log('submit', e, fe)
+  }
+
+  onFormError(e: any) {
+    console.log('error',e)
+  }
+
+  render() {
+    return (
+      <Form
+        schema={schema}
+        uiSchema={uiSchema}
+        formData={formData}
+        onChange={(e) => this.onFormChange(e)}
+        onSubmit={(e,fe) => this.onFormSubmit(e,fe)}
+        onError={(e) =>this.onFormError(e)}
+      />
+    )
+  }
+}
+
+export default MyForm

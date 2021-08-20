@@ -17,7 +17,6 @@ import {
 import Auth from '../auth/Auth'
 import { CategoryItem } from '../types/CategoryItem'
 
-
 interface CategoryProps {
   auth: Auth
   history: History
@@ -49,17 +48,20 @@ export class Category extends React.PureComponent<
     this.props.history.push(`/category/${id}/whatever`)
   }
 
-  onEditButtonClick = (itemId: string) => {
-    this.props.history.push(`/category/${itemId}/edit`)
+  onEditButtonClick = (id: string, name: string) => {
+    this.props.updateCategory(`${id}`, `${name}`)
+    this.props.history.push(`/category/${id}/edit`)
   }
 
   onCategoryCreate = async (event: React.ChangeEvent<HTMLButtonElement>) => {
     if (this.state.newCategoryName === '') {
-      alert('Specify a new Category')
+      alert('The new Category needs a name')
       return
     }
 
     try {
+      const newName = this.state.newCategoryName
+
       const category: CategoryItem = {
         itemId: '',
         name: this.state.newCategoryName,
@@ -78,23 +80,33 @@ export class Category extends React.PureComponent<
         newCategoryName: ''
       })
 
-      this.props.updateCategory(`${newCategory.itemId}`, `${newCategory.name}`)
-      
-    } catch {
-      alert('Category creation failed')
+      this.props.updateCategory('Not Selected', '')
+
+      alert(`New Category created: ${newName}`)
+
+    } catch (e) {
+      alert(`Category creation failed\n${e.message}`)
     }
   }
 
   onCategoryDelete = async (itemId: string) => {
+
+    const name = this.state.category.find(category => category.itemId === itemId)?.name
+
     try {
       await deleteCategory(this.props.auth.getIdToken(), itemId)
+
       this.setState({
         category: this.state.category.filter(
           (category) => category.itemId !== itemId
         )
       })
-    } catch {
-      alert('Category deletion failed')
+
+      this.props.updateCategory('Not Selected', '')
+
+      alert(`Category deleted: ${name}`)
+    } catch (e) {
+      alert(`Category deletion failed: ${name}\n${e.message}`)
     }
   }
 
@@ -106,7 +118,7 @@ export class Category extends React.PureComponent<
         loadingCategory: false
       })
     } catch (e) {
-      alert(`Failed to fetch category: ${e.message}`)
+      alert(`Failed to fetch all categories:\n${e.message}`)
     }
   }
 
@@ -131,14 +143,13 @@ export class Category extends React.PureComponent<
               color: 'teal',
               labelPosition: 'left',
               icon: 'add',
-              content: 'New Category',
+              content: 'Create Category',
               onClick: this.onCategoryCreate
             }}
             fluid
             actionPosition="left"
             placeholder="... for Whatever You Want"
             onChange={this.handleNameChange}
-            defaultValue={this.state.newCategoryName}
           />
         </Grid.Column>
         <Grid.Column width={16}>
@@ -180,9 +191,7 @@ export class Category extends React.PureComponent<
                 <Button
                   icon
                   color="green"
-                  onClick={() =>
-                    this.onSelectButtonClick(category.itemId, category.name)
-                  }
+                  onClick={() => this.onSelectButtonClick(category.itemId, category.name)}
                 >
                   <Icon name="target" />
                 </Button>
@@ -192,7 +201,7 @@ export class Category extends React.PureComponent<
                 <Button
                   icon
                   color="blue"
-                  onClick={() => this.onEditButtonClick(category.itemId)}
+                  onClick={() => this.onEditButtonClick(category.itemId, category.name)}
                 >
                   <Icon name="pencil" />
                 </Button>

@@ -57,6 +57,9 @@ export async function patchWhatever(
   itemId: string,
   updatedWhatever: UpdateWhateverRequest
 ): Promise<void> {
+
+  console.log("patchWhatever", `${apiEndpoint}/whatever/${itemId}`, JSON.stringify(updatedWhatever))
+
   await Axios.patch(`${apiEndpoint}/whatever/${itemId}`, JSON.stringify(updatedWhatever), {
     headers: {
       'Content-Type': 'application/json',
