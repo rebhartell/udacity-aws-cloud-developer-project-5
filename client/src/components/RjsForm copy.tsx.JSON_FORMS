@@ -1,0 +1,50 @@
+import { Generate } from '@jsonforms/core';
+import {
+  // materialCells,
+  materialRenderers
+} from '@jsonforms/material-renderers';
+import { JsonForms } from '@jsonforms/react';
+import * as React from 'react';
+import { IGNORE_ERRORS, jsonParse } from '../utils/JsonUtils';
+
+const renderers = [
+  ...materialRenderers,
+];
+
+interface RjsFormProps {
+  schema: string
+  uiSchema: string
+  formData: object
+  handleRjsFormSubmit: (formData: object) => void
+}
+
+export class RjsForm extends React.PureComponent<RjsFormProps> {
+  
+  onFormChange(data: any) {
+    console.log('change', data)
+  }
+
+  onFormSubmit(data: any) {
+    console.log('submit', data)
+    // this.props.handleRjsFormSubmit(data)
+  }
+
+  onFormError(event: any) {
+    // console.log('error', event)
+  }
+
+  render() {
+    return (
+      <JsonForms
+        schema={jsonParse(this.props.schema, IGNORE_ERRORS)}
+        uischema={Generate.uiSchema(jsonParse(this.props.uiSchema, IGNORE_ERRORS))}
+        data={this.props.formData}
+        renderers={renderers}
+        // cells={materialCells}        
+        onChange={({ errors, data }) => this.onFormChange(data)}
+      />
+    )
+  }
+}
+
+export default RjsForm

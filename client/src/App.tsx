@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link, Route, Router, Switch } from 'react-router-dom'
-import { Grid, Header, Icon, Image, Menu, Segment } from 'semantic-ui-react'
+import { Grid, Header, Icon, Image, Menu, Segment, SemanticCOLORS } from 'semantic-ui-react'
 import Auth from './auth/Auth'
 import { AttachToWhatever } from './components/AttachToWhatever'
 import { Category } from './components/Category'
@@ -8,6 +8,15 @@ import { EditCategory } from './components/EditCategory'
 import { EditWhatever } from './components/EditWhatever'
 import { LogIn } from './components/LogIn'
 import { Whatever } from './components/Whatever'
+
+
+// "red" | "orange" | "yellow" | "olive" | "green" | "teal" | "blue" | "violet" | "purple" | "pink" | "brown" | "grey" | "black"
+const BACKGROUND_COLOR: SemanticCOLORS = "grey"
+
+const BANNER_COLOR: SemanticCOLORS = "pink"
+
+const PAGE_COLOR: SemanticCOLORS = "yellow"
+
 
 const NOT_SELECTED: string = 'Not Selected'
 
@@ -62,20 +71,20 @@ export default class App extends Component<AppProps, AppState> {
   render() {
     return (
       <div>
-        <Segment color="red" style={{ padding: '2em' }} vertical inverted>
+        <Segment color={BACKGROUND_COLOR} style={{ minHeight: 700, padding: '2em' }} vertical inverted >
           <Grid container stackable>
-            <Grid.Row color="yellow">
-              <Grid.Column width={2} color="pink">
+            <Grid.Row  color={BANNER_COLOR} >
+              <Grid.Column width={2} >
                 <Image src="spinning_globe.gif" size="tiny" />
               </Grid.Column>
 
-              <Grid.Column width={14} color="pink" verticalAlign="middle">
+              <Grid.Column width={14} verticalAlign="middle">
                 <Header as="h1" textAlign="left">
                   Whatever You Want
                 </Header>
               </Grid.Column>
 
-              {/* <Grid.Column width={5} color="pink" verticalAlign="middle">
+              {/* <Grid.Column width={5} verticalAlign="middle">
                 <Header as="h3" textAlign="left">
                   categoryId={this.state.categoryId}
                 </Header>
@@ -84,7 +93,7 @@ export default class App extends Component<AppProps, AppState> {
                 </Header>
               </Grid.Column>
 
-              <Grid.Column width={5} color="pink" verticalAlign="middle">
+              <Grid.Column width={5} verticalAlign="middle">
                 <Header as="h3" textAlign="left">
                   whateverId={this.state.whateverId}
                 </Header>
@@ -95,10 +104,10 @@ export default class App extends Component<AppProps, AppState> {
 
             </Grid.Row>
 
-            <Grid.Row color="yellow">
-              <Grid.Column width={2} color="pink" />
+            <Grid.Row color={PAGE_COLOR} >
+              <Grid.Column width={2} />
 
-              <Grid.Column width={14} color="pink" verticalAlign="middle">
+              <Grid.Column width={14} verticalAlign="middle">
                 <Router history={this.props.history}>
                   {this.generateMenu()}
 

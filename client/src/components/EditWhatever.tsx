@@ -162,7 +162,7 @@ export class EditWhatever extends React.PureComponent<
 
   renderWhateverItem() {
     return (
-      <Segment color="yellow">
+      <Segment>
         <RjsForm
           schema={this.state.category.jsonSchema}
           uiSchema={this.state.category.uiSchema}

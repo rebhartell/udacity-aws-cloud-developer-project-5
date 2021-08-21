@@ -1,6 +1,12 @@
 import * as React from 'react'
+import { Button, Header, SemanticCOLORS } from 'semantic-ui-react'
 import Auth from '../auth/Auth'
-import { Button } from 'semantic-ui-react'
+
+// "red" | "orange" | "yellow" | "olive" | "green" | "teal" | "blue" | "violet" | "purple" | "pink" | "brown" | "grey" | "black"
+const LOGIN_BUTTON_COLOR: SemanticCOLORS = "green"
+
+const TEXT_COLOR: SemanticCOLORS = "black"
+
 
 interface LogInProps {
   auth: Auth
@@ -16,9 +22,9 @@ export class LogIn extends React.PureComponent<LogInProps, LogInState> {
   render() {
     return (
       <div>
-        <h1>Please log in</h1>
+        <Header as="h1" color={TEXT_COLOR} >Please log in</Header>
 
-        <Button onClick={this.onLogin} size="huge" color="olive">
+        <Button onClick={this.onLogin} size="huge" color={LOGIN_BUTTON_COLOR}>
           Log in
         </Button>
       </div>

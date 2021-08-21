@@ -4,6 +4,8 @@ import './index.css';
 import { makeAuthRouting } from './routing';
 import * as serviceWorker from './serviceWorker';
 
+// require('bootstrap')
+
 ReactDOM.render(makeAuthRouting(), document.getElementById('root'))
 
 // If you want your app to work offline and load faster, you can change

@@ -7,7 +7,8 @@ import {
   Header,
   Icon,
   Input,
-  Loader
+  Loader,
+  SemanticCOLORS
 } from 'semantic-ui-react'
 import {
   createCategory,
@@ -16,6 +17,9 @@ import {
 } from '../api/category-api'
 import Auth from '../auth/Auth'
 import { CategoryItem } from '../types/CategoryItem'
+
+// "red" | "orange" | "yellow" | "olive" | "green" | "teal" | "blue" | "violet" | "purple" | "pink" | "brown" | "grey" | "black"
+const TEXT_COLOR: SemanticCOLORS = 'grey'
 
 interface CategoryProps {
   auth: Auth
@@ -83,15 +87,15 @@ export class Category extends React.PureComponent<
       this.props.updateCategory('Not Selected', '')
 
       alert(`New Category created: ${newName}`)
-
     } catch (e) {
       alert(`Category creation failed\n${e.message}`)
     }
   }
 
   onCategoryDelete = async (itemId: string) => {
-
-    const name = this.state.category.find(category => category.itemId === itemId)?.name
+    const name = this.state.category.find(
+      (category) => category.itemId === itemId
+    )?.name
 
     try {
       await deleteCategory(this.props.auth.getIdToken(), itemId)
@@ -136,26 +140,31 @@ export class Category extends React.PureComponent<
 
   renderCreateCategoryInput() {
     return (
-      <Grid.Row>
-        <Grid.Column width={16}>
-          <Input
-            action={{
-              color: 'teal',
-              labelPosition: 'left',
-              icon: 'add',
-              content: 'Create Category',
-              onClick: this.onCategoryCreate
-            }}
-            fluid
-            actionPosition="left"
-            placeholder="... for Whatever You Want"
-            onChange={this.handleNameChange}
-          />
-        </Grid.Column>
-        <Grid.Column width={16}>
-          <Divider />
-        </Grid.Column>
-      </Grid.Row>
+      <Grid>
+        <Grid.Row>
+          <Grid.Column width={10}>
+            <Input
+              action={{
+                color: 'teal',
+                labelPosition: 'left',
+                icon: 'add',
+                content: 'Create Category',
+                onClick: this.onCategoryCreate
+              }}
+              fluid
+              actionPosition="left"
+              placeholder="... for Whatever You Want"
+              onChange={this.handleNameChange}
+            />
+          </Grid.Column>
+          <Grid.Column width={6}></Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column width={16}>
+            <Divider />
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     )
   }
 
@@ -184,14 +193,18 @@ export class Category extends React.PureComponent<
           return (
             <Grid.Row key={category.itemId}>
               <Grid.Column width={13} verticalAlign="middle">
-                {category.name}
+                <Header as="h3" color={TEXT_COLOR}>
+                  {category.name}
+                </Header>
               </Grid.Column>
 
               <Grid.Column width={1} floated="right">
                 <Button
                   icon
                   color="green"
-                  onClick={() => this.onSelectButtonClick(category.itemId, category.name)}
+                  onClick={() =>
+                    this.onSelectButtonClick(category.itemId, category.name)
+                  }
                 >
                   <Icon name="target" />
                 </Button>
@@ -201,7 +214,9 @@ export class Category extends React.PureComponent<
                 <Button
                   icon
                   color="blue"
-                  onClick={() => this.onEditButtonClick(category.itemId, category.name)}
+                  onClick={() =>
+                    this.onEditButtonClick(category.itemId, category.name)
+                  }
                 >
                   <Icon name="pencil" />
                 </Button>

@@ -8,15 +8,20 @@ import {
   Icon,
   Image,
   Input,
-  Loader
+  Loader,
+  SemanticCOLORS
 } from 'semantic-ui-react'
 import {
   createWhatever,
-  deleteWhatever, getAllWhateverByCategory
+  deleteWhatever,
+  getAllWhateverByCategory
 } from '../api/whatever-api'
 import Auth from '../auth/Auth'
 import { CategoryItem } from '../types/CategoryItem'
 import { WhateverItem } from '../types/WhateverItem'
+
+// "red" | "orange" | "yellow" | "olive" | "green" | "teal" | "blue" | "violet" | "purple" | "pink" | "brown" | "grey" | "black"
+const TEXT_COLOR: SemanticCOLORS = 'grey'
 
 interface WhateverProps {
   match: {
@@ -41,9 +46,9 @@ export class Whatever extends React.PureComponent<
   WhateverState
 > {
   state: WhateverState = {
-    category: { 
+    category: {
       itemId: this.props.match.params.categoryId,
-      name: '', 
+      name: '',
       jsonSchema: '',
       uiSchema: '',
       createdAt: ''
@@ -64,7 +69,9 @@ export class Whatever extends React.PureComponent<
 
   onEditButtonClick = (id: string, name: string) => {
     this.props.updateWhatever(`${id}`, `${name}`)
-    this.props.history.push(`/category/${this.state.category.itemId}/whatever/${id}/edit`)
+    this.props.history.push(
+      `/category/${this.state.category.itemId}/whatever/${id}/edit`
+    )
   }
 
   onWhateverCreate = async (event: React.ChangeEvent<HTMLButtonElement>) => {
@@ -76,8 +83,7 @@ export class Whatever extends React.PureComponent<
     try {
       const newName = this.state.newWhateverName
 
-      const newWhatever = await createWhatever(
-        this.props.auth.getIdToken(), {
+      const newWhatever = await createWhatever(this.props.auth.getIdToken(), {
         name: this.state.newWhateverName,
         categoryId: this.state.category.itemId
       })
@@ -90,14 +96,15 @@ export class Whatever extends React.PureComponent<
       this.props.updateWhatever('Not Selected', '')
 
       alert(`New Item created: ${newName}`)
-
     } catch (e) {
       alert(`Whatever creation failed\n${e.message}`)
     }
   }
 
   onWhateverDelete = async (itemId: string) => {
-    const name = this.state.whatever.find(whatever => whatever.itemId === itemId)?.name
+    const name = this.state.whatever.find(
+      (whatever) => whatever.itemId === itemId
+    )?.name
 
     try {
       await deleteWhatever(this.props.auth.getIdToken(), itemId)
@@ -110,16 +117,18 @@ export class Whatever extends React.PureComponent<
 
       this.props.updateWhatever('Not Selected', '')
 
-     alert(`Item deleted: ${name}`)
+      alert(`Item deleted: ${name}`)
     } catch (e) {
       alert(`Item deletion failed: ${name}\n${e.message}`)
     }
   }
 
-
   async componentDidMount() {
     try {
-      const whatever = await getAllWhateverByCategory(this.props.auth.getIdToken(), this.state.category.itemId)
+      const whatever = await getAllWhateverByCategory(
+        this.props.auth.getIdToken(),
+        this.state.category.itemId
+      )
       this.setState({
         whatever,
         loadingWhatever: false
@@ -143,26 +152,31 @@ export class Whatever extends React.PureComponent<
 
   renderCreateWhateverInput() {
     return (
-      <Grid.Row>
-        <Grid.Column width={16}>
-          <Input
-            action={{
-              color: 'teal',
-              labelPosition: 'left',
-              icon: 'add',
-              content: 'Create Item',
-              onClick: this.onWhateverCreate
-            }}
-            fluid
-            actionPosition="left"
-            placeholder="To change the world..."
-            onChange={this.handleNameChange}
-          />
-        </Grid.Column>
-        <Grid.Column width={16}>
-          <Divider />
-        </Grid.Column>
-      </Grid.Row>
+      <Grid>
+        <Grid.Row>
+          <Grid.Column width={10}>
+            <Input
+              action={{
+                color: 'teal',
+                labelPosition: 'left',
+                icon: 'add',
+                content: 'Create Item',
+                onClick: this.onWhateverCreate
+              }}
+              fluid
+              actionPosition="left"
+              placeholder="To change the world..."
+              onChange={this.handleNameChange}
+            />
+          </Grid.Column>
+          <Grid.Column width={6}></Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column width={16}>
+            <Divider />
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     )
   }
 
@@ -197,14 +211,18 @@ export class Whatever extends React.PureComponent<
               </Grid.Column>
 
               <Grid.Column width={10} verticalAlign="middle">
-                {whatever.name}
+                <Header as="h3" color={TEXT_COLOR}>
+                  {whatever.name}
+                </Header>
               </Grid.Column>
 
               <Grid.Column width={1} floated="right">
                 <Button
                   icon
                   color="blue"
-                  onClick={() => this.onEditButtonClick(whatever.itemId, whatever.name)}
+                  onClick={() =>
+                    this.onEditButtonClick(whatever.itemId, whatever.name)
+                  }
                 >
                   <Icon name="pencil" />
                 </Button>
@@ -214,7 +232,12 @@ export class Whatever extends React.PureComponent<
                 <Button
                   icon
                   color="green"
-                  onClick={() => this.onAddAttachmentButtonClick(whatever.itemId, whatever.name)}
+                  onClick={() =>
+                    this.onAddAttachmentButtonClick(
+                      whatever.itemId,
+                      whatever.name
+                    )
+                  }
                 >
                   <Icon name="image" />
                 </Button>
@@ -239,5 +262,4 @@ export class Whatever extends React.PureComponent<
       </Grid>
     )
   }
-
 }

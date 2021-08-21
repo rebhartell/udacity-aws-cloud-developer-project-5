@@ -5,6 +5,8 @@ import Auth from '../auth/Auth'
 import { CategoryItem } from '../types/CategoryItem'
 import { IGNORE_ERRORS, prettyPrint } from '../utils/JsonUtils'
 
+
+
 interface EditCategoryProps {
   match: {
     params: {
