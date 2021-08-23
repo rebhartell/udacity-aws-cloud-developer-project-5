@@ -8,6 +8,6 @@ echo
 
 export NODE_OPTIONS="--max-old-space-size=8192"
 
-sls deploy --verbose
+npx sls deploy --verbose
 
 echo

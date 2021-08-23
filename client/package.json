@@ -38,6 +38,11 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+  "engines": {
+    "node": ">=14.16.0 <15",
+    "npm": ">=7.20.5 <8",
+    "vscode": "^1.59.0"
+  },
   "browserslist": [
     ">0.2%",
     "not dead",
