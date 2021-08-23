@@ -1,0 +1,50 @@
+{
+  "title": "Film",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Title"
+    },
+    "format": {
+      "type": "string",
+      "title": "Format",
+      "enum": [
+        "",
+        "cloud",
+        "DVD",
+        "VHS",
+        "Betamax",
+        "LaserDisk",
+        "Reel"
+      ],
+      "default": ""
+    },
+    "genre": {
+      "type": "array",
+      "title": "Genre",
+      "items": {
+        "type": "string",
+        "enum": [
+          "",
+          "Adventure",
+          "Action",
+          "Fantasy",
+          "Comedy",
+          "Family",
+          "Horror",
+          "Drama",
+          "Animated",
+          "Crime",
+          "Mystery",
+          "Science Fiction"
+        ],
+        "default": ""
+      }
+    },
+    "storyline": {
+      "type": "string",
+      "title": "Storyline"
+    }
+  }
+}

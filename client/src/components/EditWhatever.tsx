@@ -104,7 +104,7 @@ export class EditWhatever extends React.PureComponent<
         updatedWhatever
       )
 
-      alert(`Item updated: ${this.state.whatever.name}`)
+      // alert(`Item updated: ${this.state.whatever.name}`)
     } catch (e) {
       alert(`Could not update Item: ${this.state.whatever.name}\n ${e.message}`)
     } finally {

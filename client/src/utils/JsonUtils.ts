@@ -12,9 +12,7 @@ export const prettyPrint = (ugly: string, ignoreErrors: boolean = THROW_ERRORS):
     const jsonObject = JSON.parse(ugly)
     pretty = JSON.stringify(jsonObject, undefined, 4)
   } catch (error) {
-    if (ignoreErrors) {
-      console.log("ERROR: jsonUtils.prettyPrint ignored error.", error)
-    } else {
+    if (!ignoreErrors) {
       throw (error)
     }
   }
@@ -30,9 +28,7 @@ export const jsonParse = (json: string, ignoreErrors: boolean = THROW_ERRORS): a
   try {
     jsonObject = JSON.parse(json)
   } catch (error) {
-    if (ignoreErrors) {
-      console.log("ERROR: jsonUtils.jsonParse ignored error.", error)
-    } else {
+    if (! ignoreErrors) {
       throw (error)
     }
   }
@@ -48,9 +44,7 @@ export const jsonStringify = (jsonObject: any, ignoreErrors: boolean = THROW_ERR
   try {
     json = JSON.parse(jsonObject)
   } catch (error) {
-    if (ignoreErrors) {
-      console.log("ERROR: jsonUtils.jsonStringify ignored error.", error)
-    } else {
+    if (! ignoreErrors) {
       throw (error)
     }
   }

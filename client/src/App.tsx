@@ -68,10 +68,11 @@ export default class App extends Component<AppProps, AppState> {
     this.setState({ whateverId: id, whateverName: name })
   }
 
+
   render() {
     return (
       <div>
-        <Segment color={BACKGROUND_COLOR} style={{ minHeight: 700, padding: '2em' }} vertical inverted >
+        <Segment color={BACKGROUND_COLOR} style={{ minHeight: document.body.clientHeight, padding: '2em' }} vertical inverted >
           <Grid container stackable>
             <Grid.Row  color={BANNER_COLOR} >
               <Grid.Column width={2} >

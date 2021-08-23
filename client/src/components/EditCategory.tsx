@@ -97,17 +97,15 @@ export class EditCategory extends React.PureComponent<
     }
 
     console.log(`handleTextAreaChange: ${name}`)
-    console.log(`handleTextAreaChange: ${value}`)
   }
 
   handleSubmit = async (event: React.SyntheticEvent) => {
     event.preventDefault()
 
-    try {
       let category = this.state.category
 
       if (!category.name) {
-        alert('Name should be specified')
+        alert('Name must be specified')
         return
       }
 
@@ -125,7 +123,9 @@ export class EditCategory extends React.PureComponent<
         return
       }
 
-      this.setState({
+      try {
+
+        this.setState({
         isSaving: true,
         category: category
       })
@@ -136,7 +136,7 @@ export class EditCategory extends React.PureComponent<
         this.state.category
       )
 
-      alert(`Category updated: ${this.state.category.name}`)
+      // alert(`Category updated: ${this.state.category.name}`)
     } catch (e) {
       alert(`Could not update Category: ${this.state.category.name}\n ${e.message}`)
     } finally {

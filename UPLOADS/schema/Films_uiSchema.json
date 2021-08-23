@@ -1,0 +1,19 @@
+{
+  "title": {
+    "ui:autofocus": true
+  },
+  "format": {
+    "ui:widget": "select",
+    "ui:placeholder": "Choose ..."
+  },
+  "genre": {
+    "ui:widget": "select",
+    "ui:placeholder": "Choose ..."
+  },
+  "storyline": {
+    "ui:widget": "textarea",
+    "ui:options": {
+      "rows": 5
+    }
+  }
+}

@@ -1,0 +1,1608 @@
+{
+	"id": "52d47137-5b3e-457b-ad4e-1f06399882b1",
+	"name": "Udacity - Project Cloud Capstone - Whatever You Want",
+	"timestamp": "2021-08-22T03:31:49.551Z",
+	"collection_id": "ae850daa-c92b-4e3e-a03d-4e84bd989f96",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 115,
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "06d202aa-c853-4b82-a9ce-8c4ae44cb655",
+			"name": "Get all category",
+			"url": "https://wdjq4nvsa6.execute-api.us-east-1.amazonaws.com/dev/category",
+			"time": 647,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Category items are returned": true,
+				"First Category item has expected fields": true,
+				"Response time is less than 5000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Category items are returned": {
+					"pass": 1,
+					"fail": 0
+				},
+				"First Category item has expected fields": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 5000ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				647
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Category items are returned": true,
+					"First Category item has expected fields": true,
+					"Response time is less than 5000ms": true
+				}
+			]
+		},
+		{
+			"id": "7ed57f92-c6b8-4703-bbfd-b36092d98157",
+			"name": "Create category",
+			"url": "https://wdjq4nvsa6.execute-api.us-east-1.amazonaws.com/dev/category",
+			"time": 2177,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"Category item is returned": true,
+				"Category item has expected fields": true,
+				"Response time is less than 5000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Category item is returned": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Category item has expected fields": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 5000ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2177
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"Category item is returned": true,
+					"Category item has expected fields": true,
+					"Response time is less than 5000ms": true
+				}
+			]
+		},
+		{
+			"id": "f0fd19b7-ee5f-4706-aef2-49a614944f26",
+			"name": "Get category",
+			"url": "https://wdjq4nvsa6.execute-api.us-east-1.amazonaws.com/dev/category/ad94622b-65f5-41ba-bc93-f06617565145",
+			"time": 2461,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Category item is returned": true,
+				"Category item has expected fields": true,
+				"Response time is less than 5000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Category item is returned": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Category item has expected fields": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 5000ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2461
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Category item is returned": true,
+					"Category item has expected fields": true,
+					"Response time is less than 5000ms": true
+				}
+			]
+		},
+		{
+			"id": "e94cac74-0c87-4321-9dc2-97ca5d03e4d9",
+			"name": "Update category",
+			"url": "https://wdjq4nvsa6.execute-api.us-east-1.amazonaws.com/dev/category/ad94622b-65f5-41ba-bc93-f06617565145",
+			"time": 2172,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"Status code is 204": true,
+				"Body is empty": true,
+				"Response time is less than 5000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 204": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Body is empty": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 5000ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2172
+			],
+			"allTests": [
+				{
+					"Status code is 204": true,
+					"Body is empty": true,
+					"Response time is less than 5000ms": true
+				}
+			]
+		},
+		{
+			"id": "e10ca785-650a-4d6a-a939-0218f04ac735",
+			"name": "Delete category",
+			"url": "https://wdjq4nvsa6.execute-api.us-east-1.amazonaws.com/dev/category/ad94622b-65f5-41ba-bc93-f06617565145",
+			"time": 1868,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"Status code is 204": true,
+				"Body is empty": true,
+				"Response time is less than 5000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 204": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Body is empty": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 5000ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				1868
+			],
+			"allTests": [
+				{
+					"Status code is 204": true,
+					"Body is empty": true,
+					"Response time is less than 5000ms": true
+				}
+			]
+		},
+		{
+			"id": "b95a5984-068a-4470-ae90-2b3aa42ed6eb",
+			"name": "Create category - bad 'name'",
+			"url": "https://wdjq4nvsa6.execute-api.us-east-1.amazonaws.com/dev/category",
+			"time": 341,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"message 'Invalid request body' is returned": true,
+				"Response time is less than 5000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"message 'Invalid request body' is returned": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 5000ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				341
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"message 'Invalid request body' is returned": true,
+					"Response time is less than 5000ms": true
+				}
+			]
+		},
+		{
+			"id": "a502bb13-f3cb-4adc-aaff-c0c6b10ddeba",
+			"name": "Update category - bad 'name'",
+			"url": "https://wdjq4nvsa6.execute-api.us-east-1.amazonaws.com/dev/category/3f342712-b4c7-45c8-8f9d-a4f9deb9bb7c",
+			"time": 419,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"message 'Invalid request body' is returned": true,
+				"Response time is less than 5000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"message 'Invalid request body' is returned": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 5000ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				419
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"message 'Invalid request body' is returned": true,
+					"Response time is less than 5000ms": true
+				}
+			]
+		},
+		{
+			"id": "25a463ce-194a-4d7a-a61c-2082f1c1796f",
+			"name": "Update category - bad 'jsonSchema'",
+			"url": "https://wdjq4nvsa6.execute-api.us-east-1.amazonaws.com/dev/category/ad94622b-65f5-41ba-bc93-f06617565145",
+			"time": 228,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"message 'Invalid request body' is returned": true,
+				"Response time is less than 5000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"message 'Invalid request body' is returned": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 5000ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				228
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"message 'Invalid request body' is returned": true,
+					"Response time is less than 5000ms": true
+				}
+			]
+		},
+		{
+			"id": "d68a1ff2-1f15-4636-9c54-e90cac5b21c6",
+			"name": "Update category - bad 'uiSchema'",
+			"url": "https://wdjq4nvsa6.execute-api.us-east-1.amazonaws.com/dev/category/ad94622b-65f5-41ba-bc93-f06617565145",
+			"time": 210,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"message 'Invalid request body' is returned": true,
+				"Response time is less than 5000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"message 'Invalid request body' is returned": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 5000ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				210
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"message 'Invalid request body' is returned": true,
+					"Response time is less than 5000ms": true
+				}
+			]
+		},
+		{
+			"id": "7c044030-777b-4c28-97af-0a74329f6a34",
+			"name": "Get all category - no auth",
+			"url": "https://wdjq4nvsa6.execute-api.us-east-1.amazonaws.com/dev/category",
+			"time": 95,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Status code is 401": true,
+				"message 'Unauthorized' is returned": true,
+				"Response time is less than 5000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 401": {
+					"pass": 1,
+					"fail": 0
+				},
+				"message 'Unauthorized' is returned": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 5000ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				95
+			],
+			"allTests": [
+				{
+					"Status code is 401": true,
+					"message 'Unauthorized' is returned": true,
+					"Response time is less than 5000ms": true
+				}
+			]
+		},
+		{
+			"id": "2a7ebf27-846e-4b2f-8e70-302793eb59f4",
+			"name": "Create category - no auth",
+			"url": "https://wdjq4nvsa6.execute-api.us-east-1.amazonaws.com/dev/category",
+			"time": 257,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Status code is 401": true,
+				"message 'Unauthorized' is returned": true,
+				"Response time is less than 5000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 401": {
+					"pass": 1,
+					"fail": 0
+				},
+				"message 'Unauthorized' is returned": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 5000ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				257
+			],
+			"allTests": [
+				{
+					"Status code is 401": true,
+					"message 'Unauthorized' is returned": true,
+					"Response time is less than 5000ms": true
+				}
+			]
+		},
+		{
+			"id": "62e816b3-1cf0-44d0-8e3b-961b8949f405",
+			"name": "Get category - no auth",
+			"url": "https://wdjq4nvsa6.execute-api.us-east-1.amazonaws.com/dev/category/ad94622b-65f5-41ba-bc93-f06617565145",
+			"time": 337,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Status code is 401": true,
+				"message 'Unauthorized' is returned": true,
+				"Response time is less than 5000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 401": {
+					"pass": 1,
+					"fail": 0
+				},
+				"message 'Unauthorized' is returned": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 5000ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				337
+			],
+			"allTests": [
+				{
+					"Status code is 401": true,
+					"message 'Unauthorized' is returned": true,
+					"Response time is less than 5000ms": true
+				}
+			]
+		},
+		{
+			"id": "ddb4b2c5-f5b1-4340-82bb-eb2e9afef23b",
+			"name": "Update category - no auth",
+			"url": "https://wdjq4nvsa6.execute-api.us-east-1.amazonaws.com/dev/category/ad94622b-65f5-41ba-bc93-f06617565145",
+			"time": 343,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Status code is 401": true,
+				"message 'Unauthorized' is returned": true,
+				"Response time is less than 5000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 401": {
+					"pass": 1,
+					"fail": 0
+				},
+				"message 'Unauthorized' is returned": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 5000ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				343
+			],
+			"allTests": [
+				{
+					"Status code is 401": true,
+					"message 'Unauthorized' is returned": true,
+					"Response time is less than 5000ms": true
+				}
+			]
+		},
+		{
+			"id": "ed3d7dad-9d17-4502-abd7-c8cdc9d36ed8",
+			"name": "Delete category - no auth",
+			"url": "https://wdjq4nvsa6.execute-api.us-east-1.amazonaws.com/dev/category/ad94622b-65f5-41ba-bc93-f06617565145",
+			"time": 454,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Status code is 401": true,
+				"message 'Unauthorized' is returned": true,
+				"Response time is less than 5000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 401": {
+					"pass": 1,
+					"fail": 0
+				},
+				"message 'Unauthorized' is returned": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 5000ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				454
+			],
+			"allTests": [
+				{
+					"Status code is 401": true,
+					"message 'Unauthorized' is returned": true,
+					"Response time is less than 5000ms": true
+				}
+			]
+		},
+		{
+			"id": "f6fe2113-f84b-45ab-ac88-6355a55b4247",
+			"name": "Create category to link to",
+			"url": "https://wdjq4nvsa6.execute-api.us-east-1.amazonaws.com/dev/category",
+			"time": 551,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"Category item is returned": true,
+				"Category item has expected fields": true,
+				"Response time is less than 5000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Category item is returned": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Category item has expected fields": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 5000ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				551
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"Category item is returned": true,
+					"Category item has expected fields": true,
+					"Response time is less than 5000ms": true
+				}
+			]
+		},
+		{
+			"id": "33441290-9932-4b42-af54-37f46753ac00",
+			"name": "Get all whatever",
+			"url": "https://wdjq4nvsa6.execute-api.us-east-1.amazonaws.com/dev/whatever",
+			"time": 2067,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Whatever items are returned": true,
+				"First Whatever item has expected fields": true,
+				"Response time is less than 5000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Whatever items are returned": {
+					"pass": 1,
+					"fail": 0
+				},
+				"First Whatever item has expected fields": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 5000ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2067
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Whatever items are returned": true,
+					"First Whatever item has expected fields": true,
+					"Response time is less than 5000ms": true
+				}
+			]
+		},
+		{
+			"id": "7e6c9089-c73c-4102-9356-f2c3d68a5cdd",
+			"name": "Create whatever",
+			"url": "https://wdjq4nvsa6.execute-api.us-east-1.amazonaws.com/dev/whatever",
+			"time": 2272,
+			"responseCode": {
+				"code": 201,
+				"name": "Created"
+			},
+			"tests": {
+				"Status code is 201": true,
+				"Whatever item is returned": true,
+				"Whatever item has expected fields": true,
+				"Response time is less than 5000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 201": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Whatever item is returned": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Whatever item has expected fields": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 5000ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2272
+			],
+			"allTests": [
+				{
+					"Status code is 201": true,
+					"Whatever item is returned": true,
+					"Whatever item has expected fields": true,
+					"Response time is less than 5000ms": true
+				}
+			]
+		},
+		{
+			"id": "f2fd69c7-ac8f-4128-a17a-3d7c9dc1315b",
+			"name": "Get all whatever by category",
+			"url": "https://wdjq4nvsa6.execute-api.us-east-1.amazonaws.com/dev/category/d750bd55-6e7b-466a-bbbc-26dce046ae97/whatever",
+			"time": 348,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Whatever items are returned": true,
+				"First Whatever item has expected fields": true,
+				"Response time is less than 5000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Whatever items are returned": {
+					"pass": 1,
+					"fail": 0
+				},
+				"First Whatever item has expected fields": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 5000ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				348
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Whatever items are returned": true,
+					"First Whatever item has expected fields": true,
+					"Response time is less than 5000ms": true
+				}
+			]
+		},
+		{
+			"id": "df988f65-5456-44ef-9066-bb06a811a7a8",
+			"name": "Get whatever",
+			"url": "https://wdjq4nvsa6.execute-api.us-east-1.amazonaws.com/dev/whatever/6e59917f-4076-47c6-8304-63496cdce726",
+			"time": 2088,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Whatever item is returned": true,
+				"Whatever item has expected fields": true,
+				"Response time is less than 5000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Whatever item is returned": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Whatever item has expected fields": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 5000ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2088
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Whatever item is returned": true,
+					"Whatever item has expected fields": true,
+					"Response time is less than 5000ms": true
+				}
+			]
+		},
+		{
+			"id": "f8e1a22f-35e0-4584-8a4d-a9d39facddea",
+			"name": "Update whatever",
+			"url": "https://wdjq4nvsa6.execute-api.us-east-1.amazonaws.com/dev/whatever/6e59917f-4076-47c6-8304-63496cdce726",
+			"time": 2274,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"Status code is 204": true,
+				"Body is empty": true,
+				"Response time is less than 5000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 204": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Body is empty": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 5000ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2274
+			],
+			"allTests": [
+				{
+					"Status code is 204": true,
+					"Body is empty": true,
+					"Response time is less than 5000ms": true
+				}
+			]
+		},
+		{
+			"id": "76e394e7-e3c7-4828-8fc6-3a1c8cee43b2",
+			"name": "Get attachment upload URL",
+			"url": "https://wdjq4nvsa6.execute-api.us-east-1.amazonaws.com/dev/whatever/6e59917f-4076-47c6-8304-63496cdce726/attachment",
+			"time": 451,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"message 'Invalid response body' is returned": true,
+				"Response time is less than 5000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"message 'Invalid response body' is returned": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 5000ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				451
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"message 'Invalid response body' is returned": true,
+					"Response time is less than 5000ms": true
+				}
+			]
+		},
+		{
+			"id": "aad21778-1cde-4f98-824e-28679a7d8ac1",
+			"name": "Upload attachment Image",
+			"url": "https://whatever-attachments-rebh-dev.s3.amazonaws.com/6e59917f-4076-47c6-8304-63496cdce726?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAQHWG2HZHVRN22E2G%2F20210822%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210822T033213Z&X-Amz-Expires=300&X-Amz-Security-Token=IQoJb3JpZ2luX2VjELz%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLWVhc3QtMSJGMEQCIAWm%2BbMwDMGqfQuTthCK%2FGF%2FPsliY6nWt%2BpetQ7Wpb1DAiBU629EK8IFtddAioGv3cwwUEDrHib4qaw%2BOsHJzVUUXSq%2FAgjl%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAEaDDAxNjUyMzA4MzM0MyIMPQLzyHYoG0FMceCtKpMC4yLrdadSH%2BHkEe9DaA6AGjmoeI6oe4VOZ2TH3W%2FE4T3CzUiGL8bjW6IMmfw9pTT%2BcCY0X%2BJKhmsNmWgvR1b2A8bJCXSowahnwfE6S4hT2gAaksoMKJl%2BJizKKUPuU77211H9twhkRBKBztkLzhN7jfiHJRmc4kBEFC6DbJpQWR7XQNz1dhgZ%2FcH4EB2oP2iG8leNIVIu8guqaX0%2FmNoAJ53ByhD71PiR40b61ExfRKKig%2FMi%2BqWCb48iaZJkgq%2FP9Zu1bNXmr6YAkUiRt5dtTd7NJ%2F57vrxbPRaNASbk4v3O7SC5jWAswQSp8olX8mWIZHTWacpa2QqDP%2B9%2FsWKRNxGfknshAGfceY0hLDF0pyktXakwvYiHiQY6mwGDJWjh%2Bw7DIE2WRSWv3NoRqOABY7SKXc3kk3ttkW3kKYOCAe3UWq35gTdhsTDfIA4ybQ%2FENWpLsZCUgKf99nWDaTPndpDaYapEJIJ75lvvACjtGw6ysjWx6b4A%2FW65axCv3N16SCC3rg54oHLnnbnYArFaaFYTCIf7vFov8eJdfJ1%2BT%2FSvNniYXGz5lUMcuqjYhfCXTfKHXCvmwg%3D%3D&X-Amz-Signature=63db661bce9383f9c1cc8e4e1c79d6f0e94ececb5e90dcbb2d14a8a9842d6787&X-Amz-SignedHeaders=host",
+			"time": 425,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Body is empty": true,
+				"Response time is less than 5000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Body is empty": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 5000ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				425
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Body is empty": true,
+					"Response time is less than 5000ms": true
+				}
+			]
+		},
+		{
+			"id": "222328a7-6fa5-41d6-98ae-65be26f3183e",
+			"name": "Get attachment Image",
+			"url": "https://whatever-attachments-rebh-dev.s3.amazonaws.com/6e59917f-4076-47c6-8304-63496cdce726",
+			"time": 186,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time is less than 5000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 5000ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				186
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time is less than 5000ms": true
+				}
+			]
+		},
+		{
+			"id": "19291df8-9ae4-4728-87d0-ae5a85db6b57",
+			"name": "Delete whatever",
+			"url": "https://wdjq4nvsa6.execute-api.us-east-1.amazonaws.com/dev/whatever/6e59917f-4076-47c6-8304-63496cdce726",
+			"time": 2090,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"Status code is 204": true,
+				"Body is empty": true,
+				"Response time is less than 5000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 204": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Body is empty": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 5000ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2090
+			],
+			"allTests": [
+				{
+					"Status code is 204": true,
+					"Body is empty": true,
+					"Response time is less than 5000ms": true
+				}
+			]
+		},
+		{
+			"id": "e0475212-616d-403f-a813-835f97846209",
+			"name": "Create whatever - bad 'name'",
+			"url": "https://wdjq4nvsa6.execute-api.us-east-1.amazonaws.com/dev/whatever",
+			"time": 346,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"message 'Invalid request body' is returned": true,
+				"Response time is less than 5000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"message 'Invalid request body' is returned": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 5000ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				346
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"message 'Invalid request body' is returned": true,
+					"Response time is less than 5000ms": true
+				}
+			]
+		},
+		{
+			"id": "062d0717-99fb-45db-a8ea-d657a43723b0",
+			"name": "Create whatever - bad 'categoryId'",
+			"url": "https://wdjq4nvsa6.execute-api.us-east-1.amazonaws.com/dev/whatever",
+			"time": 360,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"message 'Invalid request body' is returned": true,
+				"Response time is less than 5000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"message 'Invalid request body' is returned": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 5000ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				360
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"message 'Invalid request body' is returned": true,
+					"Response time is less than 5000ms": true
+				}
+			]
+		},
+		{
+			"id": "a5a2fc2f-3449-4581-8b80-d4262682fb6d",
+			"name": "Update whatever - bad 'name'",
+			"url": "https://wdjq4nvsa6.execute-api.us-east-1.amazonaws.com/dev/whatever/6e59917f-4076-47c6-8304-63496cdce726",
+			"time": 309,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"message 'Invalid request body' is returned": true,
+				"Response time is less than 5000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"message 'Invalid request body' is returned": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 5000ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				309
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"message 'Invalid request body' is returned": true,
+					"Response time is less than 5000ms": true
+				}
+			]
+		},
+		{
+			"id": "7cff9dbb-e37a-4c73-9fee-1f401166ea3c",
+			"name": "Update whatever - bad 'categoryId'",
+			"url": "https://wdjq4nvsa6.execute-api.us-east-1.amazonaws.com/dev/whatever/6e59917f-4076-47c6-8304-63496cdce726",
+			"time": 337,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"message 'Invalid request body' is returned": true,
+				"Response time is less than 5000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"message 'Invalid request body' is returned": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 5000ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				337
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"message 'Invalid request body' is returned": true,
+					"Response time is less than 5000ms": true
+				}
+			]
+		},
+		{
+			"id": "8f381e14-7ed2-45a4-a692-2e0d5b60ccbf",
+			"name": "Update whatever - missing 'formData'",
+			"url": "https://wdjq4nvsa6.execute-api.us-east-1.amazonaws.com/dev/whatever/6e59917f-4076-47c6-8304-63496cdce726",
+			"time": 356,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Status code is 400": true,
+				"message 'Invalid request body' is returned": true,
+				"Response time is less than 5000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"message 'Invalid request body' is returned": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 5000ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				356
+			],
+			"allTests": [
+				{
+					"Status code is 400": true,
+					"message 'Invalid request body' is returned": true,
+					"Response time is less than 5000ms": true
+				}
+			]
+		},
+		{
+			"id": "cdc41709-1df4-486d-a6d8-682174d5c07d",
+			"name": "Get all whatever - no auth",
+			"url": "https://wdjq4nvsa6.execute-api.us-east-1.amazonaws.com/dev/whatever",
+			"time": 95,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Status code is 401": true,
+				"message 'Unauthorized' is returned": true,
+				"Response time is less than 5000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 401": {
+					"pass": 1,
+					"fail": 0
+				},
+				"message 'Unauthorized' is returned": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 5000ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				95
+			],
+			"allTests": [
+				{
+					"Status code is 401": true,
+					"message 'Unauthorized' is returned": true,
+					"Response time is less than 5000ms": true
+				}
+			]
+		},
+		{
+			"id": "9eaecc32-cf4c-4743-94b3-f0e566afbcd9",
+			"name": "Create whatever - no auth",
+			"url": "https://wdjq4nvsa6.execute-api.us-east-1.amazonaws.com/dev/whatever",
+			"time": 244,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Status code is 401": true,
+				"message 'Unauthorized' is returned": true,
+				"Response time is less than 5000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 401": {
+					"pass": 1,
+					"fail": 0
+				},
+				"message 'Unauthorized' is returned": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 5000ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				244
+			],
+			"allTests": [
+				{
+					"Status code is 401": true,
+					"message 'Unauthorized' is returned": true,
+					"Response time is less than 5000ms": true
+				}
+			]
+		},
+		{
+			"id": "56b1c14c-b71e-4f40-8468-f4e097c68193",
+			"name": "Get all whatever by category - no auth",
+			"url": "https://wdjq4nvsa6.execute-api.us-east-1.amazonaws.com/dev/category/d750bd55-6e7b-466a-bbbc-26dce046ae97/whatever",
+			"time": 334,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Status code is 401": true,
+				"message 'Unauthorized' is returned": true,
+				"Response time is less than 5000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 401": {
+					"pass": 1,
+					"fail": 0
+				},
+				"message 'Unauthorized' is returned": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 5000ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				334
+			],
+			"allTests": [
+				{
+					"Status code is 401": true,
+					"message 'Unauthorized' is returned": true,
+					"Response time is less than 5000ms": true
+				}
+			]
+		},
+		{
+			"id": "50d6e51d-281c-4bf6-bbe5-1e95655af924",
+			"name": "Get whatever - no auth",
+			"url": "https://wdjq4nvsa6.execute-api.us-east-1.amazonaws.com/dev/whatever/6e59917f-4076-47c6-8304-63496cdce726",
+			"time": 286,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Status code is 401": true,
+				"message 'Unauthorized' is returned": true,
+				"Response time is less than 5000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 401": {
+					"pass": 1,
+					"fail": 0
+				},
+				"message 'Unauthorized' is returned": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 5000ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				286
+			],
+			"allTests": [
+				{
+					"Status code is 401": true,
+					"message 'Unauthorized' is returned": true,
+					"Response time is less than 5000ms": true
+				}
+			]
+		},
+		{
+			"id": "c378f203-46ce-4a92-8e4e-00e349c7d283",
+			"name": "Update whatever - no auth",
+			"url": "https://wdjq4nvsa6.execute-api.us-east-1.amazonaws.com/dev/whatever/6e59917f-4076-47c6-8304-63496cdce726",
+			"time": 96,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Status code is 401": true,
+				"message 'Unauthorized' is returned": true,
+				"Response time is less than 5000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 401": {
+					"pass": 1,
+					"fail": 0
+				},
+				"message 'Unauthorized' is returned": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 5000ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				96
+			],
+			"allTests": [
+				{
+					"Status code is 401": true,
+					"message 'Unauthorized' is returned": true,
+					"Response time is less than 5000ms": true
+				}
+			]
+		},
+		{
+			"id": "2f4e007d-8097-45e6-b1cf-08fc9c43d2a7",
+			"name": "Get attachment upload URL - no auth",
+			"url": "https://wdjq4nvsa6.execute-api.us-east-1.amazonaws.com/dev/whatever/6e59917f-4076-47c6-8304-63496cdce726/attachment",
+			"time": 218,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Status code is 401": true,
+				"message 'Unauthorized' is returned": true,
+				"Response time is less than 5000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 401": {
+					"pass": 1,
+					"fail": 0
+				},
+				"message 'Unauthorized' is returned": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 5000ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				218
+			],
+			"allTests": [
+				{
+					"Status code is 401": true,
+					"message 'Unauthorized' is returned": true,
+					"Response time is less than 5000ms": true
+				}
+			]
+		},
+		{
+			"id": "59747494-09a2-4513-8328-1ea8530eaf0f",
+			"name": "Delete whatever - no auth",
+			"url": "https://wdjq4nvsa6.execute-api.us-east-1.amazonaws.com/dev/whatever/6e59917f-4076-47c6-8304-63496cdce726",
+			"time": 95,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Status code is 401": true,
+				"message 'Unauthorized' is returned": true,
+				"Response time is less than 5000ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 401": {
+					"pass": 1,
+					"fail": 0
+				},
+				"message 'Unauthorized' is returned": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 5000ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				95
+			],
+			"allTests": [
+				{
+					"Status code is 401": true,
+					"message 'Unauthorized' is returned": true,
+					"Response time is less than 5000ms": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 27837,
+	"collection": {
+		"requests": [
+			{
+				"id": "06d202aa-c853-4b82-a9ce-8c4ae44cb655",
+				"method": "GET"
+			},
+			{
+				"id": "7ed57f92-c6b8-4703-bbfd-b36092d98157",
+				"method": "POST"
+			},
+			{
+				"id": "f0fd19b7-ee5f-4706-aef2-49a614944f26",
+				"method": "GET"
+			},
+			{
+				"id": "e94cac74-0c87-4321-9dc2-97ca5d03e4d9",
+				"method": "PATCH"
+			},
+			{
+				"id": "e10ca785-650a-4d6a-a939-0218f04ac735",
+				"method": "DELETE"
+			},
+			{
+				"id": "b95a5984-068a-4470-ae90-2b3aa42ed6eb",
+				"method": "POST"
+			},
+			{
+				"id": "a502bb13-f3cb-4adc-aaff-c0c6b10ddeba",
+				"method": "PATCH"
+			},
+			{
+				"id": "25a463ce-194a-4d7a-a61c-2082f1c1796f",
+				"method": "PATCH"
+			},
+			{
+				"id": "d68a1ff2-1f15-4636-9c54-e90cac5b21c6",
+				"method": "PATCH"
+			},
+			{
+				"id": "7c044030-777b-4c28-97af-0a74329f6a34",
+				"method": "GET"
+			},
+			{
+				"id": "2a7ebf27-846e-4b2f-8e70-302793eb59f4",
+				"method": "POST"
+			},
+			{
+				"id": "62e816b3-1cf0-44d0-8e3b-961b8949f405",
+				"method": "GET"
+			},
+			{
+				"id": "ddb4b2c5-f5b1-4340-82bb-eb2e9afef23b",
+				"method": "PATCH"
+			},
+			{
+				"id": "ed3d7dad-9d17-4502-abd7-c8cdc9d36ed8",
+				"method": "DELETE"
+			},
+			{
+				"id": "f6fe2113-f84b-45ab-ac88-6355a55b4247",
+				"method": "POST"
+			},
+			{
+				"id": "33441290-9932-4b42-af54-37f46753ac00",
+				"method": "GET"
+			},
+			{
+				"id": "7e6c9089-c73c-4102-9356-f2c3d68a5cdd",
+				"method": "POST"
+			},
+			{
+				"id": "f2fd69c7-ac8f-4128-a17a-3d7c9dc1315b",
+				"method": "GET"
+			},
+			{
+				"id": "df988f65-5456-44ef-9066-bb06a811a7a8",
+				"method": "GET"
+			},
+			{
+				"id": "f8e1a22f-35e0-4584-8a4d-a9d39facddea",
+				"method": "PATCH"
+			},
+			{
+				"id": "76e394e7-e3c7-4828-8fc6-3a1c8cee43b2",
+				"method": "POST"
+			},
+			{
+				"id": "aad21778-1cde-4f98-824e-28679a7d8ac1",
+				"method": "PUT"
+			},
+			{
+				"id": "222328a7-6fa5-41d6-98ae-65be26f3183e",
+				"method": "GET"
+			},
+			{
+				"id": "19291df8-9ae4-4728-87d0-ae5a85db6b57",
+				"method": "DELETE"
+			},
+			{
+				"id": "e0475212-616d-403f-a813-835f97846209",
+				"method": "POST"
+			},
+			{
+				"id": "062d0717-99fb-45db-a8ea-d657a43723b0",
+				"method": "POST"
+			},
+			{
+				"id": "a5a2fc2f-3449-4581-8b80-d4262682fb6d",
+				"method": "PATCH"
+			},
+			{
+				"id": "7cff9dbb-e37a-4c73-9fee-1f401166ea3c",
+				"method": "PATCH"
+			},
+			{
+				"id": "8f381e14-7ed2-45a4-a692-2e0d5b60ccbf",
+				"method": "PATCH"
+			},
+			{
+				"id": "cdc41709-1df4-486d-a6d8-682174d5c07d",
+				"method": "GET"
+			},
+			{
+				"id": "9eaecc32-cf4c-4743-94b3-f0e566afbcd9",
+				"method": "POST"
+			},
+			{
+				"id": "56b1c14c-b71e-4f40-8468-f4e097c68193",
+				"method": "GET"
+			},
+			{
+				"id": "50d6e51d-281c-4bf6-bbe5-1e95655af924",
+				"method": "GET"
+			},
+			{
+				"id": "c378f203-46ce-4a92-8e4e-00e349c7d283",
+				"method": "PATCH"
+			},
+			{
+				"id": "2f4e007d-8097-45e6-b1cf-08fc9c43d2a7",
+				"method": "POST"
+			},
+			{
+				"id": "59747494-09a2-4513-8328-1ea8530eaf0f",
+				"method": "DELETE"
+			}
+		]
+	}
+}

@@ -46,7 +46,7 @@ export class AttachToWhatever extends React.PureComponent<
 
     try {
       if (!this.state.file) {
-        alert('File should be selected')
+        alert('File must be selected first')
         return
       }
 
@@ -56,9 +56,9 @@ export class AttachToWhatever extends React.PureComponent<
       this.setUploadState(UploadState.UploadingFile)
       await uploadFile(uploadUrl, this.state.file)
 
-      alert('File was uploaded!')
+      // alert('File was uploaded!')
     } catch (e) {
-      alert('Could not upload a file: ' + e.message)
+      alert('Could not upload specified file: ' + e.message)
     } finally {
       this.setUploadState(UploadState.NoUpload)
     }

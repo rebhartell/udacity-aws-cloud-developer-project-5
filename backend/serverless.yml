@@ -10,7 +10,7 @@ plugins:
   - serverless-iam-roles-per-function
   - serverless-jetpack
   - serverless-prune-plugin
-#  - serverless-plugin-tracing
+  - serverless-plugin-tracing
 
 package:
   individually: true
@@ -54,18 +54,18 @@ custom:
     concurrency: 2           # desired concurrency, defaults to the number of available cores
     serializedCompile: false # backward compatible, true translates to concurrency: 1    
 
-#  logs:
+  logs:
     # Enable API Gateway logs
-#    restApi: true
+    restApi: true
 
-#  iam:
-#    role:
-#      statements:
-#        - Effect: Allow
-#          Action:
-#            - xray:PutTelemetryRecords
-#            - xray:PutTraceSegments
-#          Resource: "*"
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - xray:PutTelemetryRecords
+            - xray:PutTraceSegments
+          Resource: "*"
 
 
 functions:

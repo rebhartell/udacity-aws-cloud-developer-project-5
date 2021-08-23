@@ -1,0 +1,26 @@
+{
+  "title": "Diary Entry",
+  "description": "My diary.",
+  "type": "object",
+  "required": [
+    "date",
+    "whatDidWeDo"
+  ],
+  "properties": {
+    "date": {
+      "type": "string",
+      "title": "Date"
+    },
+    "whatDidWeDo": {
+      "type": "string",
+      "title": "What did we do today?"
+    },
+    "favouriteThings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "title": "Favourite things"
+    }
+  }
+}

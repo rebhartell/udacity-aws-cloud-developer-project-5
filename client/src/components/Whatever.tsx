@@ -80,8 +80,9 @@ export class Whatever extends React.PureComponent<
       return
     }
 
+    const newName = this.state.newWhateverName
+
     try {
-      const newName = this.state.newWhateverName
 
       const newWhatever = await createWhatever(this.props.auth.getIdToken(), {
         name: this.state.newWhateverName,
@@ -95,9 +96,9 @@ export class Whatever extends React.PureComponent<
 
       this.props.updateWhatever('Not Selected', '')
 
-      alert(`New Item created: ${newName}`)
+      // alert(`New Item created: ${newName}`)
     } catch (e) {
-      alert(`Whatever creation failed\n${e.message}`)
+      alert(`Failed to create Whatever item: ${newName}\n${e.message}`)
     }
   }
 
@@ -117,7 +118,7 @@ export class Whatever extends React.PureComponent<
 
       this.props.updateWhatever('Not Selected', '')
 
-      alert(`Item deleted: ${name}`)
+      // alert(`Item deleted: ${name}`)
     } catch (e) {
       alert(`Item deletion failed: ${name}\n${e.message}`)
     }
@@ -134,7 +135,7 @@ export class Whatever extends React.PureComponent<
         loadingWhatever: false
       })
     } catch (e) {
-      alert(`Failed to fetch all whatever:\n${e.message}`)
+      alert(`Failed to fetch all Whatever items:\n${e.message}`)
     }
   }
 

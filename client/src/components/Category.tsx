@@ -63,9 +63,9 @@ export class Category extends React.PureComponent<
       return
     }
 
-    try {
-      const newName = this.state.newCategoryName
+    const newName = this.state.newCategoryName
 
+    try {
       const category: CategoryItem = {
         itemId: '',
         name: this.state.newCategoryName,
@@ -86,9 +86,9 @@ export class Category extends React.PureComponent<
 
       this.props.updateCategory('Not Selected', '')
 
-      alert(`New Category created: ${newName}`)
+      // alert(`New Category created: ${newName}`)
     } catch (e) {
-      alert(`Category creation failed\n${e.message}`)
+      alert(`Failed to create Category: ${newName}\n${e.message}`)
     }
   }
 
@@ -108,7 +108,7 @@ export class Category extends React.PureComponent<
 
       this.props.updateCategory('Not Selected', '')
 
-      alert(`Category deleted: ${name}`)
+      // alert(`Category deleted: ${name}`)
     } catch (e) {
       alert(`Category deletion failed: ${name}\n${e.message}`)
     }

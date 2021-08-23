@@ -1,0 +1,52 @@
+{
+  "title": "Address Book Entry",
+  "description": "My contacts.",
+  "type": "object",
+  "required": [
+    "firstName",
+    "lastName"
+  ],
+  "properties": {
+    "firstName": {
+      "type": "string",
+      "title": "First name"
+    },
+    "middleNames": {
+      "type": "string",
+      "title": "Middle name(s)"
+    },
+    "lastName": {
+      "type": "string",
+      "title": "Last name"
+    },
+    "address1": {
+      "type": "string",
+      "title": "Address line 1"
+    },
+    "address2": {
+      "type": "string",
+      "title": "Address line 2"
+    },
+    "town": {
+      "type": "string",
+      "title": "Town"
+    },
+    "county": {
+      "type": "string",
+      "title": "County"
+    },
+    "postcode": {
+      "type": "string",
+      "title": "Post Code"
+    },
+    "telephone": {
+      "type": "string",
+      "title": "Telephone",
+      "minLength": 10
+    },
+    "additionalInfo": {
+      "type": "string",
+      "title": "Additional Information"
+    }
+  }
+}
