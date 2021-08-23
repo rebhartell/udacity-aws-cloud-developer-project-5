@@ -1,0 +1,37 @@
+{
+  "recipeName": {
+    "ui:autofocus": true,
+    "ui:placeholder": "Nan's traditional Welsh tea"
+  },
+  "countryOfOrigin": {
+    "ui:widget": "select",
+    "ui:placeholder": "Choose ..."
+  },
+  "feeds": {
+    "ui:widget": "updown"
+  },
+  "difficulty": {
+    "ui:widget": "select",
+    "ui:placeholder": "Choose ..."
+  },
+  "timeToPrepare": {
+    "ui:widget": "updown"
+  },
+  "timeToCook": {
+    "ui:widget": "updown"
+  },
+  "cookingTemperature": {
+    "ui:widget": "updown"
+  },
+  "ingredients": {
+    "items": {
+      "ui:placeholder": "a measure of an ingredient ..."
+    }
+  },
+  "preparationSteps": {
+    "items": {
+      "ui:widget": "textarea",
+      "ui:placeholder": "step ..."
+    }
+  }
+}

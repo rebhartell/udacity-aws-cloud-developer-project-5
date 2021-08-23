@@ -1,33 +1,58 @@
-import dateFormat from 'dateformat'
 import { History } from 'history'
-import update from 'immutability-helper'
 import * as React from 'react'
 import {
   Button,
-  Checkbox,
   Divider,
   Grid,
   Header,
-  Icon, Image, Input, Loader
+  Icon,
+  Image,
+  Input,
+  Loader,
+  SemanticCOLORS
 } from 'semantic-ui-react'
-import { createWhatever, deleteWhatever, getWhatever, patchWhatever } from '../api/whatever-api'
+import {
+  createWhatever,
+  deleteWhatever,
+  getAllWhateverByCategory
+} from '../api/whatever-api'
 import Auth from '../auth/Auth'
+import { CategoryItem } from '../types/CategoryItem'
 import { WhateverItem } from '../types/WhateverItem'
 
+// "red" | "orange" | "yellow" | "olive" | "green" | "teal" | "blue" | "violet" | "purple" | "pink" | "brown" | "grey" | "black"
+const TEXT_COLOR: SemanticCOLORS = 'grey'
 
 interface WhateverProps {
+  match: {
+    params: {
+      categoryId: string
+    }
+  }
   auth: Auth
   history: History
+  updateWhatever: (id: string, name: string) => void
 }
 
 interface WhateverState {
+  category: CategoryItem
   whatever: WhateverItem[]
   newWhateverName: string
   loadingWhatever: boolean
 }
 
-export class Whatever extends React.PureComponent<WhateverProps, WhateverState> {
+export class Whatever extends React.PureComponent<
+  WhateverProps,
+  WhateverState
+> {
   state: WhateverState = {
+    category: {
+      itemId: this.props.match.params.categoryId,
+      name: '',
+      jsonSchema: '',
+      uiSchema: '',
+      createdAt: ''
+    },
     whatever: [],
     newWhateverName: '',
     loadingWhatever: true
@@ -37,71 +62,87 @@ export class Whatever extends React.PureComponent<WhateverProps, WhateverState> 
     this.setState({ newWhateverName: event.target.value })
   }
 
-  onEditButtonClick = (itemId: string) => {
-    this.props.history.push(`/whatever/${itemId}/edit`)
+  onAddAttachmentButtonClick = (id: string, name: string) => {
+    this.props.updateWhatever(`${id}`, `${name}`)
+    this.props.history.push(`/whatever/${id}/attach`)
+  }
+
+  onEditButtonClick = (id: string, name: string) => {
+    this.props.updateWhatever(`${id}`, `${name}`)
+    this.props.history.push(
+      `/category/${this.state.category.itemId}/whatever/${id}/edit`
+    )
   }
 
   onWhateverCreate = async (event: React.ChangeEvent<HTMLButtonElement>) => {
+    if (this.state.newWhateverName === '') {
+      alert('The new Item needs a name')
+      return
+    }
+
+    const newName = this.state.newWhateverName
+
     try {
-      const dueDate = this.calculateDueDate()
+
       const newWhatever = await createWhatever(this.props.auth.getIdToken(), {
         name: this.state.newWhateverName,
-        dueDate
+        categoryId: this.state.category.itemId
       })
+
       this.setState({
         whatever: [...this.state.whatever, newWhatever],
         newWhateverName: ''
       })
-    } catch {
-      alert('Whatever creation failed')
+
+      this.props.updateWhatever('Not Selected', '')
+
+      // alert(`New Item created: ${newName}`)
+    } catch (e) {
+      alert(`Failed to create Whatever item: ${newName}\n${e.message}`)
     }
   }
 
   onWhateverDelete = async (itemId: string) => {
+    const name = this.state.whatever.find(
+      (whatever) => whatever.itemId === itemId
+    )?.name
+
     try {
       await deleteWhatever(this.props.auth.getIdToken(), itemId)
-      this.setState({
-        whatever: this.state.whatever.filter(whatever => whatever.itemId !== itemId)
-      })
-    } catch {
-      alert('Whatever deletion failed')
-    }
-  }
 
-  onWhateverCheck = async (pos: number) => {
-    try {
-      const whatever = this.state.whatever[pos]
-      await patchWhatever(this.props.auth.getIdToken(), whatever.itemId, {
-        name: whatever.name,
-        dueDate: whatever.dueDate,
-        done: !whatever.done
-      })
       this.setState({
-        whatever: update(this.state.whatever, {
-          [pos]: { done: { $set: !whatever.done } }
-        })
+        whatever: this.state.whatever.filter(
+          (whatever) => whatever.itemId !== itemId
+        )
       })
-    } catch {
-      alert('Whatever deletion failed')
+
+      this.props.updateWhatever('Not Selected', '')
+
+      // alert(`Item deleted: ${name}`)
+    } catch (e) {
+      alert(`Item deletion failed: ${name}\n${e.message}`)
     }
   }
 
   async componentDidMount() {
     try {
-      const whatever = await getWhatever(this.props.auth.getIdToken())
+      const whatever = await getAllWhateverByCategory(
+        this.props.auth.getIdToken(),
+        this.state.category.itemId
+      )
       this.setState({
         whatever,
         loadingWhatever: false
       })
     } catch (e) {
-      alert(`Failed to fetch whatever: ${e.message}`)
+      alert(`Failed to fetch all Whatever items:\n${e.message}`)
     }
   }
 
   render() {
     return (
       <div>
-        <Header as="h1">Whatever</Header>
+        <Header as="h1">Items</Header>
 
         {this.renderCreateWhateverInput()}
 
@@ -112,26 +153,31 @@ export class Whatever extends React.PureComponent<WhateverProps, WhateverState> 
 
   renderCreateWhateverInput() {
     return (
-      <Grid.Row>
-        <Grid.Column width={16}>
-          <Input
-            action={{
-              color: 'teal',
-              labelPosition: 'left',
-              icon: 'add',
-              content: 'New task',
-              onClick: this.onWhateverCreate
-            }}
-            fluid
-            actionPosition="left"
-            placeholder="To change the world..."
-            onChange={this.handleNameChange}
-          />
-        </Grid.Column>
-        <Grid.Column width={16}>
-          <Divider />
-        </Grid.Column>
-      </Grid.Row>
+      <Grid>
+        <Grid.Row>
+          <Grid.Column width={10}>
+            <Input
+              action={{
+                color: 'teal',
+                labelPosition: 'left',
+                icon: 'add',
+                content: 'Create Item',
+                onClick: this.onWhateverCreate
+              }}
+              fluid
+              actionPosition="left"
+              placeholder="To change the world..."
+              onChange={this.handleNameChange}
+            />
+          </Grid.Column>
+          <Grid.Column width={6}></Grid.Column>
+        </Grid.Row>
+        <Grid.Row>
+          <Grid.Column width={16}>
+            <Divider />
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     )
   }
 
@@ -147,7 +193,7 @@ export class Whatever extends React.PureComponent<WhateverProps, WhateverState> 
     return (
       <Grid.Row>
         <Loader indeterminate active inline="centered">
-          Loading Whatever
+          Loading Items
         </Loader>
       </Grid.Row>
     )
@@ -159,27 +205,45 @@ export class Whatever extends React.PureComponent<WhateverProps, WhateverState> 
         {this.state.whatever.map((whatever, pos) => {
           return (
             <Grid.Row key={whatever.itemId}>
-              <Grid.Column width={1} verticalAlign="middle">
-                <Checkbox
-                  onChange={() => this.onWhateverCheck(pos)}
-                  checked={whatever.done}
-                />
+              <Grid.Column width={3} verticalAlign="middle">
+                {whatever.attachmentUrl && (
+                  <Image src={whatever.attachmentUrl} size="small" wrapped />
+                )}
               </Grid.Column>
+
               <Grid.Column width={10} verticalAlign="middle">
-                {whatever.name}
+                <Header as="h3" color={TEXT_COLOR}>
+                  {whatever.name}
+                </Header>
               </Grid.Column>
-              <Grid.Column width={3} floated="right">
-                {whatever.dueDate}
-              </Grid.Column>
+
               <Grid.Column width={1} floated="right">
                 <Button
                   icon
                   color="blue"
-                  onClick={() => this.onEditButtonClick(whatever.itemId)}
+                  onClick={() =>
+                    this.onEditButtonClick(whatever.itemId, whatever.name)
+                  }
                 >
                   <Icon name="pencil" />
                 </Button>
               </Grid.Column>
+
+              <Grid.Column width={1} floated="right">
+                <Button
+                  icon
+                  color="green"
+                  onClick={() =>
+                    this.onAddAttachmentButtonClick(
+                      whatever.itemId,
+                      whatever.name
+                    )
+                  }
+                >
+                  <Icon name="image" />
+                </Button>
+              </Grid.Column>
+
               <Grid.Column width={1} floated="right">
                 <Button
                   icon
@@ -189,9 +253,7 @@ export class Whatever extends React.PureComponent<WhateverProps, WhateverState> 
                   <Icon name="delete" />
                 </Button>
               </Grid.Column>
-              {whatever.attachmentUrl && (
-                <Image src={whatever.attachmentUrl} size="small" wrapped />
-              )}
+
               <Grid.Column width={16}>
                 <Divider />
               </Grid.Column>
@@ -200,12 +262,5 @@ export class Whatever extends React.PureComponent<WhateverProps, WhateverState> 
         })}
       </Grid>
     )
-  }
-
-  calculateDueDate(): string {
-    const date = new Date()
-    date.setDate(date.getDate() + 7)
-
-    return dateFormat(date, 'yyyy-mm-dd') as string
   }
 }

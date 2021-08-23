@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Update Categpry Request Schema",  
+  "description": "Fields in a request to update a single Categpry item.",
+  "type": "object",
+  "properties": {
+    "name": {
+      "title": "name property schema",
+      "description": "name of a Category item (e.g. \"Change a light bulb\")",
+      "type": "string",
+      "minLength": 1
+    },
+    "jsonSchema": {
+      "title": "jsonSchema property schema",
+      "description": "JSON Schema declaring the data model of Whatever items in the Category",
+      "type": "string",
+      "minLength": 1
+    },
+    "uiSchema": {
+      "title": "uiSchema property schema",
+      "description": "UI Schema describing additional data entry rules for Whatever items in the Category",
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "name",
+    "jsonSchema",
+    "uiSchema"
+  ],
+  "additionalProperties": false
+}

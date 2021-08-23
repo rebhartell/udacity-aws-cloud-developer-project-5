@@ -32,15 +32,24 @@ async function createItem(whateverItem) {
 }
 
 
-const itemId = "111"
+const itemId = "3000"
+const categoryId = "2000"
 
 const whateverItem = {
   userId: USER_ID,
   itemId: itemId,
+  categoryId: categoryId,
   name: "test create whatever " + randomInt(1000).toString(),
   createdAt: new Date().toISOString(),
   dueDate: new Date().toISOString(),
-  done: false
+  done: false,
+  formData: {
+    title: "mr",
+    name: {
+      firstName: "Bilbo",
+      lastName: "Baggins"
+    }
+  } 
 }
 
 createItem(whateverItem);

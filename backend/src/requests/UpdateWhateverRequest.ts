@@ -3,6 +3,6 @@
  */
 export interface UpdateWhateverRequest {
   name: string
-  dueDate: string
-  done: boolean
+  categoryId: string
+  formData: string
 }

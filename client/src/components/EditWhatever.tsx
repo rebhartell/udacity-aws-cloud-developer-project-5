@@ -1,26 +1,28 @@
 import * as React from 'react'
-import { Button, Form } from 'semantic-ui-react'
-import { getUploadUrl, uploadFile } from '../api/whatever-api'
+import { Grid, Header, Loader, Segment } from 'semantic-ui-react'
+import { getCategory } from '../api/category-api'
+import { getWhatever, patchWhatever } from '../api/whatever-api'
 import Auth from '../auth/Auth'
-
-enum UploadState {
-  NoUpload,
-  FetchingPresignedUrl,
-  UploadingFile
-}
+import { CategoryItem } from '../types/CategoryItem'
+import { UpdateWhateverRequest } from '../types/UpdateWhateverRequest'
+import { WhateverItem } from '../types/WhateverItem'
+import RjsForm from './RjsForm'
 
 interface EditWhateverProps {
   match: {
     params: {
-      itemId: string
+      categoryId: string
+      whateverId: string
     }
   }
   auth: Auth
 }
 
 interface EditWhateverState {
-  file: any
-  uploadState: UploadState
+  isLoading: boolean
+  isSaving: boolean
+  category: CategoryItem
+  whatever: WhateverItem
 }
 
 export class EditWhatever extends React.PureComponent<
@@ -28,83 +30,146 @@ export class EditWhatever extends React.PureComponent<
   EditWhateverState
 > {
   state: EditWhateverState = {
-    file: undefined,
-    uploadState: UploadState.NoUpload
-  }
-
-  handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files
-    if (!files) return
-
-    this.setState({
-      file: files[0]
-    })
-  }
-
-  handleSubmit = async (event: React.SyntheticEvent) => {
-    event.preventDefault()
-
-    try {
-      if (!this.state.file) {
-        alert('File should be selected')
-        return
-      }
-
-      this.setUploadState(UploadState.FetchingPresignedUrl)
-      const uploadUrl = await getUploadUrl(this.props.auth.getIdToken(), this.props.match.params.itemId)
-
-      this.setUploadState(UploadState.UploadingFile)
-      await uploadFile(uploadUrl, this.state.file)
-
-      alert('File was uploaded!')
-    } catch (e) {
-      alert('Could not upload a file: ' + e.message)
-    } finally {
-      this.setUploadState(UploadState.NoUpload)
+    isLoading: true,
+    isSaving: false,
+    category: {
+      itemId: this.props.match.params.categoryId,
+      name: '',
+      jsonSchema: '',
+      uiSchema: '',
+      createdAt: ''
+    },
+    whatever: {
+      itemId: this.props.match.params.whateverId,
+      name: '',
+      categoryId: '',
+      formData: {},
+      attachmentUrl: '',
+      createdAt: ''
     }
   }
 
-  setUploadState(uploadState: UploadState) {
+  async componentDidMount() {
+    try {
+      const category = await getCategory(
+        this.props.auth.getIdToken(),
+        this.props.match.params.categoryId
+      )
+
+      this.setState({
+        category
+      })
+    } catch (e) {
+      alert(`Failed to fetch category: ${e.message}`)
+    }
+
+    try {
+      const whatever = await getWhatever(
+        this.props.auth.getIdToken(),
+        this.props.match.params.whateverId
+      )
+
+      this.setState({
+        whatever
+      })
+    } catch (e) {
+      alert(`Failed to fetch whatever: ${e.message}`)
+    }
+
     this.setState({
-      uploadState
+      isLoading: false
     })
+  }
+
+  handleRjsFormSubmit = async (formData: any) => {
+    this.setState({
+      isSaving: true,
+      whatever: {
+        ...this.state.whatever,
+
+        formData: formData
+      }
+    })
+
+    const updatedWhatever: UpdateWhateverRequest = {
+      name: this.state.whatever.name,
+      categoryId: this.state.whatever.categoryId,
+      formData: formData      
+    }
+
+    try {
+      await patchWhatever(
+        this.props.auth.getIdToken(),
+        this.props.match.params.whateverId,
+        updatedWhatever
+      )
+
+      // alert(`Item updated: ${this.state.whatever.name}`)
+    } catch (e) {
+      alert(`Could not update Item: ${this.state.whatever.name}\n ${e.message}`)
+    } finally {
+      this.setState({ isSaving: false })
+    }
+
+    console.log(`handleSubmit: ${JSON.stringify(this.state)}`)
   }
 
   render() {
     return (
       <div>
-        <h1>Upload new image</h1>
+        <Header as="h1">Edit Whatever</Header>
 
-        <Form onSubmit={this.handleSubmit}>
-          <Form.Field>
-            <label>File</label>
-            <input
-              type="file"
-              accept="image/*"
-              placeholder="Image to upload"
-              onChange={this.handleFileChange}
-            />
-          </Form.Field>
-
-          {this.renderButton()}
-        </Form>
+        {this.renderWhatever()}
       </div>
     )
   }
 
-  renderButton() {
+  renderWhatever() {
+    if (this.state.isLoading) {
+      return this.renderLoading()
+    }
 
+    if (this.state.isSaving) {
+      return this.renderSaving()
+    }
+
+    return this.renderWhateverItem()
+  }
+
+  renderSaving() {
     return (
-      <div>
-        {this.state.uploadState === UploadState.FetchingPresignedUrl && <p>Uploading image metadata</p>}
-        {this.state.uploadState === UploadState.UploadingFile && <p>Uploading file</p>}
-        <Button
-          loading={this.state.uploadState !== UploadState.NoUpload}
-          type="submit"
-        >
-          Upload
-        </Button>
-      </div>
+      <Grid>
+        <Grid.Row>
+          <Loader indeterminate active inline="centered">
+            Saving Whatever Item
+          </Loader>
+        </Grid.Row>
+      </Grid>
+    )
+  }
+
+  renderLoading() {
+    return (
+      <Grid>
+        <Grid.Row>
+          <Loader indeterminate active inline="centered">
+            Loading Whatever Item
+          </Loader>
+        </Grid.Row>
+      </Grid>
+    )
+  }
+
+  renderWhateverItem() {
+    return (
+      <Segment>
+        <RjsForm
+          schema={this.state.category.jsonSchema}
+          uiSchema={this.state.category.uiSchema}
+          formData={this.state.whatever.formData}
+          handleRjsFormSubmit={this.handleRjsFormSubmit}
+        />
+      </Segment>
     )
   }
 }

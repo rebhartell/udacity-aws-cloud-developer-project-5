@@ -1,0 +1,85 @@
+{
+  "title": "Recipe Card",
+  "type": "object",
+  "properties": {
+    "recipeName": {
+      "type": "string",
+      "title": "Recipe Name"
+    },
+    "countryOfOrigin": {
+      "type": "string",
+      "title": "Country of Origin",
+      "enum": [
+        "",
+        "English",
+        "Welsh",
+        "Scottish",
+        "Irish",
+        "French",
+        "German",
+        "Spanish",
+        "Italian",
+        "Scandinavian",
+        "American",
+        "Canadian",
+        "Mexican"
+      ]
+    },
+    "feeds": {
+      "type": "integer",
+      "title": "Feeds (number of people)",
+      "minimum": 1,
+      "maximum": 5000,
+      "default": 1
+    },
+    "difficulty": {
+      "type": "string",
+      "title": "Difficulty",
+      "enum": [
+        "Very Easy",
+        "Easy",
+        "Medium",
+        "Complicated",
+        "Very Complicated"
+      ]
+    },
+    "timeToPrepare": {
+      "type": "integer",
+      "title": "Time to prepare (minutes)",
+      "minimum": 0,
+      "maximum": 5000,
+      "multipleOf": 5,
+      "default": 0
+    },
+    "timeToCook": {
+      "type": "integer",
+      "title": "Time to cook (minutes)",
+      "minimum": 0,
+      "maximum": 5000,
+      "multipleOf": 5,
+      "default": 0
+    },
+    "cookingTemperature": {
+      "type": "integer",
+      "title": "Cooking temperature (centigrade)",
+      "minimum": 0,
+      "maximum": 1000,
+      "multipleOf": 5,
+      "default": 0
+    },
+    "ingredients": {
+      "type": "array",
+      "title": "Ingredients",
+      "items": {
+        "type": "string"
+      }
+    },
+    "preparationSteps ": {
+      "type": "array",
+      "title": "Preparation Steps",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

@@ -4,24 +4,27 @@ import { CreateWhateverRequest } from '../types/CreateWhateverRequest';
 import { UpdateWhateverRequest } from '../types/UpdateWhateverRequest';
 import { WhateverItem } from '../types/WhateverItem';
 
-export async function getWhatever(idToken: string): Promise<WhateverItem[]> {
-  console.log('Fetching whatever')
 
-  const response = await Axios.get(`${apiEndpoint}/whatever`, {
+export async function getAllWhateverByCategory(idToken: string, categoryId: string): Promise<WhateverItem[]> {
+  console.log('Fetching all whatever')
+
+  const response = await Axios.get(`${apiEndpoint}/category/${categoryId}/whatever`, {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${idToken}`
     },
   })
-  console.log('Whatever:', response.data)
+
+  console.log('All Whatever by Category:', response.data)
+
   return response.data.items
 }
 
-export async function createWhatever(
+export async function getWhatever(
   idToken: string,
-  newWhatever: CreateWhateverRequest
+  itemId: string
 ): Promise<WhateverItem> {
-  const response = await Axios.post(`${apiEndpoint}/whatever`,  JSON.stringify(newWhatever), {
+  const response = await Axios.get(`${apiEndpoint}/whatever/${itemId}`, {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${idToken}`
@@ -30,11 +33,33 @@ export async function createWhatever(
   return response.data.item
 }
 
+export async function createWhatever(
+  idToken: string,
+  newWhatever: CreateWhateverRequest
+): Promise<WhateverItem> {
+
+  console.log(`createWhatever: `, newWhatever)
+
+  const response = await Axios.post(`${apiEndpoint}/whatever`, JSON.stringify(newWhatever), {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${idToken}`
+    }
+  })
+
+  console.log(`createWhatever `, response.data.item )
+
+  return response.data.item
+}
+
 export async function patchWhatever(
   idToken: string,
   itemId: string,
   updatedWhatever: UpdateWhateverRequest
 ): Promise<void> {
+
+  console.log("patchWhatever", `${apiEndpoint}/whatever/${itemId}`, JSON.stringify(updatedWhatever))
+
   await Axios.patch(`${apiEndpoint}/whatever/${itemId}`, JSON.stringify(updatedWhatever), {
     headers: {
       'Content-Type': 'application/json',

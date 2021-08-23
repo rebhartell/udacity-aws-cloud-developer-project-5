@@ -1,5 +1,0 @@
-Shopping List
-=============
-- milk
-- eggs
-- bread

@@ -14,27 +14,27 @@
       "description": "a unique id for an item",
       "type": "string"
     },
-    "createdAt": {
-      "title": "createdAt property schema",  
-      "description": "date and time when an item was created",
-      "type": "string"
-    },
     "name": {
       "title": "name property schema",  
       "description": "name of a Whatever item (e.g. \"Change a light bulb\")",
       "type": "string",
       "minLength": 1
     },
-    "dueDate": {
-      "title": "dueDate property schema",  
-      "description": "date and optional time by which an item should be completed",
+    "categoryId": {
+      "title": "categoryId property schema",  
+      "description": "FK to Category this item belongs to",
       "type": "string",
-      "pattern": "^[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9].*$"
+      "minLength": 1
     },
-    "done": {
-      "title": "done property schema",  
-      "description": "true if an item was completed, false otherwise",
-      "type": "boolean"
+    "createdAt": {
+      "title": "createdAt property schema",  
+      "description": "date and time when an item was created",
+      "type": "string"
+    },
+    "formData": {
+      "title": "formData property schema",        
+      "description": "the data specific to the Category of the Whatever item",
+      "type": "object"
     },
     "attachmentUrl": {
       "title": "attachmentUrl property schema",        
@@ -44,10 +44,11 @@
   },
   "required": [
     "itemId",
-    "createdAt",
     "name",
-    "dueDate",
-    "done"
+    "categoryId",
+    "createdAt",
+    "formData",
+    "attachmentUrl"
   ],
   "additionalProperties": false
 }

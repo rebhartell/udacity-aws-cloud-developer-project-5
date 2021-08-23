@@ -1,15 +1,16 @@
 import 'source-map-support/register'
 import * as uuid from 'uuid'
-import { DatabaseAccess } from '../databaseLayer/DatabaseAccess'
+import { WhateverDatabaseAccess } from '../databaseLayer/WhateverDatabaseAccess'
 import { FileAccess } from '../fileLayer/FileAccess'
 import { CreateWhateverModel } from '../models/CreateWhateverModel'
 import { CreateWhateverRequest } from '../requests/CreateWhateverRequest'
 import { UpdateWhateverRequest } from '../requests/UpdateWhateverRequest'
 import { createLogger } from '../utils/logger'
 
+
 const logger = createLogger('businessLogic/whateverBusiness')
 
-const databaseAccess = new DatabaseAccess()
+const databaseAccess = new WhateverDatabaseAccess()
 
 const fileAccess = new FileAccess()
 
@@ -24,6 +25,29 @@ export async function getAllWhatever(userId: string): Promise<CreateWhateverMode
 
   return whateverItems
 }
+
+export async function getAllWhateverByCategory(userId: string, categoryId: string): Promise<CreateWhateverModel[]> {
+
+  logger.info("getAllWhateverByCategory", { userId, categoryId })
+
+  const whateverItems = databaseAccess.getAllWhateverByCategory(userId, categoryId)
+
+  logger.info("getAllWhateverByCategory - retrieved all whatever for userId and categoryId", { whateverItems })
+
+  return whateverItems
+}
+
+export async function getWhatever(userId: string, itemId: string): Promise<CreateWhateverModel> {
+
+  logger.info("getWhatever", { userId, itemId })
+
+  const getItem = databaseAccess.getWhatever(userId, itemId)
+
+  logger.info("getWhatever - get item", { getItem })
+
+  return getItem
+}
+
 
 export async function deleteWhatever(userId: string, itemId: string): Promise<CreateWhateverModel> {
 
@@ -47,8 +71,9 @@ export async function createWhatever(userId: string, createWhateverRequest: Crea
     userId: userId,
     name: createWhateverRequest.name,
     createdAt: new Date().toISOString(),
-    dueDate: createWhateverRequest.dueDate,
-    done: false
+    categoryId: createWhateverRequest.categoryId,
+    formData: {},
+    attachmentUrl: null
   })
 
   logger.info("createWhatever created item", { createdItem })
